@@ -1,0 +1,12 @@
+{
+  "name": "rollup-electron",
+  "version": "1.0.0",
+  "main": "app/main/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^9.1.0"
+  }
+}
