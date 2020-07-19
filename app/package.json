@@ -1,0 +1,8 @@
+{
+  "license": "MIT",
+  "version": "1.0.0",
+  "name": "my-electron-app",
+  "description": "My electron app",
+  "author": "skarab42 <skarab42@users.noreply.github.com>",
+  "main": "main/index.js"
+}

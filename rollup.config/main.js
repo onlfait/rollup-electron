@@ -2,6 +2,7 @@ import { terser as terserPlugin } from "rollup-plugin-terser";
 import replacePlugin from "@rollup/plugin-replace";
 import cleanerPlugin from "rollup-plugin-cleaner";
 import commonjs from "@rollup/plugin-commonjs";
+import copyPlugin from "rollup-plugin-copy";
 import builtins from "builtin-modules";
 import servePlugin from "./serve";
 import path from "path";
@@ -14,6 +15,15 @@ const outputDir = path.resolve(distDir, "main");
 const serve = () => watch && servePlugin({ bin: `${outputDir}/index.js` });
 const cleaner = () => !watch && cleanerPlugin({ targets: [outputDir] });
 const terser = () => !watch && terserPlugin();
+
+const copy = () =>
+  copyPlugin({
+    targets: [
+      { src: `app/static`, dest: distDir },
+      { src: `app/package.json`, dest: distDir }
+    ]
+  });
+
 const replace = () =>
   replacePlugin({
     __APP_HOST__: JSON.stringify(
@@ -32,5 +42,5 @@ export default {
     file: `${outputDir}/index.js`
   },
   external: builtins,
-  plugins: [cleaner(), commonjs(), replace(), terser(), serve()]
+  plugins: [cleaner(), copy(), commonjs(), replace(), terser(), serve()]
 };
