@@ -4,9 +4,11 @@
   "main": "app/main/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "lint": "eslint ."
   },
   "devDependencies": {
-    "electron": "^9.1.0"
+    "electron": "^9.1.0",
+    "eslint": "^7.5.0"
   }
 }
