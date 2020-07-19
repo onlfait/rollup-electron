@@ -16,5 +16,8 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "linebreak-style": ["error", "unix"]
+  },
+  globals: {
+    __APP_HOST__: true
   }
 };

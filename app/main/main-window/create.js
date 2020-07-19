@@ -6,7 +6,7 @@ module.exports = function create() {
     height: 600
   });
 
-  win.loadURL("app://renderer/main-window/index.html");
+  win.loadURL(`${__APP_HOST__}/main-window/index.html`);
 
   return win;
 };

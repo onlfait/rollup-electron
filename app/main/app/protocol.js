@@ -10,7 +10,7 @@ const config = {
   }
 };
 
-const rendererPath = path.resolve(__dirname, "..", "..", "renderer");
+const rendererPath = path.resolve(__dirname, "..", "renderer");
 
 const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
