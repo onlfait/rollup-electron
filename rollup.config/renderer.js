@@ -5,7 +5,7 @@ import cleanerPlugin from "rollup-plugin-cleaner";
 import sveltePlugin from "rollup-plugin-svelte";
 import commonjs from "@rollup/plugin-commonjs";
 import servePlugin from "rollup-plugin-serve";
-import html from "@rollup/plugin-html";
+import copyPlugin from "rollup-plugin-copy";
 import path from "path";
 
 import { appDir, distDir, watch, port } from "./common";
@@ -28,6 +28,16 @@ const svelte = () =>
     }
   });
 
+const copy = () =>
+  copyPlugin({
+    targets: [
+      {
+        src: `app/renderer/main-window/index.html`,
+        dest: `${outputDir}/main-window/`
+      }
+    ]
+  });
+
 export default {
   input: `${inputDir}/main-window/index.js`,
   output: {
@@ -38,7 +48,7 @@ export default {
   },
   plugins: [
     cleaner(),
-    html(),
+    copy(),
     resolve(),
     commonjs(),
     svelte(),

@@ -8,5 +8,12 @@
 	}
 </script>
 
+<style>
+	:global(body) {
+  	color: red;
+		background-color: #111;
+	}
+</style>
+
 <button on:click={getMe}>getMe</button>
 <button on:click={chatConnect}>chat connect</button>
