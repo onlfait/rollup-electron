@@ -1,5 +1,3 @@
-const pouet = require("./pouet");
+const App = require("./App.svelte");
 
-console.log("renderer/main-window/index.js");
-
-pouet();
+new App({ target: document.body });

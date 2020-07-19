@@ -1,6 +1,8 @@
 import { terser as terserPlugin } from "rollup-plugin-terser";
 import livereloadPlugin from "rollup-plugin-livereload";
+import resolvePlugin from "@rollup/plugin-node-resolve";
 import cleanerPlugin from "rollup-plugin-cleaner";
+import sveltePlugin from "rollup-plugin-svelte";
 import commonjs from "@rollup/plugin-commonjs";
 import servePlugin from "rollup-plugin-serve";
 import html from "@rollup/plugin-html";
@@ -16,6 +18,16 @@ const cleaner = () => !watch && cleanerPlugin({ targets: [outputDir] });
 const livereload = () => watch && livereloadPlugin(outputDir);
 const terser = () => !watch && terserPlugin();
 
+const resolve = () => resolvePlugin({ browser: true, dedupe: ["svelte"] });
+
+const svelte = () =>
+  sveltePlugin({
+    dev: watch,
+    css: css => {
+      css.write(`${outputDir}/main-window/index.css`);
+    }
+  });
+
 export default {
   input: `${inputDir}/main-window/index.js`,
   output: {
@@ -24,5 +36,14 @@ export default {
     sourcemap: true,
     file: `${outputDir}/main-window/index.js`
   },
-  plugins: [cleaner(), html(), commonjs(), terser(), serve(), livereload()]
+  plugins: [
+    cleaner(),
+    html(),
+    resolve(),
+    commonjs(),
+    svelte(),
+    terser(),
+    serve(),
+    livereload()
+  ]
 };
