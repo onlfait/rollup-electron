@@ -41,8 +41,5 @@
     "rollup-plugin-terser": "^6.1.0",
     "svelte": "^3.24.0",
     "tree-kill": "^1.2.2"
-  },
-  "dependencies": {
-    "-": "^0.0.1"
   }
 }
