@@ -2,12 +2,12 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    es2020: true,
     node: true
   },
   extends: "eslint:recommended",
   parserOptions: {
-    ecmaVersion: 11
+    ecmaVersion: 2018,
+    sourceType: "module"
   },
   rules: {
     "no-console": "warn",
@@ -16,8 +16,5 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "linebreak-style": ["error", "unix"]
-  },
-  globals: {
-    __APP_HOST__: true
   }
 };

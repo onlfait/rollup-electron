@@ -10,7 +10,7 @@ const config = {
   }
 };
 
-const rendererPath = path.resolve(__dirname, "..", "renderer");
+const rendererPath = path.resolve(__dirname, "..", "..", "renderer");
 
 const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
@@ -24,7 +24,7 @@ function error(message) {
     message.name = "AppProtocolError";
   }
   // eslint-disable-next-line
-  console.error(message);
+  console.error(">", message);
 }
 
 function getMimeType(filename) {
