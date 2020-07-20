@@ -8,6 +8,7 @@ import copy from "rollup-plugin-copy";
 import serve from "./rollup.serve";
 
 const watch = process.env.ROLLUP_WATCH;
+const sourcemap = watch ? "inline" : false;
 const dir = watch ? "dev" : "prod";
 
 const inputDir = "app/renderer/main-window";
@@ -16,18 +17,23 @@ const outputDir = `dist/${dir}/renderer/main-window`;
 export default {
   input: `${inputDir}/index.js`,
   output: {
+    sourcemap,
     format: "iife",
-    sourcemap: true,
     file: `${outputDir}/index.js`
   },
   plugins: [
     !watch && cleaner({ targets: [outputDir] }),
     copy({ targets: [{ src: `${inputDir}/index.html`, dest: outputDir }] }),
-    postcss({ extract: true, sourceMap: true, minimize: !watch }),
-    svelte({ dev: watch, css: css => css.write(`${outputDir}/svelte.css`) }),
+    postcss({ extract: true, sourceMap: sourcemap, minimize: !watch }),
+    svelte({
+      dev: watch,
+      css: css => {
+        css.write(`${outputDir}/svelte.css`, false);
+      }
+    }),
     resolve({ browser: true, dedupe: ["svelte"] }),
     commonjs(),
     !watch && terser(),
-    watch && serve()
+    watch && serve("app/main/index.js --dev")
   ]
 };

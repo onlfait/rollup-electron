@@ -1,7 +1,7 @@
 const createBrowserWindow = require("../app/security/createBrowserWindow");
 const path = require("path");
 
-const { hasDevTools, appURL } = require("../app/utils");
+const { hasDevTools } = require("../app/utils");
 
 module.exports = function create() {
   const win = createBrowserWindow({
@@ -13,7 +13,7 @@ module.exports = function create() {
     }
   });
 
-  win.loadURL(`${appURL}/main-window/index.html`);
+  win.loadURL("app://renderer/main-window/index.html");
   hasDevTools && win.webContents.openDevTools();
 
   return win;

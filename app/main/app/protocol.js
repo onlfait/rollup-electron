@@ -1,4 +1,5 @@
 const { app, protocol } = require("electron");
+const { isDev } = require("./utils");
 const path = require("path");
 const fs = require("fs");
 
@@ -10,7 +11,10 @@ const config = {
   }
 };
 
-const rendererPath = path.resolve(__dirname, "..", "..", "renderer");
+const rendererPath = path.resolve(
+  __dirname,
+  isDev ? "../../../dist/dev/renderer" : "../../renderer"
+);
 
 const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
