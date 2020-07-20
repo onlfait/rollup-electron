@@ -1,12 +1,12 @@
 <script>
-	import "./index.css"
+	import "./index.css";
 
 	function getMe() {
-		console.log("getMe");
+	  console.log("getMe");
 	}
 
 	function chatConnect() {
-		console.log("chatConnect");
+	  console.log("chatConnect");
 	}
 </script>
 

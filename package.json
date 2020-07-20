@@ -17,6 +17,7 @@
     "@rollup/plugin-node-resolve": "^8.4.0",
     "electron": "^9.1.0",
     "eslint": "^7.5.0",
+    "eslint-plugin-svelte3": "^2.7.3",
     "rollup": "^2.22.1",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0",

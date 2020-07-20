@@ -5,6 +5,7 @@ import cleaner from "rollup-plugin-cleaner";
 import postcss from "rollup-plugin-postcss";
 import svelte from "rollup-plugin-svelte";
 import copy from "rollup-plugin-copy";
+import serve from "./rollup.serve";
 
 const watch = process.env.ROLLUP_WATCH;
 const dir = watch ? "dev" : "prod";
@@ -26,6 +27,7 @@ export default {
     svelte({ dev: watch, css: css => css.write(`${outputDir}/svelte.css`) }),
     resolve({ browser: true, dedupe: ["svelte"] }),
     commonjs(),
-    !watch && terser()
+    !watch && terser(),
+    watch && serve()
   ]
 };
