@@ -12,8 +12,8 @@
 
 <style>
 	:global(body) {
-  	color: red;
-		background-color: #111;
+  	color: #fff;
+		background-color: #212;
 	}
 </style>
 

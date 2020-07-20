@@ -1,7 +1,19 @@
 import { spawn } from "child_process";
 import treeKill from "tree-kill";
 import chokidar from "chokidar";
+import WebSocket from "ws";
 import chalk from "chalk";
+
+const port = 42042;
+const wss = new WebSocket.Server({ port });
+
+function send(data) {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+}
 
 let watcher = null;
 let app = null;
@@ -60,6 +72,7 @@ function watch() {
 }
 
 export default function serve(script) {
+  let firstCall = true;
   bin = script;
 
   start();
@@ -67,7 +80,10 @@ export default function serve(script) {
 
   return {
     writeBundle() {
-      console.log("reload...");
+      if (!firstCall) {
+        send("reload");
+      }
+      firstCall = false;
     }
   };
 }
