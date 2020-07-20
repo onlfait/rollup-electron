@@ -1,4 +1,6 @@
 <script>
+	import "./index.css"
+
 	function getMe() {
 		console.log("getMe");
 	}
@@ -15,5 +17,6 @@
 	}
 </style>
 
+<h1>Hello World</h1>
 <button on:click={getMe}>getMe</button>
 <button on:click={chatConnect}>chat connect</button>

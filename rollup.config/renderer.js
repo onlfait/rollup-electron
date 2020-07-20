@@ -4,6 +4,7 @@ import resolvePlugin from "@rollup/plugin-node-resolve";
 import cleanerPlugin from "rollup-plugin-cleaner";
 import sveltePlugin from "rollup-plugin-svelte";
 import commonjs from "@rollup/plugin-commonjs";
+import cssPlugin from "rollup-plugin-css-only";
 import servePlugin from "rollup-plugin-serve";
 import copyPlugin from "rollup-plugin-copy";
 import path from "path";
@@ -14,17 +15,17 @@ const inputDir = path.resolve(appDir, "renderer");
 const outputDir = path.resolve(distDir, "renderer");
 
 const serve = () => watch && servePlugin({ port, contentBase: outputDir });
+const resolve = () => resolvePlugin({ browser: true, dedupe: ["svelte"] });
 const cleaner = () => !watch && cleanerPlugin({ targets: [outputDir] });
 const livereload = () => watch && livereloadPlugin(outputDir);
 const terser = () => !watch && terserPlugin();
-
-const resolve = () => resolvePlugin({ browser: true, dedupe: ["svelte"] });
+const css = () => cssPlugin({ output: `${outputDir}/main-window/index.css` });
 
 const svelte = () =>
   sveltePlugin({
     dev: watch,
     css: css => {
-      css.write(`${outputDir}/main-window/index.css`);
+      css.write(`${outputDir}/main-window/svelte.css`);
     }
   });
 
@@ -49,6 +50,7 @@ export default {
   plugins: [
     cleaner(),
     copy(),
+    css(),
     resolve(),
     commonjs(),
     svelte(),
