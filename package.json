@@ -7,11 +7,20 @@
   "repository": "github:skarab42/rollup-electron",
   "main": "app/main/index.js",
   "scripts": {
-    "serve": "rollup -c -w",
     "build": "rollup -c",
+    "serve": "rollup -c -w",
     "start": "electron . --dev",
-    "dist": "electron-builder",
+    "pack": "electron-builder --dir",
+    "dist": "node dist.js",
     "lint": "eslint --fix app"
+  },
+  "build": {
+    "productName": "My electron app",
+    "icon": "dist/prod/static/icon.ico",
+    "directories": {
+      "app": "dist/prod",
+      "output": "dist/bin"
+    }
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
@@ -19,8 +28,10 @@
     "chalk": "^4.1.0",
     "chokidar": "^3.4.1",
     "electron": "^9.1.0",
+    "electron-builder": "^22.7.0",
     "eslint": "^7.5.0",
     "eslint-plugin-svelte3": "^2.7.3",
+    "fs-extra": "^9.0.1",
     "rollup": "^2.22.1",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0",

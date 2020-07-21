@@ -5,16 +5,6 @@ import WebSocket from "ws";
 import chalk from "chalk";
 
 const port = 42042;
-const wss = new WebSocket.Server({ port });
-
-function send(data) {
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(data);
-    }
-  });
-}
-
 let watcher = null;
 let app = null;
 let bin = null;
@@ -72,18 +62,27 @@ function watch() {
 }
 
 export default function serve(script) {
-  let firstCall = true;
+  let wss = null;
   bin = script;
 
   start();
   watch();
 
+  function send(data) {
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+  }
+
   return {
     writeBundle() {
-      if (!firstCall) {
+      if (wss) {
         send("reload");
+      } else {
+        wss = new WebSocket.Server({ port });
       }
-      firstCall = false;
     }
   };
 }
