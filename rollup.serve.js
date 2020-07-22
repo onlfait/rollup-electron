@@ -8,6 +8,7 @@ const port = 42042;
 let watcher = null;
 let app = null;
 let bin = null;
+let wss = null;
 
 function start() {
   if (app) {
@@ -62,7 +63,6 @@ function watch() {
 }
 
 export default function serve(script) {
-  let wss = null;
   bin = script;
 
   start();
