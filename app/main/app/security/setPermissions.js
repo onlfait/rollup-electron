@@ -1,5 +1,4 @@
 const { session } = require("electron");
-const chalk = require("chalk");
 
 // https://github.com/reZach/secure-electron-template/blob/master/app/electron/main.js#L109
 // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
@@ -11,10 +10,8 @@ function requestHandler({ permissions, permission, callback }) {
 
   // eslint-disable-next-line
   console.error(
-    chalk.red(
-      `The application tried to request permission for '${permission}'.
-      This permission was not whitelisted and has been blocked. `
-    )
+    `! The application tried to request permission for '${permission}'.`,
+    "\n! This permission was not whitelisted and has been blocked."
   );
 
   callback(false); // Deny

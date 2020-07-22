@@ -4,6 +4,7 @@ const registerAppProtocol = require("./app/protocol");
 const createMainWindow = require("./main-window/create");
 
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");
+const webContentsSecurity = require("./app/security/webContentsSecurity");
 const setPermissions = require("./app/security/setPermissions");
 const setCSP = require("./app/security/setCSP");
 
@@ -16,6 +17,11 @@ preventRemoteEvents();
 
 app.whenReady().then(() => {
   setCSP({});
-  setPermissions([]);
+  setPermissions([]); // <- broken !?
+  webContentsSecurity({
+    newWindowOrigins: [],
+    redirectOrigins: [],
+    navigateOrigins: []
+  });
   createMainWindow();
 });

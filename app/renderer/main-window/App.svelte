@@ -7,6 +7,7 @@
 
 	function chatConnect() {
 	  console.log("chatConnect");
+	  location.href = "http://www.google.ch";
 	}
 </script>
 
