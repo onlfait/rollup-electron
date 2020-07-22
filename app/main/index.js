@@ -5,6 +5,7 @@ const createMainWindow = require("./main-window/create");
 
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");
 const setPermissions = require("./app/security/setPermissions");
+const setCSP = require("./app/security/setCSP");
 
 if (isDev) {
   require("./app/livereload")(livereload);
@@ -14,6 +15,7 @@ registerAppProtocol();
 preventRemoteEvents();
 
 app.whenReady().then(() => {
-  setPermissions();
+  setCSP({});
+  setPermissions([]);
   createMainWindow();
 });
