@@ -18,7 +18,8 @@ module.exports = {
     }
   ],
   globals: {
-    remote: true
+    remote: true,
+    __isDev__: true
   },
   rules: {
     "no-console": "warn",
