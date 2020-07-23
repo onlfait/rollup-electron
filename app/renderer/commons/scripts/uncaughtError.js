@@ -11,5 +11,7 @@ function uncaughtError(event) {
   remote.uncaughtError({ error: { name, message, stack }, origin });
 }
 
-window.addEventListener("error", uncaughtError);
-window.addEventListener("unhandledrejection", uncaughtError);
+if (!__isDev__) {
+  window.addEventListener("error", uncaughtError);
+  window.addEventListener("unhandledrejection", uncaughtError);
+}

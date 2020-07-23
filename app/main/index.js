@@ -28,6 +28,6 @@ app.whenReady().then(() => {
     redirectOrigins: [],
     navigateOrigins: []
   });
-  uncaughtError();
+  !isDev && uncaughtError();
   createMainWindow();
 });

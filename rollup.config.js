@@ -1,6 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
+import replace from "@rollup/plugin-replace";
 import cleaner from "rollup-plugin-cleaner";
 import postcss from "rollup-plugin-postcss";
 import svelte from "rollup-plugin-svelte";
@@ -36,6 +37,7 @@ function makeEntry(entry) {
       }),
       resolve({ browser: true, dedupe: ["svelte"] }),
       commonjs(),
+      replace({ __isDev__: watch }),
       !watch && terser(),
       watch && serve("app/main/index.js --dev")
     ]
