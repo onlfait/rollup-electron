@@ -4,7 +4,7 @@
   "name": "rollup-electron",
   "description": "Rollup & Electron",
   "author": "skarab42 <skarab42@users.noreply.github.com>",
-  "repository": "github:skarab42/rollup-electron",
+  "repository": "github:onlfait/rollup-electron",
   "main": "app/main/index.js",
   "scripts": {
     "build": "rollup -c",
