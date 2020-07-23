@@ -7,6 +7,7 @@ module.exports = function create() {
   const win = createBrowserWindow({
     width: 800,
     height: 600,
+    show: false,
     webPreferences: {
       devTools: hasDevTools,
       preload: path.resolve(__dirname, "preload.js")
@@ -15,6 +16,10 @@ module.exports = function create() {
 
   win.loadURL("app://renderer/main-window/index.html");
   hasDevTools && win.webContents.openDevTools();
+
+  win.webContents.on("did-finish-load", () => {
+    win.show();
+  });
 
   return win;
 };

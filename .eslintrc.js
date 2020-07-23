@@ -17,6 +17,9 @@ module.exports = {
       processor: "svelte3/svelte3"
     }
   ],
+  globals: {
+    remote: true
+  },
   rules: {
     "no-console": "warn",
     "no-debugger": "warn",

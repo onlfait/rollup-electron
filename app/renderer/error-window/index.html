@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Rollup Bundle</title>
+    <title>Unexpected error</title>
     <style media="screen"></style>
     <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="svelte.css" />
   </head>
   <body>
+    <header>
+      <h1>An unexpected error occurred</h1>
+    </header>
+    <nav>
+      <button id="openIssue">Open issue</button>
+      <button id="relaunchApp">Relaunch app</button>
+      <button id="exitApp">Exit app</button>
+    </nav>
+    <main>
+      <div id="errors"></div>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>

@@ -9,20 +9,25 @@ const webContentsSecurity = require("./app/security/webContentsSecurity");
 const setPermissions = require("./app/security/setPermissions");
 const setCSP = require("./app/security/setCSP");
 
+const uncaughtError = require("./app/uncaughtError");
+
 if (isDev) {
   require("./app/livereload")(livereload);
 }
+
+require("./ipc");
 
 registerAppProtocol();
 preventRemoteEvents();
 
 app.whenReady().then(() => {
   setCSP({});
-  setPermissions([]); // <- broken !?
+  setPermissions(["notifications"]);
   webContentsSecurity({
     newWindowOrigins: [],
     redirectOrigins: [],
     navigateOrigins: []
   });
+  uncaughtError();
   createMainWindow();
 });
