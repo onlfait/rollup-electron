@@ -31,8 +31,13 @@ app.whenReady().then(() => {
   setPermissions(["notifications"]);
   webContentsSecurity({
     newWindowOrigins: [],
-    redirectOrigins: ["http://localhost"],
-    navigateOrigins: ["http://localhost"]
+    redirectOrigins: [
+      "http://localhost",
+      "https://twitch.tv",
+      "https://id.twitch.tv",
+      "https://www.twitch.tv"
+    ],
+    navigateOrigins: ["http://localhost", "https://id.twitch.tv"]
   });
   !isDev && uncaughtError();
   createMainWindow();
