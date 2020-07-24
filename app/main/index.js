@@ -20,7 +20,8 @@ require("./ipc");
 
 twitchClient({
   clientId: "imjraqfj76pwp3za7hagehonex3xph",
-  forceVerify: true
+  forceVerify: true,
+  darkMode: true
 });
 
 registerAppProtocol();
