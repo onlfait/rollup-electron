@@ -1,6 +1,7 @@
 const createBrowserWindow = require("../app/security/createBrowserWindow");
 const { hasDevTools } = require("../app/utils");
 const { BrowserWindow } = require("electron");
+const open = require("open");
 
 const authBaseURL = "https://id.twitch.tv/oauth2/authorize?response_type=token";
 
@@ -30,6 +31,9 @@ function getThemeJS(darkMode) {
       e.preventDefault();
       window.close();
     })
+    document.querySelectorAll('.footer-links a').forEach(a => {
+      a.setAttribute('target', '_blank');
+    });
   `;
 }
 
@@ -83,6 +87,11 @@ module.exports = function create({ uri, onError, darkMode = true }) {
       .then(error => {
         error && onError("Invalid auth URL");
       });
+  });
+
+  win.webContents.on("new-window", (event, url) => {
+    event.preventDefault();
+    open(url);
   });
 
   win.webContents.on("did-finish-load", () => {
