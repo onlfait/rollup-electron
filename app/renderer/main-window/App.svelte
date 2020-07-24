@@ -2,7 +2,10 @@
 	import "./index.css";
 
 	function getMe() {
-	  console.log("getMe");
+	  remote.twitch("helix.users.getMe", true).then(me => {
+	    console.log("me:", me);
+	  });
+
 	}
 
 	function chatConnect() {

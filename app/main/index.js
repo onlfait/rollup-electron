@@ -10,12 +10,18 @@ const setPermissions = require("./app/security/setPermissions");
 const setCSP = require("./app/security/setCSP");
 
 const uncaughtError = require("./app/uncaughtError");
+const twitchClient = require("./twitch/client");
 
 if (isDev) {
   require("./app/livereload")(livereload);
 }
 
 require("./ipc");
+
+twitchClient({
+  clientId: "imjraqfj76pwp3za7hagehonex3xph",
+  forceVerify: true
+});
 
 registerAppProtocol();
 preventRemoteEvents();
@@ -25,8 +31,8 @@ app.whenReady().then(() => {
   setPermissions(["notifications"]);
   webContentsSecurity({
     newWindowOrigins: [],
-    redirectOrigins: [],
-    navigateOrigins: []
+    redirectOrigins: ["http://localhost"],
+    navigateOrigins: ["http://localhost"]
   });
   !isDev && uncaughtError();
   createMainWindow();
