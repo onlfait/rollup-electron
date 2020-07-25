@@ -10,19 +10,24 @@ const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
 function getThemeJS(darkMode) {
   return `
-    const html = document.querySelector('html');
-    ${darkMode && "html.classList.add(\"theme--dark\");"}
-    ${darkMode && "html.classList.add(\"tw-root--theme-dark\");"}
-    ${!darkMode && "html.classList.remove(\"tw-root--theme-dark\");"}
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const btn = document.querySelector('.js-cancel');
-    btn && btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.close();
-    })
-    document.querySelectorAll('.footer-links a').forEach(a => {
-      a.setAttribute('target', '_blank');
-    });
+      const html = document.querySelector('html');
+      const body = document.querySelector('body');
+      ${darkMode && "html.classList.add('theme--dark');"}
+      ${!darkMode && "html.classList.remove('theme--dark');"}
+      ${darkMode && "html.classList.add('tw-root--theme-dark');"}
+      ${!darkMode && "html.classList.remove('tw-root--theme-dark');"}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const btn = document.querySelector('.js-cancel');
+      btn && btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.close();
+      })
+      document.querySelectorAll('.footer-links a').forEach(a => {
+        a.setAttribute('target', '_blank');
+      });
+      const h = document.createElement('div');
+      h.classList.add('auth-window-header');
+      body.append(h);
   `;
 }
 
