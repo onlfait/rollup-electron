@@ -1,5 +1,5 @@
 const TwitchClient = require("twitch");
-const AuthProvider = require("./AuthProvider");
+const AuthProvider = require("./auth-window/AuthProvider");
 
 let authProvider = null;
 let twitchClient = null;
