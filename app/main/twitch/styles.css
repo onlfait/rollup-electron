@@ -21,11 +21,11 @@
   -webkit-app-region: drag;
 }
 
-#kraken_auth {
+.theme--dark #kraken_auth {
   background-color: var(--dark-color) !important;
 }
 
-#kraken_auth .authorize .wrap {
+.theme--dark #kraken_auth .authorize .wrap {
   background-color: rgba(255, 255, 255, 0.05) !important;
 }
 

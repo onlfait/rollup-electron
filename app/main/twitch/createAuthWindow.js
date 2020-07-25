@@ -9,13 +9,16 @@ const authBaseURL = "https://id.twitch.tv/oauth2/authorize?response_type=token";
 const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
 function getThemeJS(darkMode) {
+  const add = darkMode ? "dark" : "light";
+  const remove = darkMode ? "light" : "dark";
+
   return `
       const html = document.querySelector('html');
       const body = document.querySelector('body');
-      ${darkMode && "html.classList.add('theme--dark');"}
-      ${!darkMode && "html.classList.remove('theme--dark');"}
-      ${darkMode && "html.classList.add('tw-root--theme-dark');"}
-      ${!darkMode && "html.classList.remove('tw-root--theme-dark');"}
+      html.classList.remove('theme--${remove}');
+      html.classList.remove('tw-root--theme-${remove}');
+      html.classList.add('theme--${add}');
+      html.classList.add('tw-root--theme-${add}');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       const btn = document.querySelector('.js-cancel');
       btn && btn.addEventListener('click', (e) => {
