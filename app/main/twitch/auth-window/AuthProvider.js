@@ -1,6 +1,6 @@
 const qs = require("qs");
 const { AccessToken } = require("twitch");
-const createAuthWindow = require("./createAuthWindow");
+const createAuthWindow = require("./create");
 
 function normalizeScopes(scopes) {
   if (typeof scopes === "string") {
