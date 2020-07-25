@@ -12,6 +12,15 @@
   --scrollbar-thumb-light-color: rgba(0, 0, 0, 0.2);
 }
 
+.auth-window-header {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25px;
+  position: absolute;
+  -webkit-app-region: drag;
+}
+
 #kraken_auth {
   background-color: var(--dark-color) !important;
 }
