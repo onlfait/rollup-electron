@@ -4,6 +4,8 @@ const { isDev, livereload } = require("./app/utils");
 const registerAppProtocol = require("./app/protocol");
 const createMainWindow = require("./main-window/create");
 
+const createChatWindow = require("./twitch/chat-window/create");
+
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");
 const webContentsSecurity = require("./app/security/webContentsSecurity");
 const setPermissions = require("./app/security/setPermissions");
@@ -37,9 +39,14 @@ app.whenReady().then(() => {
       "https://id.twitch.tv",
       "https://www.twitch.tv"
     ],
-    navigateOrigins: ["http://localhost", "https://id.twitch.tv"],
+    navigateOrigins: [
+      "http://localhost",
+      "https://www.twitch.tv",
+      "https://id.twitch.tv"
+    ],
     newWindowOrigins: ["https://www.twitch.tv", "https://help.twitch.tv"]
   });
   !isDev && uncaughtError();
   createMainWindow();
+  createChatWindow();
 });
