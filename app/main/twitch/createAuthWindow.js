@@ -2,22 +2,11 @@ const createBrowserWindow = require("../app/security/createBrowserWindow");
 const { hasDevTools } = require("../app/utils");
 const { BrowserWindow } = require("electron");
 const open = require("open");
+const path = require("path");
+const fs = require("fs");
 
 const authBaseURL = "https://id.twitch.tv/oauth2/authorize?response_type=token";
-
-function getThemeCSS(darkMode) {
-  if (darkMode) {
-    return `
-      #kraken_auth {
-        background-color: #0e0e10 !important;
-      }
-      #kraken_auth .authorize .wrap {
-        background-color: #18181B !important;
-      }
-    `;
-  }
-  return "";
-}
+const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
 function getThemeJS(darkMode) {
   return `
@@ -59,7 +48,7 @@ module.exports = function create({ uri, onError, darkMode = true }) {
   });
 
   win.webContents.on("dom-ready", () => {
-    win.webContents.insertCSS(getThemeCSS(darkMode));
+    win.webContents.insertCSS(stylesCSS.toString());
     win.webContents.executeJavaScript(getThemeJS(darkMode));
   });
 
