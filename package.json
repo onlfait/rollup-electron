@@ -5,13 +5,11 @@
   "description": "Rollup & Electron",
   "author": "skarab42 <skarab42@users.noreply.github.com>",
   "repository": "github:onlfait/rollup-electron",
-  "main": "app/main/index.js",
   "scripts": {
-    "build": "rollup -c",
     "serve": "rollup -c -w",
-    "start": "electron . --dev",
-    "pack": "electron-builder --dir",
+    "build": "rollup -c",
     "dist": "node dist.js",
+    "pack": "electron-builder --dir",
     "lint": "eslint --fix app"
   },
   "build": {
