@@ -3,7 +3,6 @@ const { app } = require("electron");
 const uncaughtError = require("./app/uncaughtError");
 const registerAppProtocol = require("./app/protocol");
 const createMainWindow = require("./main-window/create");
-// const createChatWindow = require("./twitch/chat-window/create");
 
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");
 const webContentsSecurity = require("./app/security/webContentsSecurity");
@@ -44,5 +43,4 @@ app.whenReady().then(() => {
   });
   !isDev && uncaughtError();
   createMainWindow({ darkMode });
-  // createChatWindow({ darkMode });
 });

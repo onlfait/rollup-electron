@@ -5,12 +5,10 @@
 	  remote.twitch("helix.users.getMe", true).then(me => {
 	    console.log("me:", me);
 	  });
-
 	}
 
-	function chatConnect() {
-	  console.log("chatConnect");
-	  location.href = "http://www.google.ch";
+	function openTwitchChat() {
+	  remote.openTwitchChat();
 	}
 </script>
 
@@ -23,4 +21,4 @@
 
 <h1>Hello World</h1>
 <button on:click={getMe}>getMe</button>
-<button on:click={chatConnect}>chat connect</button>
+<button on:click={openTwitchChat}>open chat window</button>

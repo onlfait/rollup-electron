@@ -1,3 +1,6 @@
+const createChatWindow = require("./chat-window/create");
+const { darkMode } = require("../app/config");
+
 function callAPI({ api, args }) {
   const client = require("./client")();
   const path = api.split(".");
@@ -22,11 +25,16 @@ function callAPI({ api, args }) {
   return func.call(parent, args);
 }
 
-module.exports = async function ipcHandler(event, { api, args }) {
-  try {
-    const ret = await callAPI({ api, args });
-    return { error: null, data: ret._data || ret };
-  } catch (error) {
-    return { error: error.message || error, data: null };
+module.exports = {
+  openTwitchChat() {
+    createChatWindow({ darkMode });
+  },
+  async twitchAPI(event, { api, args }) {
+    try {
+      const ret = await callAPI({ api, args });
+      return { error: null, data: ret._data || ret };
+    } catch (error) {
+      return { error: error.message || error, data: null };
+    }
   }
 };

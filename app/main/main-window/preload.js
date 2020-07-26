@@ -6,5 +6,8 @@ contextBridge.exposeInMainWorld("remote", {
   },
   twitch(api, args = []) {
     return ipcRenderer.invoke("twitch", { api, args });
+  },
+  openTwitchChat() {
+    ipcRenderer.invoke("openTwitchChat");
   }
 });
