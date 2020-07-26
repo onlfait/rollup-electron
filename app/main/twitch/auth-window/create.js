@@ -1,5 +1,5 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools } = require("../../app/utils");
+const { hasDevTools } = require("../../app/config");
 const { BrowserWindow } = require("electron");
 const open = require("open");
 const path = require("path");

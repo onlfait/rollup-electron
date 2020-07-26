@@ -1,5 +1,5 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools } = require("../../app/utils");
+const { hasDevTools } = require("../../app/config");
 
 module.exports = function create({ darkMode = true } = {}) {
   const win = createBrowserWindow({

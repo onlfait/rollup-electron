@@ -1,7 +1,7 @@
 const createBrowserWindow = require("../app/security/createBrowserWindow");
 const path = require("path");
 
-const { hasDevTools } = require("../app/utils");
+const { hasDevTools } = require("../app/config");
 
 module.exports = function create() {
   const win = createBrowserWindow({

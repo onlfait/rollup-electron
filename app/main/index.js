@@ -1,9 +1,8 @@
 const { app } = require("electron");
 
-const { isDev, livereload } = require("./app/utils");
+const uncaughtError = require("./app/uncaughtError");
 const registerAppProtocol = require("./app/protocol");
 const createMainWindow = require("./main-window/create");
-
 const createChatWindow = require("./twitch/chat-window/create");
 
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");
@@ -11,8 +10,9 @@ const webContentsSecurity = require("./app/security/webContentsSecurity");
 const setPermissions = require("./app/security/setPermissions");
 const setCSP = require("./app/security/setCSP");
 
-const uncaughtError = require("./app/uncaughtError");
 const twitchClient = require("./twitch/client");
+
+const { isDev, livereload, darkMode, twitchConfig } = require("./app/config");
 
 if (isDev) {
   require("./app/livereload")(livereload);
@@ -20,11 +20,7 @@ if (isDev) {
 
 require("./ipc");
 
-twitchClient({
-  clientId: "imjraqfj76pwp3za7hagehonex3xph",
-  forceVerify: false,
-  darkMode: true
-});
+twitchClient({ ...twitchConfig, darkMode });
 
 registerAppProtocol();
 preventRemoteEvents();
@@ -48,5 +44,5 @@ app.whenReady().then(() => {
   });
   !isDev && uncaughtError();
   createMainWindow();
-  createChatWindow();
+  createChatWindow({ darkMode });
 });

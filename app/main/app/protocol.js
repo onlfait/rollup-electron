@@ -1,5 +1,5 @@
 const { app, protocol } = require("electron");
-const { isDev } = require("./utils");
+const { isDev } = require("./config");
 const path = require("path");
 const fs = require("fs");
 
