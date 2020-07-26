@@ -2,6 +2,7 @@ const { app } = require("electron");
 
 const uncaughtError = require("./app/uncaughtError");
 const registerAppProtocol = require("./app/protocol");
+const singleInstance = require("./app/singleInstance");
 const createMainWindow = require("./main-window/create");
 const createTray = require("./tray/create");
 
@@ -20,10 +21,12 @@ if (isDev) {
 
 require("./ipc");
 
-twitchClient({ ...twitchConfig, darkMode });
-
 registerAppProtocol();
 preventRemoteEvents();
+
+singleInstance(() => createMainWindow({ darkMode }));
+
+twitchClient({ ...twitchConfig, darkMode });
 
 app.whenReady().then(() => {
   setCSP({});
