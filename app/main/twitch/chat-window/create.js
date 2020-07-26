@@ -1,10 +1,17 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
-
 const { hasDevTools } = require("../../app/config");
 
-module.exports = function create({ darkMode = true } = {}) {
-  const win = createBrowserWindow({
+let win = null;
+
+module.exports = function create({ show = true, darkMode = true } = {}) {
+  if (win) {
+    show && win.show();
+    return win;
+  }
+
+  win = createBrowserWindow({
     width: 800,
     height: 600,
     show: false,
@@ -14,6 +21,7 @@ module.exports = function create({ darkMode = true } = {}) {
     }
   });
 
+  hideWinOnClose(win);
   createTitlebar({ win, darkMode, title: "Chat - Twitch" });
 
   win.loadURL("https://www.twitch.tv/embed/skarab42/chat?parent=localhost");
@@ -34,6 +42,6 @@ module.exports = function create({ darkMode = true } = {}) {
   });
 
   win.webContents.on("did-finish-load", () => {
-    win.show();
+    show && win.show();
   });
 };

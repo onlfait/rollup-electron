@@ -43,6 +43,6 @@ app.whenReady().then(() => {
     newWindowOrigins: ["https://www.twitch.tv", "https://help.twitch.tv"]
   });
   !isDev && uncaughtError();
-  createMainWindow({ darkMode });
-  createTray();
+  const mainWin = createMainWindow({ darkMode });
+  createTray({ mainWin });
 });
