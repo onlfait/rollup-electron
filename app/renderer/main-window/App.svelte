@@ -1,15 +1,32 @@
 <script>
+	import "minireset.css";
+
+	import "../commons/styles/index.css";
+	import "../commons/styles/scrollbar.css";
+		
 	import "./index.css";
 
-	function getMe() {
-	  remote.twitch("helix.users.getMe", true).then(me => {
-	    console.log("me:", me);
-	  });
-	}
+	let user = null;
+	let loading = false;
 
 	function openTwitchChat() {
 	  remote.openTwitchChat();
 	}
+
+	function openTwitchLogin() {
+	  if (user) return;
+
+	  loading = true;
+
+	  remote.twitch("helix.users.getMe", true).then(res => {
+	    if (res.data) {
+	      user = res.data;
+	    }
+	    loading = false;
+	  });
+	}
+
+	openTwitchLogin();
 </script>
 
 <style>
@@ -19,6 +36,12 @@
 	}
 </style>
 
-<h1>Hello World</h1>
-<button on:click={getMe}>getMe</button>
-<button on:click={openTwitchChat}>open chat window</button>
+{#if loading}
+	<h1>loading...</h1>
+{:else if user}
+<h1>Hello {user.display_name}</h1>
+	<button on:click={openTwitchChat}>Open chat window</button>
+{:else}
+	<h1>Please login with your Twitch account.</h1>
+	<button on:click={openTwitchLogin}>Login to Twitch</button>
+{/if}
