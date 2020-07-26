@@ -1,5 +1,6 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools } = require("../../app/config");
+const createTitlebar = require("../../app/titlebar");
 const { BrowserWindow } = require("electron");
 const open = require("open");
 const path = require("path");
@@ -15,6 +16,9 @@ function getThemeJS(darkMode) {
   return `
       const html = document.querySelector('html');
       const body = document.querySelector('body');
+      const root = document.querySelector('#root');
+      const authorize = document.querySelector('.authorize')
+      const titlebar = document.querySelector('.app-titlebar')
       html.classList.remove('theme--${remove}');
       html.classList.remove('tw-root--theme-${remove}');
       html.classList.add('theme--${add}');
@@ -28,9 +32,16 @@ function getThemeJS(darkMode) {
       document.querySelectorAll('.footer-links a').forEach(a => {
         a.setAttribute('target', '_blank');
       });
-      const h = document.createElement('div');
-      h.classList.add('auth-window-header');
-      body.append(h);
+      if (root) {
+        root.firstElementChild.classList.remove('tw-top-0');
+        root.firstElementChild.style.top = "30px";
+      }
+      if (authorize) {
+        body.style.paddingTop = "30px;";
+        titlebar.style.position = "fixed";
+        titlebar.style.right = "0px";
+        titlebar.style.left = "0px";
+      }
   `;
 }
 
@@ -50,6 +61,7 @@ module.exports = function create({ uri, onError, darkMode = true }) {
 
   win.loadURL(`${authBaseURL}&${uri}`);
   hasDevTools && win.webContents.openDevTools();
+  createTitlebar({ win, darkMode, title: "Connexion - Twitch" });
 
   win.webContents.on("before-input-event", (_, input) => {
     ["Esc", "Escape"].includes(input.key) && win.close();
