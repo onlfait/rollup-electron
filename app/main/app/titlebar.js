@@ -38,7 +38,7 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   `;
 }
 
-function js({ darkMode = true } = {}) {
+function js({ title = null, darkMode = true } = {}) {
   return `(function () {
     const html = document.querySelector('html');
     const titlebar = document.createElement("nav");
@@ -51,7 +51,8 @@ function js({ darkMode = true } = {}) {
 
     titlebar.classList.add("app-titlebar");
 
-    title.innerText = document.title;
+    title.innerText = ${title ? `"${title}"` : "document.title"};
+    document.title = title.innerText;
     close.innerText = "⨉"
 
     titlebar.append(title);
