@@ -15,6 +15,9 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
       display: grid;
       place-items: center;
     }
+    .app-titlebar--icon img {
+      height: 20px;
+    }
     .app-titlebar--title {
       -webkit-app-region: drag;
       place-items: center start;
@@ -37,7 +40,11 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   `;
 }
 
-function js({ title = null, icon = "static/icon.ico", darkMode = true } = {}) {
+function js({
+  title = null,
+  icon = "app://renderer/static/icon.ico",
+  darkMode = true
+} = {}) {
   return `(function () {
     const $html = document.querySelector('html');
     const $nav = document.createElement("nav");

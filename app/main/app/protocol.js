@@ -13,13 +13,17 @@ const config = {
 
 const rendererPath = path.resolve(
   __dirname,
-  isDev ? "../../../dist/dev/renderer" : "../../renderer"
+  "../..",
+  isDev && "../dist/dev/",
+  "renderer"
 );
+const staticPath = path.resolve(__dirname, "../../static");
 
 const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
   ".html": { mimeType: "text/html", charset: "utf-8" },
-  ".css": { mimeType: "text/css", charset: "utf-8" }
+  ".css": { mimeType: "text/css", charset: "utf-8" },
+  ".ico": { mimeType: "image/x-icon", charset: "utf-8" }
 };
 
 function error(message) {
@@ -49,7 +53,16 @@ function requestHandler(req, next) {
     return error(`Unsupported mimetype for "${pathname}".`);
   }
 
-  fs.readFile(path.join(rendererPath, pathname), (err, data) => {
+  let readPath = path.join(rendererPath, pathname);
+
+  const pathParts = pathname.replace(/^\/|\/$/, "").split("/");
+  const pathChunk = pathParts.shift();
+
+  if (pathChunk === "static") {
+    readPath = path.join(staticPath, ...pathParts);
+  }
+
+  fs.readFile(readPath, (err, data) => {
     err ? error(err) : next({ data, ...mimetype });
   });
 }
