@@ -27,7 +27,7 @@ module.exports = function createErrorWindow(error) {
     frame: false,
     webPreferences: {
       devTools: hasDevTools,
-      preload: path.join(__dirname, "preload.js")
+      preload: path.resolve(__dirname, "preload.js")
     }
   });
 

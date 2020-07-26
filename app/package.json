@@ -2,7 +2,15 @@
   "license": "MIT",
   "version": "1.0.0",
   "name": "my-electron-app",
+  "appName": "My electron app",
   "description": "My electron app",
   "author": "skarab42 <skarab42@users.noreply.github.com>",
-  "main": "main/index.js"
+  "repository": "github:onlfait/rollup-electron",
+  "main": "main/index.js",
+  "dependencies": {
+    "open": "^7.1.0",
+    "qs": "^6.9.4",
+    "twitch": "^4.0.10",
+    "twitch-chat-client": "^4.0.10"
+  }
 }

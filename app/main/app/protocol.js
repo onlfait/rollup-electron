@@ -11,12 +11,10 @@ const config = {
   }
 };
 
-const rendererPath = path.resolve(
-  __dirname,
-  "../..",
-  isDev && "../dist/dev/",
-  "renderer"
-);
+const rendererPath = isDev
+  ? path.resolve(__dirname, "../../../dist/dev/renderer")
+  : path.resolve(app.getAppPath(), "renderer");
+
 const staticPath = path.resolve(__dirname, "../../static");
 
 const mimeTypes = {
