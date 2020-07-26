@@ -2,7 +2,7 @@ const createBrowserWindow = require("../app/security/createBrowserWindow");
 const createTitlebar = require("../app/titlebar");
 const path = require("path");
 
-const { hasDevTools } = require("../app/config");
+const { hasDevTools, appName } = require("../app/config");
 
 module.exports = function create({ darkMode = true } = {}) {
   const win = createBrowserWindow({
@@ -16,7 +16,7 @@ module.exports = function create({ darkMode = true } = {}) {
     }
   });
 
-  createTitlebar({ win, darkMode });
+  createTitlebar({ win, darkMode, title: appName });
 
   win.loadURL("app://renderer/main-window/index.html");
   hasDevTools && win.webContents.openDevTools();
