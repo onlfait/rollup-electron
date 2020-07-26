@@ -1,64 +1,72 @@
 function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   return `
-  .app-titlebar {
-    height: 30px;
-    display: flex;
-    font-size: 14px;
-    line-height: 1em;
-    color: ${lightColor};
-    background-color: ${darkColor};
-  }
-  .app-titlebar span {
-    height: 30px;
-    padding: 8px;
-    flex: 1 1 auto;
-    vertical-align: middle;
-    -webkit-app-region: drag;
-  }
-  .app-titlebar button {
-    border: 0;
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    padding: 6px 8px;
-    color: rgba(255,255,255,0.8);
-    background-color: transparent;
-  }
-  .app-titlebar button:hover {
-    color: rgba(255,255,255,0.8);
-    background-color: rgba(255,0,0,0.8);
-  }
-  .theme--light .app-titlebar {
-    color: ${darkColor};
-    background-color: ${lightColor};
-  }
-  .theme--light .app-titlebar button {
-    color: ${darkColor};
-  }
+    .app-titlebar {
+      height: 30px;
+      display: grid;
+      font-size: 14px;
+      place-items: stretch;
+      color: ${lightColor};
+      background-color: ${darkColor};
+      grid-template-columns: 30px auto 30px;
+    }
+    .app-titlebar--icon,
+    .app-titlebar--title,
+    .app-titlebar--close {
+      display: grid;
+      place-items: center;
+    }
+    .app-titlebar--title {
+      -webkit-app-region: drag;
+      place-items: center start;
+    }
+    .app-titlebar--close {
+      font-size: 16px;
+      cursor: default;
+    }
+    .app-titlebar--close:hover {
+      color: rgba(255,255,255,0.8);
+      background-color: rgba(255,0,0,0.8);
+    }
+    .theme--light .app-titlebar {
+      color: ${darkColor};
+      background-color: ${lightColor};
+    }
+    .theme--light .app-titlebar--close {
+      color: ${darkColor};
+    }
   `;
 }
 
-function js({ title = null, darkMode = true } = {}) {
+function js({ title = null, icon = "static/icon.ico", darkMode = true } = {}) {
   return `(function () {
-    const html = document.querySelector('html');
-    const titlebar = document.createElement("nav");
-    const title = document.createElement("span");
-    const close = document.createElement("button");
+    const $html = document.querySelector('html');
+    const $nav = document.createElement("nav");
+    const $icon = document.createElement("div");
+    const $img = document.createElement("img");
+    const $title = document.createElement("div");
+    const $close = document.createElement("div");
 
-    html.classList.add('theme--${darkMode ? "dark" : "light"}');
+    $html.classList.add('theme--${darkMode ? "dark" : "light"}');
 
-    close.addEventListener('click', () => window.close());
+    $nav.classList.add("app-titlebar");
+    $icon.classList.add("app-titlebar--icon");
+    $title.classList.add("app-titlebar--title");
+    $close.classList.add("app-titlebar--close");
 
-    titlebar.classList.add("app-titlebar");
+    $title.innerText = ${title ? `"${title}"` : "document.title"};
+    document.title = $title.innerText;
 
-    title.innerText = ${title ? `"${title}"` : "document.title"};
-    document.title = title.innerText;
-    close.innerText = "⨉"
+    $close.addEventListener('click', () => window.close());
+    $close.innerText = "⨉"
 
-    titlebar.append(title);
-    titlebar.append(close);
+    $img.setAttribute('src', '${icon}');
+    $icon.append($img);
 
-    document.body.prepend(titlebar);
+    $nav.append($icon);
+    $nav.append($title);
+    $nav.append($close);
+
+    document.body.prepend($nav);
   }());
   `;
 }
