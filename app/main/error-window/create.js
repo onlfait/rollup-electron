@@ -1,6 +1,6 @@
 const createBrowserWindow = require("../app/security/createBrowserWindow");
+const getMainWindow = require("../app/getMainWindow");
 const { hasDevTools } = require("../app/config");
-const { BrowserWindow } = require("electron");
 const path = require("path");
 
 let win = null;
@@ -16,15 +16,13 @@ module.exports = function createErrorWindow(error) {
     return showErrorWindow(win, error);
   }
 
-  const [parent] = BrowserWindow.getAllWindows();
-
   win = createBrowserWindow({
-    parent,
     width: 540,
     height: 340,
     show: false,
     modal: true,
     frame: false,
+    parent: getMainWindow(),
     webPreferences: {
       devTools: hasDevTools,
       preload: path.resolve(__dirname, "preload.js")

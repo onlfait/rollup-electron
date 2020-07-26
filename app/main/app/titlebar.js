@@ -62,7 +62,6 @@ function js({
     $close.classList.add("app-titlebar--close");
 
     $title.innerText = ${title ? `"${title}"` : "document.title"};
-    document.title = $title.innerText;
 
     $close.addEventListener('click', () => window.close());
     $close.innerText = "⨉"

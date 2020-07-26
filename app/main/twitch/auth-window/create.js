@@ -1,7 +1,7 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools } = require("../../app/config");
+const getMainWindow = require("../../app/getMainWindow");
 const createTitlebar = require("../../app/titlebar");
-const { BrowserWindow } = require("electron");
+const { hasDevTools } = require("../../app/config");
 const open = require("open");
 const path = require("path");
 const fs = require("fs");
@@ -46,14 +46,13 @@ function getThemeJS(darkMode) {
 }
 
 module.exports = function create({ uri, onError, darkMode = true }) {
-  const [parent] = BrowserWindow.getAllWindows();
   const win = createBrowserWindow({
-    parent,
     width: 540,
     height: 600,
     show: false,
     modal: true,
     frame: false,
+    parent: getMainWindow(),
     webPreferences: {
       devTools: hasDevTools
     }

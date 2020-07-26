@@ -17,6 +17,7 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
     height: 600,
     show: false,
     frame: false,
+    title: "MainWindow",
     webPreferences: {
       devTools: hasDevTools,
       preload: path.resolve(__dirname, "preload.js")
