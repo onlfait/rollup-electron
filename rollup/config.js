@@ -6,13 +6,23 @@ import cleaner from "rollup-plugin-cleaner";
 import postcss from "rollup-plugin-postcss";
 import svelte from "rollup-plugin-svelte";
 import copy from "rollup-plugin-copy";
-import serve from "./rollup.serve";
+import serve from "./serve";
+import path from "path";
+
+const makePackageJSON = require("./makePackageJSON");
 
 const watch = process.env.ROLLUP_WATCH;
 const sourcemap = watch ? "inline" : false;
 const dir = watch ? "dev" : "prod";
 
 const entries = ["main-window", "error-window"];
+
+(async function functionName() {
+  await makePackageJSON({
+    from: path.resolve(__dirname, "../package.json"),
+    to: path.resolve(__dirname, "../app/package.json")
+  });
+})();
 
 function makeEntry(entry) {
   const inputDir = `app/renderer/${entry}`;

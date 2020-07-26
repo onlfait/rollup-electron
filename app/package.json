@@ -1,12 +1,15 @@
 {
   "license": "MIT",
   "version": "1.0.0",
-  "name": "my-electron-app",
-  "appName": "My electron app",
-  "description": "My electron app",
+  "name": "rollup-electron",
+  "description": "Rollup & Electron",
   "author": "skarab42 <skarab42@users.noreply.github.com>",
   "repository": "github:onlfait/rollup-electron",
   "main": "main/index.js",
+  "appConfig": {
+    "name": "My electron app",
+    "icon": "static/icon.ico"
+  },
   "dependencies": {
     "open": "^7.1.0",
     "qs": "^6.9.4",

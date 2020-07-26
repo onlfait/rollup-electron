@@ -6,15 +6,15 @@
   "author": "skarab42 <skarab42@users.noreply.github.com>",
   "repository": "github:onlfait/rollup-electron",
   "scripts": {
-    "serve": "rollup -c -w",
-    "build": "rollup -c",
-    "dist": "node dist.js",
+    "serve": "rollup -w -c rollup/config.js",
+    "build": "rollup -c rollup/config.js",
+    "dist": "node rollup/dist.js",
     "pack": "electron-builder --dir",
     "lint": "eslint --fix app"
   },
   "build": {
     "productName": "My electron app",
-    "icon": "dist/prod/static/icon.ico",
+    "icon": "app/static/icon.ico",
     "directories": {
       "app": "dist/prod",
       "output": "dist/bin"

@@ -1,7 +1,7 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const { hasDevTools, appIcon } = require("../../app/config");
 const getMainWindow = require("../../app/getMainWindow");
 const createTitlebar = require("../../app/titlebar");
-const { hasDevTools } = require("../../app/config");
 const open = require("open");
 const path = require("path");
 const fs = require("fs");
@@ -60,7 +60,7 @@ module.exports = function create({ uri, onError, darkMode = true }) {
 
   win.loadURL(`${authBaseURL}&${uri}`);
   hasDevTools && win.webContents.openDevTools();
-  createTitlebar({ win, darkMode, title: "Connexion - Twitch" });
+  createTitlebar({ win, darkMode, title: "Connexion - Twitch", icon: appIcon });
 
   win.webContents.on("before-input-event", (_, input) => {
     ["Esc", "Escape"].includes(input.key) && win.close();

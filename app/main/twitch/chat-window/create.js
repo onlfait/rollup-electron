@@ -1,7 +1,7 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const { hasDevTools, appIcon } = require("../../app/config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
-const { hasDevTools } = require("../../app/config");
 
 let win = null;
 
@@ -22,7 +22,7 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
   });
 
   hideWinOnClose(win);
-  createTitlebar({ win, darkMode, title: "Chat - Twitch" });
+  createTitlebar({ win, darkMode, title: "Chat - Twitch", icon: appIcon });
 
   win.loadURL("https://www.twitch.tv/embed/skarab42/chat?parent=localhost");
   hasDevTools && win.webContents.openDevTools();

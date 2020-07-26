@@ -1,5 +1,4 @@
-const { appName } = require("../../package");
-const path = require("path");
+const { appConfig } = require("../../package");
 
 const isDev = process.argv.includes("--dev");
 const isDebug = process.argv.includes("--debug");
@@ -7,9 +6,9 @@ const isDebug = process.argv.includes("--debug");
 module.exports = {
   isDev,
   isDebug,
-  appName,
   darkMode: true,
-  appIcon: path.resolve(__dirname, "../../static/icon.ico"),
+  appName: appConfig.name,
+  appIcon: appConfig.icon,
   hasDevTools: isDev || isDebug,
   livereload: { host: "localhost", port: 42042 },
   twitchConfig: {

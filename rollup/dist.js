@@ -1,12 +1,13 @@
 const loadConfigFile = require("rollup/dist/loadConfigFile");
+const makePackageJSON = require("./makePackageJSON");
 const builder = require("electron-builder");
 const rollup = require("rollup");
 const fs = require("fs-extra");
 const chalk = require("chalk");
 const path = require("path");
 
-const srcPath = path.resolve(__dirname, "app");
-const distPath = path.resolve(__dirname, "dist", "prod");
+const srcPath = path.resolve(__dirname, "..", "app");
+const distPath = path.resolve(__dirname, "..", "dist", "prod");
 
 async function clean() {
   await fs.emptyDir(distPath);
@@ -17,7 +18,7 @@ async function copy(dir) {
 }
 
 function buildRenderer() {
-  return loadConfigFile(path.resolve(__dirname, "rollup.config.js"), {
+  return loadConfigFile(path.resolve(__dirname, "config.js"), {
     format: "es"
   }).then(async ({ options, warnings }) => {
     const count =
@@ -40,7 +41,11 @@ async function dist() {
   log("Copy app sources");
   await copy("main");
   await copy("static");
-  await copy("package.json");
+  log("Copy package.json");
+  await makePackageJSON({
+    from: path.join(__dirname, "..", "package.json"),
+    to: path.join(distPath, "package.json")
+  });
   log("Rollup renderer");
   await buildRenderer();
   log("Build app");

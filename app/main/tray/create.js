@@ -4,6 +4,7 @@ const showChatWindow = require("../twitch/chat-window/create");
 const { appIcon, appName, darkMode } = require("../app/config");
 const toggleWindow = require("../app/toggleWindow");
 const quit = require("../app/quit");
+const path = require("path");
 
 let tray = null;
 
@@ -27,7 +28,7 @@ function createMenu() {
 
 module.exports = function create({ mainWin }) {
   if (!tray) {
-    tray = new Tray(appIcon);
+    tray = new Tray(path.resolve(__dirname, `../../${appIcon}`));
     tray.setToolTip(appName);
     tray.setContextMenu(createMenu());
     tray.on("click", () => toggleWindow(mainWin));

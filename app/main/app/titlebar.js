@@ -41,11 +41,7 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   `;
 }
 
-function js({
-  title = null,
-  icon = "app://renderer/static/icon.ico",
-  darkMode = true
-} = {}) {
+function js({ title = null, icon = "static/icon.ico", darkMode = true } = {}) {
   return `(function () {
     const $html = document.querySelector('html');
     const $nav = document.createElement("nav");
@@ -66,7 +62,7 @@ function js({
     $close.addEventListener('click', () => window.close());
     $close.innerText = "⨉"
 
-    $img.setAttribute('src', '${icon}');
+    $img.setAttribute('src', 'app://renderer/${icon}');
     $icon.append($img);
 
     $nav.append($icon);
