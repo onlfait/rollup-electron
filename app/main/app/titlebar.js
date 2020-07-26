@@ -3,6 +3,7 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
     .app-titlebar {
       height: 30px;
       display: grid;
+      line-height: 1;
       font-size: 14px;
       place-items: stretch;
       color: ${lightColor};
