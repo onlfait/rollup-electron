@@ -1,4 +1,4 @@
-const { name, version, repository } = require("../../package");
+const { name, version, repository } = require("../../../package");
 const { errorLogs } = require("./errorHandler");
 
 module.exports = function createIssue() {
