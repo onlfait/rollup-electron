@@ -1,6 +1,5 @@
-const config = require("../config");
+const store = require("../store");
 
 module.exports = function getDarkMode() {
-  console.log("getDarkMode >>>", config.darkMode);
-  return config.darkMode;
+  return store.get("darkMode", true);
 };

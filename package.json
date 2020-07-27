@@ -43,6 +43,7 @@
     "ws": "^7.3.1"
   },
   "dependencies": {
+    "electron-store": "^6.0.0",
     "open": "^7.1.0",
     "qs": "^6.9.4",
     "twitch": "^4.0.10",

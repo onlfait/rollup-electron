@@ -13,6 +13,8 @@ function setDarkMode(darkMode) {
 }
 
 function setDarkModeIPC(e, darkMode) {
+  const store = require("../store");
+  store.set("darkMode", darkMode);
   setDarkMode(darkMode);
 }
 
@@ -22,11 +24,7 @@ function setDarkModeRemote(ipcRenderer) {
   };
 }
 
-function setDarkModeLocale(darkMode = null) {
-  darkMode = darkMode === null ? true : !!darkMode;
-
-  console.log("setDarkModeLocale >>>", darkMode);
-
+function setDarkModeLocale(darkMode) {
   const $html = document.querySelector("html");
 
   $html.classList.toggle("theme--dark", darkMode);

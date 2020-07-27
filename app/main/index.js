@@ -13,7 +13,7 @@ const setCSP = require("./app/security/setCSP");
 
 const twitchClient = require("./twitch/client");
 
-const { isDev, livereload, darkMode, twitchConfig } = require("./config");
+const { isDev, livereload, twitchConfig } = require("./config");
 
 if (isDev) {
   require("./app/livereload")(livereload);
@@ -24,9 +24,9 @@ require("./ipc");
 registerAppProtocol();
 preventRemoteEvents();
 
-singleInstance(() => createMainWindow({ darkMode }));
+singleInstance(() => createMainWindow());
 
-twitchClient({ ...twitchConfig, darkMode });
+twitchClient(twitchConfig);
 
 app.whenReady().then(() => {
   setCSP({});
@@ -46,6 +46,6 @@ app.whenReady().then(() => {
     newWindowOrigins: ["https://www.twitch.tv", "https://help.twitch.tv"]
   });
   !isDev && uncaughtError();
-  const mainWin = createMainWindow({ darkMode });
+  const mainWin = createMainWindow();
   createTray({ mainWin });
 });
