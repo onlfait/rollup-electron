@@ -2,6 +2,7 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appIcon } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
+const storeWindow = require("../../app/storeWindow");
 const path = require("path");
 const fs = require("fs");
 
@@ -27,6 +28,7 @@ module.exports = function create({ show = true } = {}) {
   });
 
   hideWinOnClose(win);
+  storeWindow({ win, name: "twitch-chat" });
   createTitlebar({ win, title: "Chat - Twitch", icon: appIcon });
 
   win.loadURL("https://www.twitch.tv/embed/skarab42/chat?parent=localhost");

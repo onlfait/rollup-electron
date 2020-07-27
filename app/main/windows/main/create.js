@@ -2,6 +2,7 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appName, appIcon } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
+const storeWindow = require("../../app/storeWindow");
 const path = require("path");
 
 let win = null;
@@ -25,6 +26,7 @@ module.exports = function create({ show = true } = {}) {
   });
 
   hideWinOnClose(win);
+  storeWindow({ win, name: "main" });
   createTitlebar({ win, title: appName, icon: appIcon });
 
   win.loadURL("app://renderer/main-window/index.html");
