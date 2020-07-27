@@ -3,6 +3,8 @@
 	let loading = false;
 	let darkMode = true;
 
+	remote.isDarkMode().then(r => darkMode = r);
+
 	$: remote.setDarkMode(darkMode);
 
 	function openTwitchChat() {

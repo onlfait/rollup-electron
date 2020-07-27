@@ -9,6 +9,9 @@ ipcRenderer.on("setDarkMode", (event, darkMode) => {
 });
 
 contextBridge.exposeInMainWorld("remote", {
+  isDarkMode() {
+    return ipcRenderer.invoke("isDarkMode");
+  },
   uncaughtError(error) {
     ipcRenderer.invoke("uncaughtError", error);
   },
