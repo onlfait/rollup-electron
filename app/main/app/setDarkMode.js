@@ -13,13 +13,16 @@ function setDarkModeIPC(e, darkMode) {
 }
 
 function setDarkModeRemote(ipcRenderer) {
-  return (darkMode = true) => {
+  return darkMode => {
     ipcRenderer.invoke("setDarkMode", darkMode);
   };
 }
 
-function setDarkModeLocale(darkMode) {
+function setDarkModeLocale(darkMode = null) {
+  darkMode = darkMode === null ? true : !!darkMode;
+
   const $html = document.querySelector("html");
+
   $html.classList.toggle("theme--dark", darkMode);
   $html.classList.toggle("theme--light", !darkMode);
   $html.classList.toggle("tw-root--theme-dark", darkMode);
