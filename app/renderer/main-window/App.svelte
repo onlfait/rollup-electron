@@ -25,13 +25,6 @@
 	openTwitchLogin();
 </script>
 
-<style>
-	:global(body) {
-  	color: #fff;
-		background-color: #212;
-	}
-</style>
-
 {#if loading}
 	<h1>loading...</h1>
 {:else if user}
