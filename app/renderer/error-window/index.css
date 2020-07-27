@@ -1,29 +1,17 @@
-:root {
-  --stack-bg-color: rgba(255, 255, 255, 0.1);
-}
-
-html,
 body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
   display: flex;
   flex-direction: column;
 }
 
 header {
-  -webkit-app-region: drag;
   color: var(--error-text-color);
   background-color: var(--error-bg-color);
 }
 
 header > h1 {
-  padding: 8px;
-  line-height: 1;
+  padding: 4px 8px;
   font-weight: 700;
-  font-size: 1.7rem;
+  font-size: 1.2rem;
 }
 
 nav {

@@ -1,6 +1,8 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const { hasDevTools, appName, appIcon } = require("../../config");
 const getMainWindow = require("../../app/getMainWindow");
-const { hasDevTools } = require("../../config");
+const createTitlebar = require("../../app/titlebar");
+const exitApp = require("../../app/exit");
 const path = require("path");
 
 let win = null;
@@ -11,7 +13,7 @@ function showErrorWindow(win, error) {
   return win;
 }
 
-module.exports = function createErrorWindow(error) {
+module.exports = function createErrorWindow(error, darkMode = true) {
   if (win) {
     return showErrorWindow(win, error);
   }
@@ -29,10 +31,16 @@ module.exports = function createErrorWindow(error) {
     }
   });
 
+  createTitlebar({ win, darkMode, title: `Error - ${appName}`, icon: appIcon });
+
   win.loadURL("app://renderer/error-window/index.html");
   hasDevTools && win.webContents.openDevTools();
 
   win.webContents.on("did-finish-load", () => {
     showErrorWindow(win, error);
+  });
+
+  win.webContents.on("close", () => {
+    exitApp(1);
   });
 };
