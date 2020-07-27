@@ -2,6 +2,11 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appIcon } = require("../../app/config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
+const getTheme = require("../getTheme");
+const path = require("path");
+const fs = require("fs");
+
+const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
 let win = null;
 
@@ -28,17 +33,8 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
   hasDevTools && win.webContents.openDevTools();
 
   win.webContents.on("dom-ready", () => {
-    const add = darkMode ? "dark" : "light";
-    const remove = darkMode ? "light" : "dark";
-
-    win.webContents.executeJavaScript(`
-      const html = document.querySelector('html');
-      const root = document.querySelector('#root');
-      html.classList.add('tw-root--theme-${add}');
-      html.classList.remove('tw-root--theme-${remove}');
-      root.firstElementChild.classList.remove('tw-top-0');
-      root.firstElementChild.style.top = "30px";
-    `);
+    win.webContents.insertCSS(stylesCSS.toString());
+    win.webContents.executeJavaScript(getTheme(darkMode));
   });
 
   win.webContents.on("did-finish-load", () => {

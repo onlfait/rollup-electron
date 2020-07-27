@@ -2,6 +2,7 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appIcon } = require("../../app/config");
 const getMainWindow = require("../../app/getMainWindow");
 const createTitlebar = require("../../app/titlebar");
+const getTheme = require("../getTheme");
 const open = require("open");
 const path = require("path");
 const fs = require("fs");
@@ -9,29 +10,21 @@ const fs = require("fs");
 const authBaseURL = "https://id.twitch.tv/oauth2/authorize?response_type=token";
 const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
-function getThemeJS(darkMode) {
-  const add = darkMode ? "dark" : "light";
-  const remove = darkMode ? "light" : "dark";
-
+function cancelButtonHook() {
   return `
-      const html = document.querySelector('html');
-      
-      html.classList.remove('theme--${remove}');
-      html.classList.remove('tw-root--theme-${remove}');
-      html.classList.add('theme--${add}');
-      html.classList.add('tw-root--theme-${add}');
+    const btn = document.querySelector('.js-cancel');
+    btn && btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.close();
+    })
+  `;
+}
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      const btn = document.querySelector('.js-cancel');
-      btn && btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.close();
-      })
-
-      document.querySelectorAll('.footer-links a').forEach(a => {
-        a.setAttribute('target', '_blank');
-      });
+function externalLinkHook() {
+  return `
+    document.querySelectorAll('.footer-links a').forEach(a => {
+      a.setAttribute('target', '_blank');
+    });
   `;
 }
 
@@ -58,7 +51,9 @@ module.exports = function create({ uri, onError, darkMode = true }) {
 
   win.webContents.on("dom-ready", () => {
     win.webContents.insertCSS(stylesCSS.toString());
-    win.webContents.executeJavaScript(getThemeJS(darkMode));
+    win.webContents.executeJavaScript(getTheme(darkMode));
+    win.webContents.executeJavaScript(cancelButtonHook());
+    win.webContents.executeJavaScript(externalLinkHook());
   });
 
   win.webContents.on("did-navigate", (event, url, httpResponseCode) => {
