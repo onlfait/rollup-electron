@@ -1,11 +1,4 @@
 <script>
-	import "minireset.css";
-
-	import "../commons/styles/index.css";
-	import "../commons/styles/scrollbar.css";
-
-	import "./index.css";
-
 	let user = null;
 	let loading = false;
 	let darkMode = true;
