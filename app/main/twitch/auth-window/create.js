@@ -15,40 +15,30 @@ function getThemeJS(darkMode) {
 
   return `
       const html = document.querySelector('html');
-      const body = document.querySelector('body');
-      const root = document.querySelector('#root');
-      const authorize = document.querySelector('.authorize')
-      const titlebar = document.querySelector('.app-titlebar')
+      
       html.classList.remove('theme--${remove}');
       html.classList.remove('tw-root--theme-${remove}');
       html.classList.add('theme--${add}');
       html.classList.add('tw-root--theme-${add}');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
       const btn = document.querySelector('.js-cancel');
       btn && btn.addEventListener('click', (e) => {
         e.preventDefault();
         window.close();
       })
+
       document.querySelectorAll('.footer-links a').forEach(a => {
         a.setAttribute('target', '_blank');
       });
-      if (root) {
-        root.firstElementChild.classList.remove('tw-top-0');
-        root.firstElementChild.style.top = "30px";
-      }
-      if (authorize) {
-        body.style.paddingTop = "30px;";
-        titlebar.style.position = "fixed";
-        titlebar.style.right = "0px";
-        titlebar.style.left = "0px";
-      }
   `;
 }
 
 module.exports = function create({ uri, onError, darkMode = true }) {
   const win = createBrowserWindow({
     width: 540,
-    height: 600,
+    height: 480,
     show: false,
     modal: true,
     frame: false,
