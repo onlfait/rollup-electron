@@ -2,7 +2,6 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appIcon } = require("../../app/config");
 const getMainWindow = require("../../app/getMainWindow");
 const createTitlebar = require("../../app/titlebar");
-const getTheme = require("../getTheme");
 const open = require("open");
 const path = require("path");
 const fs = require("fs");
@@ -37,7 +36,8 @@ module.exports = function create({ uri, onError, darkMode = true }) {
     frame: false,
     parent: getMainWindow(),
     webPreferences: {
-      devTools: hasDevTools
+      devTools: hasDevTools,
+      preload: path.resolve(__dirname, "preload.js")
     }
   });
 
@@ -51,7 +51,6 @@ module.exports = function create({ uri, onError, darkMode = true }) {
 
   win.webContents.on("dom-ready", () => {
     win.webContents.insertCSS(stylesCSS.toString());
-    win.webContents.executeJavaScript(getTheme(darkMode));
     win.webContents.executeJavaScript(cancelButtonHook());
     win.webContents.executeJavaScript(externalLinkHook());
   });

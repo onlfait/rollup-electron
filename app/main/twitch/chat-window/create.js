@@ -2,7 +2,6 @@ const createBrowserWindow = require("../../app/security/createBrowserWindow");
 const { hasDevTools, appIcon } = require("../../app/config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
-const getTheme = require("../getTheme");
 const path = require("path");
 const fs = require("fs");
 
@@ -22,7 +21,8 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
     show: false,
     frame: false,
     webPreferences: {
-      devTools: hasDevTools
+      devTools: hasDevTools,
+      preload: path.resolve(__dirname, "preload.js")
     }
   });
 
@@ -34,7 +34,6 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
 
   win.webContents.on("dom-ready", () => {
     win.webContents.insertCSS(stylesCSS.toString());
-    win.webContents.executeJavaScript(getTheme(darkMode));
   });
 
   win.webContents.on("did-finish-load", () => {

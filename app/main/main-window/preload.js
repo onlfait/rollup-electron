@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
+const { setDarkModeLocale, setDarkModeRemote } = require("../app/setDarkMode");
 
 contextBridge.exposeInMainWorld("remote", {
   uncaughtError(error) {
@@ -10,7 +11,9 @@ contextBridge.exposeInMainWorld("remote", {
   openTwitchChat() {
     ipcRenderer.invoke("openTwitchChat");
   },
-  setDarkMode(darkMode = true) {
-    ipcRenderer.invoke("setDarkMode", darkMode);
-  }
+  setDarkMode: setDarkModeRemote(ipcRenderer)
+});
+
+contextBridge.exposeInMainWorld("locale", {
+  setDarkMode: setDarkModeLocale
 });

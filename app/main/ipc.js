@@ -2,13 +2,13 @@ const { ipcMain } = require("electron");
 
 const { twitchAPI, openTwitchChat } = require("./twitch/ipcHandler");
 const uncaughtError = require("./app/uncaughtError/ipcHandler");
-const setDarkMode = require("./app/setDarkMode");
+const { setDarkModeIPC } = require("./app/setDarkMode");
 const relaunchApp = require("./app/relaunch");
 const exitApp = require("./app/exit");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
-ipcMain.handle("setDarkMode", (e, darkMode) => setDarkMode(darkMode));
+ipcMain.handle("setDarkMode", setDarkModeIPC);
 ipcMain.handle("relaunchApp", () => relaunchApp(1));
 ipcMain.handle("exitApp", () => exitApp(1));
 
