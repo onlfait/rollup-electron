@@ -27,7 +27,7 @@ function externalLinkHook() {
   `;
 }
 
-module.exports = function create({ uri, onError, darkMode = true }) {
+module.exports = function create({ uri, onError }) {
   const win = createBrowserWindow({
     width: 540,
     height: 480,
@@ -43,7 +43,7 @@ module.exports = function create({ uri, onError, darkMode = true }) {
 
   win.loadURL(`${authBaseURL}&${uri}`);
   hasDevTools && win.webContents.openDevTools();
-  createTitlebar({ win, darkMode, title: "Connexion - Twitch", icon: appIcon });
+  createTitlebar({ win, title: "Connexion - Twitch", icon: appIcon });
 
   win.webContents.on("before-input-event", (_, input) => {
     ["Esc", "Escape"].includes(input.key) && win.close();

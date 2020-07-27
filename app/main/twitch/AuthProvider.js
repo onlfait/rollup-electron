@@ -21,13 +21,11 @@ module.exports = class AuthProvider {
   constructor({
     clientId,
     redirectURI = "http://localhost",
-    forceVerify = false,
-    darkMode = true
+    forceVerify = false
   } = {}) {
     this.clientId = clientId;
     this.redirectURI = redirectURI;
     this.forceVerify = forceVerify;
-    this.darkMode = darkMode;
 
     this.tokenType = "user";
     this.accessToken = null;
@@ -68,11 +66,7 @@ module.exports = class AuthProvider {
       let done = false;
 
       const uri = this.getAuthUrl(scopes);
-      const win = createAuthWindow({
-        uri,
-        onError: rejectError,
-        darkMode: this.darkMode
-      });
+      const win = createAuthWindow({ uri, onError: rejectError });
 
       win.on("closed", () => !done && rejectError("window closed by user"));
 

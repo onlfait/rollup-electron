@@ -6,7 +6,7 @@ const path = require("path");
 
 let win = null;
 
-module.exports = function create({ show = true, darkMode = true } = {}) {
+module.exports = function create({ show = true } = {}) {
   if (win) {
     show && win.show();
     return win;
@@ -25,7 +25,7 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
   });
 
   hideWinOnClose(win);
-  createTitlebar({ win, darkMode, title: appName, icon: appIcon });
+  createTitlebar({ win, title: appName, icon: appIcon });
 
   win.loadURL("app://renderer/main-window/index.html");
   hasDevTools && win.webContents.openDevTools();

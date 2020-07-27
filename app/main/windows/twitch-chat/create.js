@@ -9,7 +9,7 @@ const stylesCSS = fs.readFileSync(path.resolve(__dirname, "styles.css"));
 
 let win = null;
 
-module.exports = function create({ show = true, darkMode = true } = {}) {
+module.exports = function create({ show = true } = {}) {
   if (win) {
     show && win.show();
     return win;
@@ -27,7 +27,7 @@ module.exports = function create({ show = true, darkMode = true } = {}) {
   });
 
   hideWinOnClose(win);
-  createTitlebar({ win, darkMode, title: "Chat - Twitch", icon: appIcon });
+  createTitlebar({ win, title: "Chat - Twitch", icon: appIcon });
 
   win.loadURL("https://www.twitch.tv/embed/skarab42/chat?parent=localhost");
   hasDevTools && win.webContents.openDevTools();

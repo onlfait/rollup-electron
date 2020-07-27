@@ -6,7 +6,7 @@ const isDebug = process.argv.includes("--debug");
 module.exports = {
   isDev,
   isDebug,
-  darkMode: true,
+  darkMode: false,
   appName: appConfig.name,
   appIcon: appConfig.icon,
   hasDevTools: isDev || isDebug,

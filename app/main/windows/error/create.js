@@ -13,7 +13,7 @@ function showErrorWindow(win, error) {
   return win;
 }
 
-module.exports = function createErrorWindow(error, darkMode = true) {
+module.exports = function createErrorWindow(error) {
   if (win) {
     return showErrorWindow(win, error);
   }
@@ -31,7 +31,7 @@ module.exports = function createErrorWindow(error, darkMode = true) {
     }
   });
 
-  createTitlebar({ win, darkMode, title: `Error - ${appName}`, icon: appIcon });
+  createTitlebar({ win, title: `Error - ${appName}`, icon: appIcon });
 
   win.loadURL("app://renderer/error-window/index.html");
   hasDevTools && win.webContents.openDevTools();

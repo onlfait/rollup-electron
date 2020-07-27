@@ -1,3 +1,6 @@
+const getDarkMode = require("./getDarkMode");
+const { setWinDarkMode } = require("./setDarkMode");
+
 function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   return `
     .app-titlebar {
@@ -41,7 +44,7 @@ function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
   `;
 }
 
-function js({ title = null, icon = "static/icon.ico", darkMode = true } = {}) {
+function js({ title = null, icon = "static/icon.ico" } = {}) {
   return `(function () {
     const $html = document.querySelector('html');
     const $nav = document.createElement("nav");
@@ -49,8 +52,6 @@ function js({ title = null, icon = "static/icon.ico", darkMode = true } = {}) {
     const $img = document.createElement("img");
     const $title = document.createElement("div");
     const $close = document.createElement("div");
-
-    $html.classList.add('theme--${darkMode ? "dark" : "light"}');
 
     $nav.classList.add("app-titlebar");
     $icon.classList.add("app-titlebar--icon");
@@ -78,5 +79,6 @@ module.exports = function createTitlebar({ win, ...options }) {
   win.webContents.on("dom-ready", () => {
     win.webContents.insertCSS(css(options));
     win.webContents.executeJavaScript(js(options));
+    setWinDarkMode(win, getDarkMode());
   });
 };
