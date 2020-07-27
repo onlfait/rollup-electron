@@ -1,7 +1,7 @@
 const { Tray, Menu } = require("electron");
 const showMainWindow = require("../windows/main/create");
 const showChatWindow = require("../windows/twitch-chat/create");
-const { appIcon, appName, darkMode } = require("../app/config");
+const { appIcon, appName, darkMode } = require("../config");
 const toggleWindow = require("../app/toggleWindow");
 const quit = require("../app/quit");
 const path = require("path");

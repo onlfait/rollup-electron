@@ -1,4 +1,4 @@
-const { appConfig } = require("../../package");
+const { appConfig } = require("../package");
 
 const isDev = process.argv.includes("--dev");
 const isDebug = process.argv.includes("--debug");

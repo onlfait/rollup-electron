@@ -1,5 +1,5 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools, appIcon } = require("../../app/config");
+const { hasDevTools, appIcon } = require("../../config");
 const getMainWindow = require("../../app/getMainWindow");
 const createTitlebar = require("../../app/titlebar");
 const open = require("open");

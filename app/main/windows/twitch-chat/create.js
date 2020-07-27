@@ -1,5 +1,5 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools, appIcon } = require("../../app/config");
+const { hasDevTools, appIcon } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
 const path = require("path");

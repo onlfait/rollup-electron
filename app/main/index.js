@@ -13,7 +13,7 @@ const setCSP = require("./app/security/setCSP");
 
 const twitchClient = require("./twitch/client");
 
-const { isDev, livereload, darkMode, twitchConfig } = require("./app/config");
+const { isDev, livereload, darkMode, twitchConfig } = require("./config");
 
 if (isDev) {
   require("./app/livereload")(livereload);
