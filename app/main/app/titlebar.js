@@ -76,7 +76,7 @@ function js({ title = null, icon = "static/icon.ico" } = {}) {
 }
 
 module.exports = function createTitlebar({ win, ...options }) {
-  win.webContents.on("dom-ready", () => {
+  win.webContents.on("did-finish-load", () => {
     win.webContents.insertCSS(css(options));
     win.webContents.executeJavaScript(js(options));
     setWinDarkMode(win, getDarkMode());

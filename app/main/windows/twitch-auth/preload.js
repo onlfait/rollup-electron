@@ -4,10 +4,10 @@ const {
   setDarkModeRemote
 } = require("../../app/setDarkMode");
 
-contextBridge.exposeInMainWorld("remote", {
-  setDarkMode: setDarkModeRemote(ipcRenderer)
+ipcRenderer.on("setDarkMode", (event, darkMode) => {
+  setDarkModeLocale(darkMode);
 });
 
-contextBridge.exposeInMainWorld("locale", {
-  setDarkMode: setDarkModeLocale
+contextBridge.exposeInMainWorld("remote", {
+  setDarkMode: setDarkModeRemote(ipcRenderer)
 });

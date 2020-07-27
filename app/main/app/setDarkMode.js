@@ -1,9 +1,7 @@
 const { BrowserWindow } = require("electron");
 
 function setWinDarkMode(win, darkMode) {
-  win.webContents.executeJavaScript(
-    `locale.setDarkMode(${darkMode ? "true" : "false"})`
-  );
+  win.webContents.send("setDarkMode", darkMode);
 }
 
 function setDarkMode(darkMode) {
@@ -26,7 +24,6 @@ function setDarkModeRemote(ipcRenderer) {
 
 function setDarkModeLocale(darkMode) {
   const $html = document.querySelector("html");
-
   $html.classList.toggle("theme--dark", darkMode);
   $html.classList.toggle("theme--light", !darkMode);
   $html.classList.toggle("tw-root--theme-dark", darkMode);

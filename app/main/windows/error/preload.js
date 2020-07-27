@@ -8,6 +8,10 @@ const {
 
 ipcRenderer.on("error", onError);
 
+ipcRenderer.on("setDarkMode", (event, darkMode) => {
+  setDarkModeLocale(darkMode);
+});
+
 contextBridge.exposeInMainWorld("remote", {
   openIssue() {
     shell.openExternal(createIssue());
@@ -19,8 +23,4 @@ contextBridge.exposeInMainWorld("remote", {
     ipcRenderer.invoke("exitApp");
   },
   setDarkMode: setDarkModeRemote(ipcRenderer)
-});
-
-contextBridge.exposeInMainWorld("locale", {
-  setDarkMode: setDarkModeLocale
 });
