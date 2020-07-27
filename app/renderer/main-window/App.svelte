@@ -8,6 +8,9 @@
 
 	let user = null;
 	let loading = false;
+	let darkMode = true;
+
+	$: remote.setDarkMode(darkMode);
 
 	function openTwitchChat() {
 	  remote.openTwitchChat();
@@ -45,3 +48,7 @@
 	<h1>Please login with your Twitch account.</h1>
 	<button on:click={openTwitchLogin}>Login to Twitch</button>
 {/if}
+
+<label>
+	<input type="checkbox" bind:checked={darkMode}> Dark mode ({darkMode})
+</label>

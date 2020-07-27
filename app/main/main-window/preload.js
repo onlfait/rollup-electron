@@ -9,5 +9,8 @@ contextBridge.exposeInMainWorld("remote", {
   },
   openTwitchChat() {
     ipcRenderer.invoke("openTwitchChat");
+  },
+  setDarkMode(darkMode = true) {
+    ipcRenderer.invoke("setDarkMode", darkMode);
   }
 });
