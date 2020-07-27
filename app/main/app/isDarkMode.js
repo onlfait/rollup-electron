@@ -1,5 +1,5 @@
 const store = require("../store");
 
-module.exports = function getDarkMode() {
+module.exports = function isDarkMode() {
   return store.get("darkMode", true);
 };

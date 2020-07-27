@@ -1,4 +1,4 @@
-const getDarkMode = require("./getDarkMode");
+const isDarkMode = require("./isDarkMode");
 const { setWinDarkMode } = require("./setDarkMode");
 
 function css({ darkColor = "#121212", lightColor = "#f1f1f1" } = {}) {
@@ -79,6 +79,6 @@ module.exports = function createTitlebar({ win, ...options }) {
   win.webContents.on("did-finish-load", () => {
     win.webContents.insertCSS(css(options));
     win.webContents.executeJavaScript(js(options));
-    setWinDarkMode(win, getDarkMode());
+    setWinDarkMode(win, isDarkMode());
   });
 };
