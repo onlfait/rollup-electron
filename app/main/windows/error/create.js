@@ -1,6 +1,6 @@
-const createBrowserWindow = require("../app/security/createBrowserWindow");
-const getMainWindow = require("../app/getMainWindow");
-const { hasDevTools } = require("../app/config");
+const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const getMainWindow = require("../../app/getMainWindow");
+const { hasDevTools } = require("../../app/config");
 const path = require("path");
 
 let win = null;

@@ -3,7 +3,7 @@ const { app } = require("electron");
 const uncaughtError = require("./app/uncaughtError");
 const registerAppProtocol = require("./app/protocol");
 const singleInstance = require("./app/singleInstance");
-const createMainWindow = require("./main-window/create");
+const createMainWindow = require("./windows/main/create");
 const createTray = require("./tray/create");
 
 const preventRemoteEvents = require("./app/security/preventRemoteEvents");

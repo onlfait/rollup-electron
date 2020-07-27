@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
-const { setDarkModeLocale, setDarkModeRemote } = require("../app/setDarkMode");
+const { setDarkModeLocale, setDarkModeRemote } = require("../../app/setDarkMode");
 
 contextBridge.exposeInMainWorld("remote", {
   uncaughtError(error) {

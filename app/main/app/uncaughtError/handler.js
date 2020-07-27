@@ -1,7 +1,7 @@
 const { dirname } = require("path");
 const { app } = require("electron");
 
-const createErrorWindow = require("../../error-window/create");
+const createErrorWindow = require("../../windows/error/create");
 
 function cleanPath(path) {
   return path.trim().replace(dirname(app.getAppPath()), "");

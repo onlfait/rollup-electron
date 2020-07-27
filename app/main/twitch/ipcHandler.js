@@ -1,4 +1,4 @@
-const createChatWindow = require("./chat-window/create");
+const createChatWindow = require("../windows/twitch-chat/create");
 const { darkMode } = require("../app/config");
 
 function callAPI({ api, args }) {
