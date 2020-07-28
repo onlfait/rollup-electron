@@ -7,7 +7,7 @@
   "repository": "github:onlfait/rollup-electron",
   "main": "main/index.js",
   "appConfig": {
-    "name": "My electron app",
+    "name": "Marv",
     "icon": "static/icon.ico"
   },
   "dependencies": {

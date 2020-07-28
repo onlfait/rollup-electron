@@ -1,11 +1,8 @@
 require("../commons/scripts/uncaughtError");
 
-require("minireset.css");
-
 require("../commons/styles/index.css");
 require("../commons/styles/scrollbar.css");
-
-require("./index.css");
+require("./styles/tailwind.css");
 
 const App = require("./App.svelte");
 

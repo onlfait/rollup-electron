@@ -1,4 +1,5 @@
 import resolve from "@rollup/plugin-node-resolve";
+import svelteSVG from "rollup-plugin-svelte-svg";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import replace from "@rollup/plugin-replace";
@@ -6,6 +7,10 @@ import cleaner from "rollup-plugin-cleaner";
 import postcss from "rollup-plugin-postcss";
 import svelte from "rollup-plugin-svelte";
 import copy from "rollup-plugin-copy";
+
+import postcssImport from "postcss-import";
+import tailwindcss from "tailwindcss";
+
 import serve from "./serve";
 import path from "path";
 
@@ -38,7 +43,13 @@ function makeEntry(entry) {
     plugins: [
       !watch && cleaner({ targets: [outputDir] }),
       copy({ targets: [{ src: `${inputDir}/index.html`, dest: outputDir }] }),
-      postcss({ extract: true, sourceMap: sourcemap, minimize: !watch }),
+      postcss({
+        extract: true,
+        sourceMap: sourcemap,
+        minimize: !watch,
+        plugins: [postcssImport, tailwindcss]
+      }),
+      svelteSVG(),
       svelte({
         dev: watch,
         css: css => {
