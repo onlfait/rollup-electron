@@ -1,5 +1,4 @@
 <script>
-  import "./components/DarkMode.svelte";
   import Landing from "./components/Landing.svelte";
   import UserDrawer from "./components/UserDrawer.svelte";
 
