@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="absolute p-1 right-0 {hoveringClass}"
+  class="absolute z-50 p-1 right-0 {hoveringClass}"
   on:mouseenter={enter} on:mouseleave={leave}
 >
 

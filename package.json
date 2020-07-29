@@ -41,6 +41,7 @@
     "rollup-plugin-svelte-svg": "^0.2.3",
     "rollup-plugin-terser": "^6.1.0",
     "svelte": "^3.24.0",
+    "svelte-grid": "^1.11.0",
     "tailwindcss": "^1.5.2",
     "tree-kill": "^1.2.2",
     "ws": "^7.3.1"

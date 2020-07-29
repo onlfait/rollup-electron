@@ -56,7 +56,7 @@ function makeEntry(entry) {
           css.write(`${outputDir}/svelte.css`, false);
         }
       }),
-      resolve({ browser: true, dedupe: ["svelte"] }),
+      resolve({ browser: true, dedupe: ["svelte", "svelte-grid"] }),
       commonjs(),
       replace({ __isDev__: watch }),
       !watch && terser(),
