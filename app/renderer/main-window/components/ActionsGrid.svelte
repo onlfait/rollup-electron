@@ -1,6 +1,7 @@
 <script>
   import Grid from "svelte-grid";
   import gridHelp from "svelte-grid/src/utils/helper";
+  import { v4 as uuid } from "uuid";
 
   import { darkMode } from "../stores.js";
 
@@ -31,12 +32,8 @@
     };
   }
 
-  function id() {
-    return `_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
   function createItem() {
-    return { id: id(), ...defaultItem, ...editableItem() };
+    return { id: uuid(), ...defaultItem, ...editableItem() };
   }
 
   $: boxClass = `
@@ -70,10 +67,6 @@
   remote.getGridItems().then(gridItems => {
     items = gridItems.map(item => ({...item, ...editableItem() }));
   });
-
-  // for (var i = 0; i < 10; i++) {
-  //   add();
-  // }
 </script>
 
 <div class="p-2 mx-1">
