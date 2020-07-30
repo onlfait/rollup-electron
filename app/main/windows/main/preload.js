@@ -9,6 +9,7 @@ ipcRenderer.on("setDarkMode", (event, darkMode) => {
 });
 
 contextBridge.exposeInMainWorld("remote", {
+  setDarkMode: setDarkModeRemote(ipcRenderer),
   isDarkMode() {
     return ipcRenderer.invoke("isDarkMode");
   },
@@ -21,5 +22,10 @@ contextBridge.exposeInMainWorld("remote", {
   openTwitchChat() {
     ipcRenderer.invoke("openTwitchChat");
   },
-  setDarkMode: setDarkModeRemote(ipcRenderer)
+  saveGridItems(items) {
+    ipcRenderer.invoke("saveGridItems", items);
+  },
+  getGridItems() {
+    return ipcRenderer.invoke("getGridItems");
+  }
 });

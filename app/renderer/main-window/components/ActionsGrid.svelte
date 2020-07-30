@@ -63,12 +63,17 @@
 
   function edit() {
     editMode = !editMode;
-    items = items.map(i => ({ ...i, ...editableItem() }));
+    items = items.map(item => ({ ...item, ...editableItem() }));
+    remote.saveGridItems(items);
   }
 
-  for (var i = 0; i < 10; i++) {
-    add();
-  }
+  remote.getGridItems().then(gridItems => {
+    items = gridItems.map(item => ({...item, ...editableItem() }));
+  });
+
+  // for (var i = 0; i < 10; i++) {
+  //   add();
+  // }
 </script>
 
 <div class="p-2 mx-1">
