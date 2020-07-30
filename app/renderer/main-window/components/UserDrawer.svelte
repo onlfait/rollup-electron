@@ -6,7 +6,7 @@
   let hovering;
   const enter = () => (hovering = true);
   const leave = () => (hovering = false);
-  $: hoveringClass = hovering ? `h-screen bg-gray-${$darkMode ? "900" : "300"}` : "";
+  $: hoveringClass = hovering ? `shadow-lg h-screen bg-gray-${$darkMode ? "900" : "300"}` : "";
 </script>
 
 <div
@@ -21,7 +21,7 @@
       alt="{user.display_name}"
     />
     {#if hovering}
-    <span class="px-2">{user.display_name}</span>
+    <span class="px-2 font-medium">{user.display_name}</span>
     {/if}
   </div>
 

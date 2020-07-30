@@ -1,5 +1,6 @@
 <script>
   import Landing from "./components/Landing.svelte";
+  import Topbar from "./components/Topbar.svelte";
   import UserDrawer from "./components/UserDrawer.svelte";
   import ActionsGrid from "./components/ActionsGrid.svelte";
 
@@ -19,6 +20,8 @@
       loading = false;
     });
   }
+
+  openTwitchLogin();
 </script>
 
 {#if !user}
@@ -27,5 +30,6 @@
 
 {#if user}
 <UserDrawer {user} />
+<Topbar />
 <ActionsGrid />
 {/if}
