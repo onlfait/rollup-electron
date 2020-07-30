@@ -6,45 +6,90 @@
 
   import "../styles/actions-grid.css";
 
-  let gap = 5;
-  let cols = 10;
-  let rowHeight = 50;
-  let min = { w: 1, h: 2 };
+  let items = [];
+  let editMode = false;
 
-  const id = () => "_" + Math.random().toString(36).substr(2, 9);
+  let gridOptions = {
+    gap:5,
+    cols:10,
+    rowHeight:50,
+    fillEmpty:false,
+    useTransform:true
+  };
+
+  const defaultItem =  {
+    x: 0, y: 0,
+    w: 2, h: 2,
+    min: { w: 2, h: 2 }
+  };
+
+  function editableItem() {
+    return {
+      static: !editMode,
+      resizable: editMode,
+      draggable: editMode
+    };
+  }
+
+  function id() {
+    return `_${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  function createItem() {
+    return { id: id(), ...defaultItem, ...editableItem() };
+  }
 
   $: boxClass = `
     border-gray-${$darkMode ? "800" : "400"}
     bg-gray-${$darkMode ? "900" : "300"}
     text-gray-${$darkMode ? "300" : "800"}`;
 
-  let items = [
-    gridHelp.item({ x: 0, y: 0, w: 5, h: 2, id: id(), min }),
-    gridHelp.item({ x: 5, y: 0, w: 5, h: 2, id: id(), min }),
-    gridHelp.item({ x: 0, y: 2, w: 5, h: 2, id: id(), min }),
-    gridHelp.item({ x: 5, y: 2, w: 5, h: 2, id: id(), min })
-  ];
 
   function add() {
-    let newItem = gridHelp.item({ w: 2, h: 2, id: id(), min});
-    let findOutPosition = gridHelp.findSpaceForItem(newItem, items, cols);
-    items = [...items, ...[{ ...newItem, ...findOutPosition }]];
+    const { cols } = gridOptions;
+    const newItem = gridHelp.item(createItem());
+    const oldItems = gridHelp.findSpaceForItem(newItem, items, cols);
+    items = [...items, ...[{ ...newItem, ...oldItems }]];
   }
 
-  // items[2].resizable = false;
-  // items[2].draggable = false;
-  // items[2].static = true;
-  // items = [...items];
+  function remove(item) {
+    items = items.filter(i => i.id !== item.id);
+  }
+
+  function adjust() {
+    const {cols} = gridOptions;
+    items = gridHelp.resizeItems(items, cols);
+  }
+
+  function edit() {
+    editMode = !editMode;
+    items = items.map(i => ({ ...i, ...editableItem() }));
+  }
+
+  for (var i = 0; i < 10; i++) {
+    add();
+  }
 </script>
 
 <div class="p-2 mx-1">
   <button
     class="px-2 text-gray-200 bg-pink-900 rounded"
+    on:click={edit}>{editMode ? "✕" : "Edit grid"}</button>
+  {#if editMode}
+  <button
+    class="px-2 text-gray-200 bg-pink-900 rounded"
+    on:click={adjust}>Adjust grid</button>
+  <button
+    class="px-2 text-gray-200 bg-pink-900 rounded"
     on:click={add}>Add widget</button>
+  {/if}
 </div>
 
-<Grid bind:items let:item {cols} {rowHeight} {gap} fillEmpty={false}>
-  <div class="flex p-2 h-full rounded-md border-2 {boxClass}">
+<Grid bind:items let:item {...gridOptions}>
+  <div class="flex h-full rounded-md border-2 {boxClass}">
+    {#if editMode}
+    <span on:click={remove.bind(null, item)} class=close>✕</span>
+    {/if}
     {item.id}
   </div>
 </Grid>
