@@ -9,6 +9,7 @@
 
   let items = [];
   let editMode = false;
+  let currentItem = null;
 
   let gridOptions = {
     gap:5,
@@ -64,11 +65,19 @@
     remote.saveGridItems(items);
   }
 
+  function setCurrentItem(item) {
+    if (!editMode) {
+      return;
+    }
+    currentItem = item;
+  }
+
   remote.getGridItems().then(gridItems => {
     items = gridItems.map(item => ({...item, ...editableItem() }));
   });
 </script>
 
+{#if !currentItem}
 <div class="p-2 mx-1">
   <button
     class="px-2 text-gray-200 bg-pink-900 rounded"
@@ -84,10 +93,23 @@
 </div>
 
 <Grid bind:items let:item {...gridOptions}>
-  <div class="flex h-full rounded-md border-2 {boxClass}">
+  <div
+    class="flex h-full rounded-md border-2 {boxClass}"
+    on:dblclick={setCurrentItem.bind(null, item)}
+  >
     {#if editMode}
     <span on:click={remove.bind(null, item)} class=close>✕</span>
     {/if}
     {item.id}
   </div>
 </Grid>
+{/if}
+
+{#if currentItem}
+  <div class="p-2  mx-1">
+    <button
+      class="px-2 text-gray-200 bg-pink-900 rounded"
+      on:click={setCurrentItem.bind(null, null)}>✕</button>
+    Editable item {currentItem.id}
+  </div>
+{/if}
