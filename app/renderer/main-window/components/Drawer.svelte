@@ -1,5 +1,5 @@
 <script>
-  import { darkMode } from "../stores.js";
+  import { darkMode } from "../stores";
 
   export let user = null;
 
