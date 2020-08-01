@@ -27,5 +27,8 @@ contextBridge.exposeInMainWorld("remote", {
   },
   getGridItems() {
     return ipcRenderer.invoke("getGridItems");
+  },
+  addGridIcon(icon) {
+    return ipcRenderer.invoke("addGridIcon", icon);
   }
 });

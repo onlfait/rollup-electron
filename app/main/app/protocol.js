@@ -1,5 +1,5 @@
+const { isDev, appPath, publicPath, staticPath } = require("../config");
 const { app, protocol } = require("electron");
-const { isDev } = require("../config");
 const path = require("path");
 const fs = require("fs");
 
@@ -13,9 +13,7 @@ const config = {
 
 const rendererPath = isDev
   ? path.resolve(__dirname, "../../../dist/dev/renderer")
-  : path.resolve(app.getAppPath(), "renderer");
-
-const staticPath = path.resolve(__dirname, "../../static");
+  : path.resolve(appPath, "renderer");
 
 const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
@@ -58,6 +56,8 @@ function requestHandler(req, next) {
 
   if (pathChunk === "static") {
     readPath = path.join(staticPath, ...pathParts);
+  } else if (pathChunk === "public") {
+    readPath = path.join(publicPath, ...pathParts);
   }
 
   fs.readFile(readPath, (err, data) => {

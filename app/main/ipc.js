@@ -1,4 +1,4 @@
-const { ipcMain } = require("electron");
+const { app, ipcMain } = require("electron");
 
 const { twitchAPI, openTwitchChat } = require("./twitch/ipcHandler");
 const uncaughtError = require("./app/uncaughtError/ipcHandler");
@@ -6,7 +6,8 @@ const { setDarkModeIPC } = require("./app/setDarkMode");
 const isDarkMode = require("./app/isDarkMode");
 const relaunchApp = require("./app/relaunch");
 const exitApp = require("./app/exit");
-const store = require("./store");
+
+const grid = require("./libs/grid");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
@@ -19,9 +20,6 @@ ipcMain.handle("exitApp", () => exitApp(1));
 ipcMain.handle("twitch", twitchAPI);
 ipcMain.handle("openTwitchChat", openTwitchChat);
 
-ipcMain.handle("saveGridItems", (event, items) => {
-  store.set("gridItems", items);
-});
-ipcMain.handle("getGridItems", () => {
-  return store.get("gridItems", []);
-});
+ipcMain.handle("saveGridItems", grid.saveGridItems);
+ipcMain.handle("getGridItems", grid.getGridItems);
+ipcMain.handle("addGridIcon", grid.addGridIcon);

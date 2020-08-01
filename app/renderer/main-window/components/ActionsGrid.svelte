@@ -22,7 +22,8 @@
   const defaultItem =  {
     x: 0, y: 0,
     w: 2, h: 2,
-    min: { w: 2, h: 2 }
+    min: { w: 2, h: 2 },
+    icon: null
   };
 
   function editableItem() {
@@ -72,6 +73,23 @@
     currentItem = item;
   }
 
+  function editItem(item) {
+    items = items.map(i => {
+      if (i.id === item.id) {
+        i = { ...i, ...item, ...editableItem() };
+      }
+      return i;
+    });
+    remote.saveGridItems(items);
+  }
+
+  function onImage(e) {
+    const {name,path} = e.target.files[0];
+    currentItem = {...currentItem, icon: {name, path}};
+    remote.addGridIcon({name, path});
+    editItem(currentItem);
+  }
+
   remote.getGridItems().then(gridItems => {
     items = gridItems.map(item => ({...item, ...editableItem() }));
   });
@@ -96,6 +114,7 @@
   <div
     class="flex h-full rounded-md border-2 {boxClass}"
     on:dblclick={setCurrentItem.bind(null, item)}
+    style="background-image: {item.icon ? `url(/public/grid-icons/${item.icon.name})` : 'none'}"
   >
     {#if editMode}
     <span on:click={remove.bind(null, item)} class=close>✕</span>
@@ -110,6 +129,12 @@
     <button
       class="px-2 text-gray-200 bg-pink-900 rounded"
       on:click={setCurrentItem.bind(null, null)}>✕</button>
-    Editable item {currentItem.id}
+    <div>
+      Editing item #{currentItem.id}
+    </div>
+    <input type="file" accept="image/*" on:change="{onImage}"/>
+    {#if currentItem.icon}
+    {currentItem.icon.name}
+    {/if}
   </div>
 {/if}
