@@ -23,16 +23,23 @@
   <Button on:click={close}>⨞ Back</Button>
 </div>
 
-<div class="p-2">
-  <label>
+<div class="flex flex-col mx-2 space-y-2">
+  <label class="flex flex-col">
     <div class="font-medium">Background image</div>
     <div class="flex">
       <FileInput accept="image/*" on:file="{onImage}" />
       {#if $editItem.icon}
-      <img src="/public/grid-icons/{$editItem.icon.name}" class="ml-1 h-6">
+      <img src="/public/grid-icons/{$editItem.icon.name}" class="ml-2 h-6">
       {:else}
-      <span class="ml-1">No image selected</span>
+      <span class="ml-1 italic">No image selected</span>
       {/if}
+    </div>
+  </label>
+
+  <label class="flex flex-col">
+    <div class="font-medium">Background color</div>
+    <div class="flex">
+      ...
     </div>
   </label>
 </div>
