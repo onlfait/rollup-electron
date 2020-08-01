@@ -49,10 +49,6 @@
     const oldItems = gridHelp.findSpaceForItem(newItem, $items, cols);
     $items = [...$items, ...[{ ...newItem, ...oldItems }]];
   }
-
-  function removeGridItem(item) {
-    $items = $items.filter(i => i.id !== item.id);
-  }
 </script>
 
 <div class="p-2">

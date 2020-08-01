@@ -6,7 +6,7 @@
 
     import { createEventDispatcher } from "svelte";
 
-	  const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher();
 
     function login() {
       dispatch("login");

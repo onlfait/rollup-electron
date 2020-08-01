@@ -3,6 +3,8 @@
   import FileInput from "../FileInput.svelte";
   import Button from "../Button.svelte";
 
+  $: icon = $editItem && $editItem.icon && $editItem.icon.name;
+
   function updateItem(item) {
     $items = $items.map(i => (i.id === item.id) ? { ...i, ...item } : i);
   }
@@ -28,8 +30,8 @@
     <div class="font-medium">Background image</div>
     <div class="flex">
       <FileInput accept="image/*" on:file="{onImage}" />
-      {#if $editItem.icon}
-      <img src="/public/grid-icons/{$editItem.icon.name}" class="ml-2 h-6">
+      {#if icon}
+      <img src="/public/grid-icons/{icon}" class="ml-2 h-6" alt="{icon}">
       {:else}
       <span class="ml-1 italic">No image selected</span>
       {/if}

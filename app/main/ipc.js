@@ -1,4 +1,4 @@
-const { app, ipcMain } = require("electron");
+const { ipcMain } = require("electron");
 
 const { twitchAPI, openTwitchChat } = require("./twitch/ipcHandler");
 const uncaughtError = require("./app/uncaughtError/ipcHandler");
