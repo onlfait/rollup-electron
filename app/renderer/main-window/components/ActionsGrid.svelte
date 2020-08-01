@@ -3,7 +3,7 @@
   import gridHelp from "svelte-grid/src/utils/helper";
   import { v4 as uuid } from "uuid";
 
-  import { darkMode } from "../stores.js";
+  import { darkMode } from "../stores";
 
   import "../styles/actions-grid.css";
 

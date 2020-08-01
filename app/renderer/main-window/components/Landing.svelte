@@ -1,5 +1,5 @@
 <script>
-    import { darkMode } from "../stores.js";
+    import { darkMode } from "../stores";
 
     import LogoSVG from "../../../static/marv.svg";
     import TwitchSVG from "../../../static/Twitch_icon.svg";

@@ -1,5 +1,5 @@
 <script>
-    import { darkMode } from "../stores.js";
+    import { darkMode } from "../stores";
 </script>
 
 <div class="p-2 bg-gray-{$darkMode ? '800' : '500'}">
