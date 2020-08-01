@@ -19,7 +19,11 @@ const mimeTypes = {
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
   ".html": { mimeType: "text/html", charset: "utf-8" },
   ".css": { mimeType: "text/css", charset: "utf-8" },
-  ".ico": { mimeType: "image/x-icon", charset: "utf-8" }
+  ".ico": { mimeType: "image/x-icon", charset: "utf-8" },
+  ".gif": { mimeType: "image/gif", charset: "utf-8" },
+  ".png": { mimeType: "image/png", charset: "utf-8" },
+  ".jpg": { mimeType: "image/jpeg", charset: "utf-8" },
+  ".jpeg": { mimeType: "image/jpeg", charset: "utf-8" }
 };
 
 function error(message) {
