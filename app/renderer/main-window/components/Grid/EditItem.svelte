@@ -30,6 +30,8 @@
       <FileInput accept="image/*" on:file="{onImage}" />
       {#if $editItem.icon}
       <img src="/public/grid-icons/{$editItem.icon.name}" class="ml-1 h-6">
+      {:else}
+      <span class="ml-1">No image selected</span>
       {/if}
     </div>
   </label>
