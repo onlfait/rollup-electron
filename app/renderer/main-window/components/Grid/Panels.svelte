@@ -1,8 +1,8 @@
 <script>
   import Grid from "svelte-grid";
   import { v4 as uuid } from "uuid";
+  import Item from "./Item.svelte";
   import Button from "../Button.svelte";
-  import RemoveItem from "./RemoveItem.svelte";
   import { items, editGrid } from "../../stores/grid";
   import gridHelp from "svelte-grid/src/utils/helper";
 
@@ -67,9 +67,5 @@
 </div>
 
 <Grid bind:items={$items} let:item {...gridOptions}>
-  <div class="flex h-full">
-    {#if $editGrid}
-    <RemoveItem {item} />
-    {/if}
-  </div>
+  <Item {item} />
 </Grid>

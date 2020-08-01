@@ -11,7 +11,9 @@ module.exports = {
     return store.get("gridItems", []);
   },
   async addGridIcon(event, { name, path: source }) {
+    name = name.replace(/[^a-z0-9_.]+/gi, "_");
     const target = path.resolve(publicPath, "grid-icons", name);
     await fs.copy(source, target);
+    return name;
   }
 };

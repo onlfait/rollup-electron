@@ -25,23 +25,3 @@
   background: rgba(0, 0, 0, 0.2);
   border: 1px rgba(255, 255, 255, 0.1) dotted;
 }
-
-/* .svlt-grid-container {
-  margin: 5px;
-}
-
-.svlt-grid-shadow {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px rgba(255, 255, 255, 0.1) dotted;
-}
-
-.svlt-grid-container .close {
-  position: absolute;
-  cursor: pointer;
-  right: 5px;
-  top: 2px;
-}
-
-.svlt-grid-container .close:hover {
-  color: red;
-} */
