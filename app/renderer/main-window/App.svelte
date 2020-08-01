@@ -4,7 +4,7 @@
   import Drawer from "./components/Drawer.svelte";
   import Grid from "./components/Grid.svelte";
 
-  let user = null;
+  let user = true;
   let loading = false;
 
   function openTwitchLogin() {
@@ -21,7 +21,7 @@
     });
   }
 
-  openTwitchLogin();
+  // openTwitchLogin();
 </script>
 
 {#if !user}

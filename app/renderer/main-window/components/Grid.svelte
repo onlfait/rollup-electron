@@ -1,14 +1,13 @@
 <script>
-  import Actions from "./Grid/Actions.svelte"
-  import EditItem from "./Grid/EditItem.svelte"
-  import Panels from "./Grid/Panels.svelte"
+  import { editItem } from "../stores/grid";
 
-  let editItem = false;
+  import EditItem from "./Grid/EditItem.svelte";
+  import Panels from "./Grid/Panels.svelte";
+
+  import "../styles/grid.css";
 </script>
 
-<Actions />
-
-{#if editItem}
+{#if $editItem}
 <EditItem />
 {:else}
 <Panels />
