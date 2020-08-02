@@ -1,19 +1,26 @@
 <script>
   import { items, editItem } from "../../stores/grid";
   import FileInput from "../FileInput.svelte";
+  import ColorPicker from "../ColorPicker.svelte";
+  import SettingsPage from "../SettingsPage.svelte";
   import Button from "../Button.svelte";
 
   $: icon = $editItem && $editItem.icon && $editItem.icon.name;
 
   function updateItem(item) {
-    $items = $items.map(i => (i.id === item.id) ? { ...i, ...item } : i);
+    $editItem = {...$editItem, ...item };
+    $items = $items.map(i => (i.id === item.id) ? $editItem : i);
   }
 
   async function onImage(event) {
     let { name, path } = event.detail;
     name = await remote.addGridIcon({ name, path });
-    $editItem = {...$editItem, icon: { name, path }};
-    updateItem($editItem);
+    updateItem({ icon: { name, path } });
+  }
+
+  function onColor(event) {
+    let { hex } = event.detail;
+    updateItem({ color: hex });
   }
 
   function close() {
@@ -21,27 +28,42 @@
   }
 </script>
 
-<div class="p-2">
-  <Button on:click={close}>⨞ Back</Button>
-</div>
-
-<div class="flex flex-col mx-2 space-y-2">
-  <label class="flex flex-col">
-    <div class="font-medium">Background image</div>
-    <div class="flex">
-      <FileInput accept="image/*" on:file="{onImage}" />
-      {#if icon}
-      <img src="/public/grid-icons/{icon}" class="ml-2 h-6" alt="{icon}">
-      {:else}
-      <span class="ml-1 italic">No image selected</span>
-      {/if}
-    </div>
-  </label>
-
-  <label class="flex flex-col">
-    <div class="font-medium">Background color</div>
-    <div class="flex">
-      ...
-    </div>
-  </label>
-</div>
+<SettingsPage>
+  <div slot="left">
+    Menu...
+  </div>
+  <div slot="right">
+    Settings...<br />
+      Settings...<br />
+        Settings...<br />
+          Settings...<br />
+            Settings...<br />
+              Settings...<br />
+                Settings...<br />
+                  Settings...<br />
+                    Settings...<br />
+                      Settings...<br />
+                        Settings...<br />
+                          Settings...<br />
+                            Settings...<br />
+                              Settings...<br />
+                                Settings...<br />
+                                  Settings...<br />
+                                    Settings...<br />
+                                      Settings...<br />
+                                        Settings...<br />
+                                          Settings...<br />
+                                            Settings...<br />
+                                              Settings...<br />
+                                                Settings...<br />
+                                                  Settings...<br />
+                                                    Settings...<br />
+                                                      Settings...<br />
+                                                        Settings...<br />
+                                                          Settings...<br />
+                                                            Settings...<br />
+                                                              Settings...<br />
+                                                                Settings...<br />
+                                                                  Settings...<br />
+  </div>
+</SettingsPage>

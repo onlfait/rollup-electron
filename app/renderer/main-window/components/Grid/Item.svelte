@@ -12,10 +12,10 @@
     editItem.set(item);
   }
 
-  $: iconClass = item.icon ? `background-image: url("/public/grid-icons/${item.icon.name}")` : "";
+  $: iconClass = item.icon ? `background-image: url("/public/grid-icons/${item.icon.name}");` : "";
 </script>
 
-<div class="flex h-full bg-center bg-no-repeat bg-cover" style="{iconClass}" on:dblclick={setEditItem}>
+<div class="flex h-full bg-center bg-no-repeat bg-cover" style="{iconClass} background-color: {item.color};" on:dblclick={setEditItem}>
   {#if $editGrid}
   <span
     on:click={removeItem}
