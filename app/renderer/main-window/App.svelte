@@ -1,35 +1,50 @@
 <script>
-  import Landing from "./components/Landing.svelte";
-  import Topbar from "./components/Topbar.svelte";
-  import Drawer from "./components/Drawer.svelte";
-  import Grid from "./components/Grid.svelte";
-
-  let user = true;
-  let loading = false;
-
-  function openTwitchLogin() {
-    if (user) return;
-
-    loading = true;
-
-    remote.twitch("helix.users.getMe", true).then(res => {
-      if (res.data) {
-        user = res.data;
-      }
-
-      loading = false;
-    });
-  }
-
-  // openTwitchLogin();
+  // import Landing from "./components/Landing.svelte";
+  // import Topbar from "./components/Topbar.svelte";
+  // import Drawer from "./components/Drawer.svelte";
+  // import Grid from "./components/Grid.svelte";
 </script>
 
-{#if !user}
-<Landing on:login={openTwitchLogin} />
-{/if}
+<style>
+  :global(body) {
+    overflow: hidden;
+  }
 
-{#if user}
-<Drawer {user} />
-<Topbar />
-<Grid />
-{/if}
+  :global(body > header) {
+    height: var(--header-height);
+  }
+
+  :global(body > main) {
+    height: calc(100% - var(--header-height) - var(--titlebar-height));
+    background-color: #444;
+    overflow: auto;
+  }
+</style>
+
+<header>
+  header...
+</header>
+
+<main>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+  <div class="flood">flooooooooooooooooooood</div>
+</main>
