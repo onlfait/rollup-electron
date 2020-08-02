@@ -3917,6 +3917,11 @@ svelte-grid@^1.11.0:
   resolved "https://registry.yarnpkg.com/svelte-grid/-/svelte-grid-1.11.0.tgz#3985f14f422ecab721192e2d52242d9c9ffa7f84"
   integrity sha512-oGx10JuA2ojTcUea6/YJ0/BjXsIGM6PPnHOfhtVPfqnhTyj50xvanXFYIhZ2GeHIpaZjwkaJmwwMRKDSEVWPRQ==
 
+svelte-icons@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-icons/-/svelte-icons-2.1.0.tgz#6f2ec72f1d5c8b2de1a4b8a822c95bcb2f701aca"
+  integrity sha512-rHPQjweEc9fGSnvM0/4gA3pDHwyZyYsC5KhttCZRhSMJfLttJST5Uq0B16Czhw+HQ+HbSOk8kLigMlPs7gZtfg==
+
 svelte@^3.24.0:
   version "3.24.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.24.0.tgz#6565a42c9705796fa66c6abb4fedc09f4323a4a8"

@@ -42,6 +42,7 @@
     "svelte": "^3.24.0",
     "svelte-color": "^1.0.2",
     "svelte-grid": "^1.11.0",
+    "svelte-icons": "^2.1.0",
     "tailwindcss": "^1.5.2",
     "throttle-debounce": "^2.2.1",
     "tree-kill": "^1.2.2",
