@@ -10,25 +10,12 @@ ipcRenderer.on("setDarkMode", (event, darkMode) => {
 
 contextBridge.exposeInMainWorld("remote", {
   setDarkMode: setDarkModeRemote(ipcRenderer),
-  isDarkMode() {
-    return ipcRenderer.invoke("isDarkMode");
-  },
-  uncaughtError(error) {
-    ipcRenderer.invoke("uncaughtError", error);
-  },
-  twitch(api, args = []) {
-    return ipcRenderer.invoke("twitch", { api, args });
-  },
-  openTwitchChat() {
-    ipcRenderer.invoke("openTwitchChat");
-  },
-  saveGridItems(items) {
-    ipcRenderer.invoke("saveGridItems", items);
-  },
-  getGridItems() {
-    return ipcRenderer.invoke("getGridItems");
-  },
-  addGridIcon(icon) {
-    return ipcRenderer.invoke("addGridIcon", icon);
-  }
+  isDarkMode: () => ipcRenderer.invoke("isDarkMode"),
+  uncaughtError: error => ipcRenderer.invoke("uncaughtError", error),
+  twitch: (api, args = []) => ipcRenderer.invoke("twitch", { api, args }),
+  openTwitchChat: () => ipcRenderer.invoke("openTwitchChat"),
+  savePanels: items => ipcRenderer.invoke("savePanels", items),
+  getPanels: () => ipcRenderer.invoke("getPanels"),
+  getCurrentPanelId: () => ipcRenderer.invoke("getCurrentPanelId"),
+  setCurrentPanelId: id => ipcRenderer.invoke("setCurrentPanelId", id)
 });

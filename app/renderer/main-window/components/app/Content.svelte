@@ -1,27 +1,5 @@
 <script>
-  // import { darkMode } from "../../stores/app";
-  // import Drawer from "./components/app/Drawer.svelte";
-  // import Grid from "./components/Grid.svelte";
+  import DeckPanels from "../deck/Panels.svelte";
 </script>
 
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
-<div class="flood">flooooooooooooooooooood</div>
+<DeckPanels />

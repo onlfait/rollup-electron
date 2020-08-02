@@ -7,7 +7,7 @@ const isDarkMode = require("./app/isDarkMode");
 const relaunchApp = require("./app/relaunch");
 const exitApp = require("./app/exit");
 
-const grid = require("./libs/grid");
+const panels = require("./libs/panels");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
@@ -20,6 +20,7 @@ ipcMain.handle("exitApp", () => exitApp(1));
 ipcMain.handle("twitch", twitchAPI);
 ipcMain.handle("openTwitchChat", openTwitchChat);
 
-ipcMain.handle("saveGridItems", grid.saveGridItems);
-ipcMain.handle("getGridItems", grid.getGridItems);
-ipcMain.handle("addGridIcon", grid.addGridIcon);
+ipcMain.handle("savePanels", panels.save);
+ipcMain.handle("getPanels", panels.getAll);
+ipcMain.handle("setCurrentPanelId", panels.setCurrentId);
+ipcMain.handle("getCurrentPanelId", panels.getCurrentId);

@@ -1,4 +1,4 @@
-const Store = require("electron-store");
+const create = require("../stores/create");
 
 const defaults = {
   bounds: {
@@ -8,7 +8,7 @@ const defaults = {
 };
 
 module.exports = function storeWindow({ win, name = "main", delay = 500 }) {
-  const store = new Store({ name: `${name}.window`, defaults });
+  const store = create({ name: `${name}.window`, defaults });
 
   let timeout = null;
 

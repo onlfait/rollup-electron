@@ -11,7 +11,7 @@ function setDarkMode(darkMode) {
 }
 
 function setDarkModeIPC(e, darkMode) {
-  const store = require("../store");
+  const store = require("../stores/app");
   store.set("darkMode", darkMode);
   setDarkMode(darkMode);
 }
