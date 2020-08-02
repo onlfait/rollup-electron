@@ -1,50 +1,25 @@
 <script>
   // import Landing from "./components/Landing.svelte";
-  // import Topbar from "./components/Topbar.svelte";
-  // import Drawer from "./components/Drawer.svelte";
-  // import Grid from "./components/Grid.svelte";
+  import Topbar from "./components/app/Topbar.svelte";
+  import Content from "./components/app/Content.svelte";
 </script>
 
 <style>
-  :global(body) {
+  #app {
     overflow: hidden;
+    height: calc(100% - var(--titlebar-height));
   }
 
-  :global(body > header) {
-    height: var(--header-height);
-  }
-
-  :global(body > main) {
-    height: calc(100% - var(--header-height) - var(--titlebar-height));
-    background-color: #444;
+  #app-content {
     overflow: auto;
   }
 </style>
 
-<header>
-  header...
-</header>
-
-<main>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-  <div class="flood">flooooooooooooooooooood</div>
-</main>
+<div id="app" class="flex flex-col">
+  <div id="app-topbar">
+    <Topbar />
+  </div>
+  <div id="app-content" class="flex-auto">
+    <Content />
+  </div>
+</div>
