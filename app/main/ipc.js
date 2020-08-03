@@ -8,6 +8,7 @@ const relaunchApp = require("./app/relaunch");
 const exitApp = require("./app/exit");
 
 const panels = require("./libs/panels");
+const grids = require("./libs/grids");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
@@ -24,3 +25,7 @@ ipcMain.handle("savePanels", panels.save);
 ipcMain.handle("getPanels", panels.getAll);
 ipcMain.handle("setCurrentPanelId", panels.setCurrentId);
 ipcMain.handle("getCurrentPanelId", panels.getCurrentId);
+
+ipcMain.handle("getAllGrids", grids.getAll);
+ipcMain.handle("saveGrid", grids.saveGrid);
+ipcMain.handle("removeGrid", grids.removeGrid);

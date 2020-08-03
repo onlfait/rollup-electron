@@ -43,6 +43,7 @@
 
     $panels = $panels.filter((panel, i) => {
       if (panel.id === id) {
+        remote.removeGrid(panel.id);
         pos = i;
         return false;
       }
@@ -93,7 +94,7 @@
 </div>
 
 {#if editMode}
-<div class="absolute z-10 bg-secondary flex flex-wrap shadow-md mx-2" on:click|stopPropagation>
+<div class="absolute z-10 bg-secondary flex flex-wrap shadow-md mx-2 mt-16" on:click|stopPropagation>
   <div class="p-2">
     <InputText bind:value={currentPanel.name} on:enterKey={toggleEditMode}>Rename</InputText>
   </div>
