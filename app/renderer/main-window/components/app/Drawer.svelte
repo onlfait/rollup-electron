@@ -12,7 +12,7 @@
     slot="open"
     on:click|stopPropagation
     style="top: var(--titlebar-height)"
-    class="absolute ml-8 right-0 bottom-0 overflow-auto shadow-md bg-secondary"
+    class="absolute z-50 ml-8 right-0 bottom-0 overflow-auto shadow-md bg-secondary"
   >
     <div class="flex flex-col">
       <span class="p-2">Login</span>
