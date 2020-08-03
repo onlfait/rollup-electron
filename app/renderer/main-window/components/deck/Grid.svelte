@@ -1,15 +1,17 @@
 <script>
   import Grid from "svelte-grid";
   import { v4 as uuid } from "uuid";
-  // import Item from "./Item.svelte";
-  import Button from "../Button.svelte";
+  import GridItem from "./GridItem.svelte";
   import { grids } from "../../stores/grids";
   import gridHelp from "svelte-grid/src/utils/helper";
+  import { createEventDispatcher } from "svelte";
   import { debounce } from "throttle-debounce";
 
   export let panel = null;
+  export let editMode = false;
 
-  let editGrid = false;
+  const dispatch = createEventDispatcher();
+
   let items = [];
 
   const saveGrid = debounce(1000, (items) => {
@@ -34,14 +36,15 @@
     w: 2, h: 2,
     min: { w: 2, h: 2 },
     color: "#333",
-    icon: null
+    icon: null,
+    label: null
   };
 
   function editableItem() {
     return {
-      static: !editGrid,
-      resizable: editGrid,
-      draggable: editGrid
+      static: !editMode,
+      resizable: editMode,
+      draggable: editMode
     };
   }
 
@@ -49,27 +52,39 @@
     return { id: uuid(), ...defaultItem, ...editableItem() };
   }
 
-  function addItem() {
+  function updateGrids() {
+    $grids[panel.id] = items;
+  }
+
+  export function addItem() {
     const { cols } = gridOptions;
     const newItem = gridHelp.item(createItem());
     const oldItems = gridHelp.findSpaceForItem(newItem, items, cols);
     items = [...items, ...[{ ...newItem, ...oldItems }]];
-    $grids[panel.id] = items;
+    updateGrids();
   }
 
-  function adjustGrid() {
+  export function adjust() {
     const { cols } = gridOptions;
     items = gridHelp.resizeItems(items, cols);
+    updateGrids();
+  }
+
+  export function toggleEditMode(enabled = null) {
+    editMode = enabled === null ? !editMode : enabled;
+    items = items.map(item => ({ ...item, ...editableItem() }));
+    dispatch("editMode", editMode);
+    updateGrids();
+  }
+
+  function removeItem(id) {
+    items = items.filter(item => item.id !== id);
+    updateGrids();
   }
 </script>
 
-<div class="p-2">
-  <Button on:click={adjustGrid}>Adjust grid</Button>
-  <Button on:click={addItem}>Add item</Button>
-</div>
-
 <div class="flex-auto overflow-auto p-2">
   <Grid bind:items let:item {...gridOptions}>
-    {item.id}
+    <GridItem {item} {editMode} on:remove={removeItem.bind(null, item.id)} />
   </Grid>
 </div>
