@@ -12,6 +12,10 @@ module.exports = {
         secondary: {
           dark: "#2D3748",
           light: "#E2E8F0"
+        },
+        danger: {
+          dark: "#e53e3e",
+          light: "#e53e3e"
         }
       }
     }

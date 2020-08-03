@@ -6,6 +6,7 @@
   export let size = 0;
   export let icon = false;
   export let flex = true;
+  export let text = null;
   export let rounded = 2;
   export let uppercase = 2;
   export let bg = "primary";
@@ -26,13 +27,14 @@
   let cls = "";
 
   $: {
-    cls = [];
+    cls = ["font-normal"];
 
     w && cls.push(`w-${w}`);
     h && cls.push(`h-${h}`);
     px && cls.push(`px-${px}`);
     py && cls.push(`py-${py}`);
     bg && cls.push(`bg-${bg}`);
+    text && cls.push(`text-${text}`);
 
     flex && cls.push("inline-flex items-center");
     noShrink && cls.push("flex-shrink-0");
@@ -46,6 +48,6 @@
   }
 </script>
 
-<button class="{cls}" on:click>
+<button class="{cls}" on:click|stopPropagation>
   <slot />
 </button>

@@ -39,3 +39,10 @@ body {
 .theme--light .bg-secondary {
   @apply bg-secondary-light;
 }
+
+.bg-danger {
+  @apply bg-danger-dark;
+}
+.theme--light .bg-danger {
+  @apply bg-danger-light;
+}
