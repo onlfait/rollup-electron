@@ -8,7 +8,7 @@ const defaults = {
 };
 
 module.exports = function storeWindow({ win, name = "main", delay = 500 }) {
-  const store = create({ name: `${name}.window`, defaults });
+  const store = create({ name, dir: "stores/windows", defaults });
 
   let timeout = null;
 
