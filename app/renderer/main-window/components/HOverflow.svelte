@@ -4,6 +4,7 @@
 	import MdKeyboardArrowRight from "svelte-icons/md/MdKeyboardArrowRight.svelte";
 
 	export let stepSize = 1;
+	export let gap = 1;
 
 	let element = null;
 	let overflowing = false;
@@ -22,13 +23,13 @@
 	window.addEventListener("resize", isOverflowing);
 </script>
 
-<div class="p-2 flex items-center overflow-hidden">
+<div class="p-2 inline-flex items-center overflow-hidden">
   {#if overflowing}
   <div class="{arrowClass} mr-2" on:click={scroll.bind(null, -stepSize)}>
     <MdKeyboardArrowLeft />
   </div>
   {/if}
-  <div bind:this={element} class="flex items-center overflow-hidden">
+  <div bind:this={element} class="flex space-x-{gap} items-center overflow-hidden">
     <slot />
   </div>
   {#if overflowing}
