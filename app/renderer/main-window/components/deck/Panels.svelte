@@ -1,14 +1,14 @@
 <script>
   import { v4 as uuid } from "uuid";
 
+  import Panel from "./Panel.svelte";
   import Button from "../Button.svelte";
   import HOverflow from "../HOverflow.svelte";
   import InputText from "../InputText.svelte";
+  import PanelButton from "./PanelButton.svelte";
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdSettings from "svelte-icons/md/MdSettings.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
-
-  import PanelButton from "./PanelButton.svelte";
 
   import { panels, currentId } from "../../stores/panels";
 
@@ -107,7 +107,5 @@
 {/if}
 
 {#if currentPanel}
-<div class="p-2">
-  Current panel: {currentPanel.name}
-</div>
+<Panel panel={currentPanel} />
 {/if}
