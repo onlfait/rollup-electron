@@ -16,14 +16,25 @@
 	  overflowing = element && element.clientWidth < element.scrollWidth;
 	};
 
-	const scroll = (n) => {
-	  const scrollLeft = element.scrollLeft + n * element.clientWidth;
+	export const scrollTo = (scrollLeft) => {
 	  anime({
 	    scrollLeft,
 	    duration: 500,
 	    targets: element,
 	    easing: "easeInOutQuad"
 	  });
+	};
+
+	const scroll = (n) => {
+	  scrollTo(element.scrollLeft + n * element.clientWidth);
+	};
+
+	export const scrollLeft = () => {
+	  scrollTo(0);
+	};
+
+	export const scrollRight = () => {
+	  scrollTo(element.scrollWidth);
 	};
 
 	afterUpdate(isOverflowing);

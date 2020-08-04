@@ -1,7 +1,5 @@
 import { writable } from "svelte/store";
 
-export const grids = writable({});
-
-// sync main <-> renderer store
-remote.getAllGrids().then(grids.set);
-// grids.subscribe(remote.saveGrids);
+export const grids = writable({}, async set => {
+  set(await remote.getAllGrids());
+});

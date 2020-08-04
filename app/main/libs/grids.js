@@ -14,6 +14,7 @@ module.exports = {
   saveGrid(event, { id, items }) {
     getGrid(id).set("items", items);
   },
+
   getAll() {
     const grids = {};
 
@@ -23,6 +24,7 @@ module.exports = {
 
     return grids;
   },
+
   removeGrid(event, id) {
     fs.removeSync(getGrid(id).path);
   }

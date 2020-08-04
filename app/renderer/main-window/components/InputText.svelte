@@ -15,5 +15,5 @@
 
 <label class="bg-{bg} inline-flex flex-shrink-0 items-center rounded">
   <span class="px-2 uppercase"><slot /></span>
-  <input bind:value on:keypress={onKeypress} class="p-2 text-dark rounded-r">
+  <input bind:value on:input on:change on:keypress={onKeypress} class="p-2 text-dark rounded-r">
 </label>

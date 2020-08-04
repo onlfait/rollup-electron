@@ -1,7 +1,6 @@
 <script>
-  import Button from "../Button.svelte";
-
-  import { currentId } from "../../stores/panels";
+  import Button from "../../Button.svelte";
+  import { currentId } from "../../../stores/panels";
 
   export let panel = null;
 
