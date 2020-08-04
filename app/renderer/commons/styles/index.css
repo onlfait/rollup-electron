@@ -47,3 +47,10 @@ body {
 .theme--light .bg-danger {
   @apply bg-danger-light;
 }
+
+.text-danger {
+  @apply text-danger-dark;
+}
+.theme--light .text-danger {
+  @apply text-danger-light;
+}

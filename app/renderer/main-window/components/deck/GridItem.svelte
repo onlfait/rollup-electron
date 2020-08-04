@@ -14,7 +14,12 @@
   {#if editMode}
   <span
     on:click={dispatch.bind(null, 'remove')}
-    class="absolute hover:bg-red-900 hover:text-gray-300 text-xs right-0 px-1 cursor-pointer"
+    class="absolute text-danger hover:bg-red-800 hover:text-gray-200 right-0 px-1 cursor-pointer"
   >✕</span>
+  {/if}
+  {#if item.label}
+  <div class="bg-black text-light opacity-50 text-center absolute bottom-0 right-0 left-0 px-2 overflow-hidden truncate">
+    {item.label}
+  </div>
   {/if}
 </div>
