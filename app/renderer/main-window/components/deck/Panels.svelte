@@ -6,7 +6,7 @@
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdSettings from "svelte-icons/md/MdSettings.svelte";
 
-  // import InputText from "../../InputText.svelte";
+  import InputText from "../InputText.svelte";
   import MdApps from "svelte-icons/md/MdApps.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
   import MdAddToPhotos from "svelte-icons/md/MdAddToPhotos.svelte";
@@ -14,8 +14,14 @@
   import { panels } from "../../stores/panels";
 
   let of = null;
+  let panel = null;
 
   $: console.log("$panels:", $panels);
+  $: console.log("panel:", panel);
+
+  $: if ($panels) {
+    panel = $panels.panels.find(p => p.id === $panels.currentId);
+  }
 
   function toggleEditMode() {
     $panels.editMode = !$panels.editMode;
@@ -50,6 +56,15 @@
     } else if (pos > -1 && $panels.currentId === id) {
       $panels.currentId = ($panels.panels[pos] || $panels.panels[pos-1]).id;
     }
+  }
+
+  function updatePanel() {
+    $panels.panels = $panels.panels.map(p => {
+      if (p.id === $panels.currentId) {
+        return panel;
+      }
+      return p;
+    });
   }
 
   function addGridItem() {
@@ -102,7 +117,11 @@
     </Button>
   </div>
   <div class="p-1">
-    ...
+    <InputText
+      bind:value={panel.name}
+      on:input={updatePanel}
+      on:enterKey={toggleEditMode}
+    >Rename</InputText>
   </div>
   <div class="p-1">
     <Button bg="danger" text="light" on:click={removePanel.bind(null, $panels.currentId)}>
