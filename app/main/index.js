@@ -19,7 +19,7 @@ if (isDev) {
   require("./app/livereload")(livereload);
 }
 
-require("./ipc");
+require("./ipc/handlers");
 
 registerAppProtocol();
 preventRemoteEvents();

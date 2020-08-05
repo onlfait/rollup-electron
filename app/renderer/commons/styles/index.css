@@ -22,6 +22,10 @@ body {
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 .theme--light body {
   color: var(--dark-color);
   background-color: var(--light-color);

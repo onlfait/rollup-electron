@@ -13,6 +13,7 @@
   export let first = false;
   export let last = false;
   export let noShrink = false;
+  export let disabled = false;
 
   if (icon) {
     px = 0;
@@ -48,6 +49,6 @@
   }
 </script>
 
-<button class="{cls}" on:click|stopPropagation>
+<button class="{cls}" {disabled} on:click|stopPropagation>
   <slot />
 </button>
