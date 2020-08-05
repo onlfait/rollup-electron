@@ -7,10 +7,13 @@
 
   import { panels, editMode, currentId } from "../../../stores/panels";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
   let panel = null;
 
   $: panel = findPanel($currentId);
-  $: updatePanel(panel);
 
   function toggleEditMode() {
     $editMode = !$editMode;
@@ -31,9 +34,6 @@
       return true;
     });
 
-    remote.savePanels($panels);
-    remote.removeGrid(panel.id);
-
     if (!$panels.length) {
       $currentId = null;
     } else if (pos > -1 && $currentId === id) {
@@ -42,24 +42,20 @@
   }
 
   function updatePanel(panel) {
-    if (!$panels.length) return;
-
     $panels = $panels.map(p => {
       if (p.id === panel.id) {
         return { ...p, ...panel };
       }
       return p;
     });
-
-    remote.savePanels($panels);
   }
 
   function adjustGrid() {
-    console.log("adjustGrid");
+    dispatch("adjustGrid");
   }
 
   function addGridItem() {
-    console.log("addGridItem");
+    dispatch("addGridItem");
   }
 </script>
 
@@ -81,6 +77,7 @@
     <InputText
       bind:value={panel.name}
       on:enterKey={toggleEditMode}
+      on:input={updatePanel.bind(null, panel)}
     >Rename</InputText>
   </div>
   <div class="p-1">

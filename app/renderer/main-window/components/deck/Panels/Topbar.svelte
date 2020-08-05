@@ -17,8 +17,6 @@
     $panels = [...$panels, newPanel];
     currentId.set(newPanel.id);
     hOverflow.scrollRight();
-    remote.savePanels($panels);
-    remote.setCurrentPanelId(newPanel.id);
   }
 
   function toggleEditMode() {
