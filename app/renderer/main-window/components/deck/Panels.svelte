@@ -120,6 +120,10 @@
   function removeGridItem(id) {
     panel.widgets = panel.widgets.filter(widget => widget.id !== id);
   }
+
+  function editGridItem(id) {
+    console.log("editGridItem:", id);
+  }
 </script>
 
 
@@ -179,7 +183,10 @@
 
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={panel.widgets} let:item {...gridOptions}>
-    <GridItem {item} editMode={$panels.editMode} on:remove={removeGridItem.bind(null, item.id)} />
+    <GridItem {item} editMode={$panels.editMode}
+      on:edit={editGridItem.bind(null, item.id)}
+      on:remove={removeGridItem.bind(null, item.id)}
+    />
   </Grid>
 </div>
 

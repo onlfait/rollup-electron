@@ -10,7 +10,11 @@
   $: icon = item.icon ? `background-image: url("/public/grid-icons/${item.icon.name}");` : "";
 </script>
 
-<div class="flex h-full bg-center bg-no-repeat bg-cover" style="{icon} {bg}">
+<div
+  style="{icon} {bg}"
+  on:dblclick={dispatch.bind(null, "edit")}
+  class="flex h-full bg-center bg-no-repeat bg-cover"
+>
   {#if editMode}
   <span
     on:click={dispatch.bind(null, "remove")}
