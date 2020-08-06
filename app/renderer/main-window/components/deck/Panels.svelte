@@ -3,28 +3,54 @@
 
   import Button from "../Button.svelte";
   import HOverflow from "../HOverflow.svelte";
-  import MdAdd from "svelte-icons/md/MdAdd.svelte";
-  import MdSettings from "svelte-icons/md/MdSettings.svelte";
-
   import InputText from "../InputText.svelte";
+  import GridItem from "./GridItem.svelte";
+
+  import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdApps from "svelte-icons/md/MdApps.svelte";
+  import MdSettings from "svelte-icons/md/MdSettings.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
   import MdAddToPhotos from "svelte-icons/md/MdAddToPhotos.svelte";
+
+  import Grid from "svelte-grid";
+  import gridHelp from "svelte-grid/src/utils/helper";
 
   import { panels } from "../../stores/panels";
 
   let of = null;
   let panel = null;
 
-  $: console.log("$panels:", $panels);
-  $: console.log("panel:", panel);
+  let gridOptions = {
+    gap: 4,
+    cols: 10,
+    rowHeight: 50,
+    fillEmpty: false,
+    useTransform: true
+  };
+
+  const defaultItem =  {
+    x: 0, y: 0,
+    w: 2, h: 2,
+    min: { w: 2, h: 2 },
+    color: "#424242",
+    icon: null,
+    label: null
+  };
 
   $: if ($panels) {
     panel = $panels.panels.find(p => p.id === $panels.currentId);
   }
 
+  $: panel && updatePanel();
+
   function toggleEditMode() {
     $panels.editMode = !$panels.editMode;
+    $panels.panels = $panels.panels.map(panel => {
+      panel.widgets = panel.widgets.map(widget => {
+        return { ...widget, ...editableItem() };
+      });
+      return panel;
+    });
   }
 
   function setCurrentId(id) {
@@ -33,8 +59,8 @@
 
   function addPanel() {
     const id = uuid();
-    const name = `Power n°${$panels.panels.length + 1}`;
-    $panels.panels = [...$panels.panels, { id, name }];
+    const name = `Powers group n°${$panels.panels.length + 1}`;
+    $panels.panels = [...$panels.panels, { id, name, widgets: [] }];
     setCurrentId(id);
     of.scrollRight();
   }
@@ -67,12 +93,32 @@
     });
   }
 
+  function editableItem() {
+    return {
+      static: !$panels.editMode,
+      resizable: $panels.editMode,
+      draggable: $panels.editMode
+    };
+  }
+
+  function createItem() {
+    return { id: uuid(), ...defaultItem, ...editableItem() };
+  }
+
   function addGridItem() {
-    console.log("addGridItem");
+    const { cols } = gridOptions;
+    const newItem = gridHelp.item(createItem());
+    const oldItems = gridHelp.findSpaceForItem(newItem, panel.widgets, cols);
+    panel.widgets = [...panel.widgets, ...[{ ...newItem, ...oldItems }]];
   }
 
   function adjustGrid() {
-    console.log("adjustGrid");
+    const { cols } = gridOptions;
+    panel.widgets = gridHelp.resizeItems(panel.widgets, cols);
+  }
+
+  function removeGridItem(id) {
+    panel.widgets = panel.widgets.filter(widget => widget.id !== id);
   }
 </script>
 
@@ -119,7 +165,6 @@
   <div class="p-1">
     <InputText
       bind:value={panel.name}
-      on:input={updatePanel}
       on:enterKey={toggleEditMode}
     >Rename</InputText>
   </div>
@@ -132,8 +177,10 @@
 </div>
 {/if}
 
-<div>
-  {$panels.currentId}
+<div class="flex-auto overflow-auto p-1">
+  <Grid bind:items={panel.widgets} let:item {...gridOptions}>
+    <GridItem {item} editMode={$panels.editMode} on:remove={removeGridItem.bind(null, item.id)} />
+  </Grid>
 </div>
 
 {/if}
