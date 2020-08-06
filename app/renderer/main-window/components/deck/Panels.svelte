@@ -188,6 +188,8 @@
 {/if}
 
 
+{#if panel}
+
 {#if !panel.widgets.length}
 <div class="p-2">
   No widgets found o_O ! Click on the cog button to add your first power !
@@ -201,6 +203,7 @@
     />
   </Grid>
 </div>
+{/if}
 {/if}
 
 {/if}
