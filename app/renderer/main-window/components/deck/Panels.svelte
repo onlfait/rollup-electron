@@ -187,6 +187,12 @@
 </div>
 {/if}
 
+
+{#if !panel.widgets.length}
+<div class="p-2">
+  No widgets found o_O ! Click on the cog button to add your first power !
+</div>
+{:else}
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={panel.widgets} let:item {...gridOptions}>
     <GridItem {item} editMode={$panels.editMode}
@@ -195,6 +201,7 @@
     />
   </Grid>
 </div>
+{/if}
 
 {/if}
 
