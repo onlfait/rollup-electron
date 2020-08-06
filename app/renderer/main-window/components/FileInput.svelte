@@ -7,14 +7,17 @@
   export let label = "Select a file";
   export let accept = "*";
 
+  let input = "";
+
   function onChange(event) {
     dispatch("file", event.target.files[0]);
+    input.value = "";
   }
 </script>
 
 <div class="file-input">
   <Button text="light">{label}</Button>
-  <input type="file" {accept} on:change="{onChange}"/>
+  <input type="file" bind:this={input} {accept} on:change="{onChange}"/>
 </div>
 
 <style>

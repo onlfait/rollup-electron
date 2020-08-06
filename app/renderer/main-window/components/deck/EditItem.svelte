@@ -1,6 +1,9 @@
 <script>
+  import Button from "../Button.svelte";
   import FileInput from "../FileInput.svelte";
   import ColorPicker from "../ColorPicker.svelte";
+
+  import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
   export let item = null;
 
@@ -14,6 +17,10 @@
     item = { ...item, icon: { name, path } };
   }
 
+  function removeIcon() {
+    item = { ...item, icon: null };
+  }
+
   function onColor({ detail }) {
     item = { ...item, color: detail.hex };
   }
@@ -24,9 +31,11 @@
   <div class="flex flex-col">
     <div class="font-medium">Background image</div>
     <div class="flex items-center">
-      <FileInput accept="image/*" on:file="{onImage}" />
+      <FileInput label="Upload image" accept="image/*" on:file="{onImage}" />
+      <Button text="light" mx="2">Select image</Button>
       {#if icon}
-      <img src="/public/grid-icons/{icon}" class="ml-2 h-10" alt="{icon}">
+      <img src="/public/grid-icons/{icon}" class="h-10" alt="{icon}">
+      <span on:click={removeIcon} class="ml-2 w-8 h-8 text-gray-500 hover:text-danger-dark"><MdDelete /></span>
       {:else}
       <span class="ml-1 italic">No image selected</span>
       {/if}

@@ -3,6 +3,8 @@
   export let h = 0;
   export let px = 2;
   export let py = 2;
+  export let mx = 0;
+  export let my = 0;
   export let size = 0;
   export let icon = false;
   export let flex = true;
@@ -34,6 +36,8 @@
     h && cls.push(`h-${h}`);
     px && cls.push(`px-${px}`);
     py && cls.push(`py-${py}`);
+    mx && cls.push(`mx-${mx}`);
+    my && cls.push(`my-${my}`);
     bg && cls.push(`bg-${bg}`);
     text && cls.push(`text-${text}`);
 
