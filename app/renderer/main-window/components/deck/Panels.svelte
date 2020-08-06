@@ -1,6 +1,7 @@
 <script>
   import { v4 as uuid } from "uuid";
 
+  import Modal from "../Modal.svelte";
   import Button from "../Button.svelte";
   import HOverflow from "../HOverflow.svelte";
   import InputText from "../InputText.svelte";
@@ -19,6 +20,7 @@
 
   let of = null;
   let panel = null;
+  let editItem = null;
 
   let gridOptions = {
     gap: 4,
@@ -121,8 +123,12 @@
     panel.widgets = panel.widgets.filter(widget => widget.id !== id);
   }
 
-  function editGridItem(id) {
-    console.log("editGridItem:", id);
+  function editGridItem(item) {
+    editItem = item;
+  }
+
+  function closeEditGrid() {
+    editItem = null;
   }
 </script>
 
@@ -184,10 +190,18 @@
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={panel.widgets} let:item {...gridOptions}>
     <GridItem {item} editMode={$panels.editMode}
-      on:edit={editGridItem.bind(null, item.id)}
+      on:edit={editGridItem.bind(null, item)}
       on:remove={removeGridItem.bind(null, item.id)}
     />
   </Grid>
 </div>
 
+{/if}
+
+{#if editItem}
+<Modal on:click={closeEditGrid}>
+  <div class="p-10 bg-light text-dark rounded overflow-auto shadow">
+    <div>Edit {editItem.id}</div>
+  </div>
+</Modal>
 {/if}
