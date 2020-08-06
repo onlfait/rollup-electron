@@ -127,10 +127,10 @@
 
 <div class="flex items-center">
   <div class="inline-flex p-2">
-    <Button first on:click={addPanel}>
+    <Button first text="light" on:click={addPanel}>
       <span class="w-6 h-6"><MdAdd /></span>
     </Button>
-    <Button last on:click={toggleEditMode} disabled={!$panels.panels.length} bg={$panels.editMode ? "danger" : "secondary"}>
+    <Button last text="light" on:click={toggleEditMode} disabled={!$panels.panels.length} bg={$panels.editMode ? "danger" : "secondary"}>
       <span class="w-6 h-6"><MdSettings /></span>
     </Button>
   </div>
@@ -151,13 +151,13 @@
 {#if $panels.editMode}
 <div class="bg-secondary flex flex-wrap mx-2 p-1">
   <div class="p-1">
-    <Button on:click={adjustGrid}>
+    <Button text="light" on:click={adjustGrid}>
       <span class="w-6 h-6"><MdApps /></span>
       <span class="hidden md:inline md:ml-2">Adjust grid</span>
     </Button>
   </div>
   <div class="p-1">
-    <Button on:click={addGridItem}>
+    <Button text="light" on:click={addGridItem}>
       <span class="w-6 h-6"><MdAddToPhotos /></span>
       <span class="hidden md:inline md:ml-2">Add item</span>
     </Button>
