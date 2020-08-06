@@ -13,7 +13,7 @@
 </script>
 
 <div class="file-input">
-  <Button>{label}</Button>
+  <Button text="light">{label}</Button>
   <input type="file" {accept} on:change="{onChange}"/>
 </div>
 

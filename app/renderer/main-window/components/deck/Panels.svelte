@@ -223,7 +223,6 @@
 {#if editItem}
 <Modal on:click={closeEditGrid}>
   <div class="p-10 bg-light text-dark rounded overflow-auto shadow">
-    <div>Edit {editItem.id}</div>
     <EditItem bind:item={editItem} />
   </div>
 </Modal>

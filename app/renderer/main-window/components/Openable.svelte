@@ -1,4 +1,6 @@
 <script>
+  import { onMount, onDestroy } from "svelte";
+
   export let openOnEnter = false;
   export let closeOnLeave = false;
   export let closeOnClickOutside = true;
@@ -20,9 +22,12 @@
     closeOnLeave && close();
   };
 
-  document.addEventListener("click", () => {
+  const closeListener = () => {
     closeOnClickOutside && !hovering && close();
-  });
+  };
+
+  onMount(() => document.addEventListener("click", closeListener));
+  onDestroy(() => document.removeEventListener("click", closeListener));
 </script>
 
 <div
@@ -32,6 +37,8 @@
   on:mouseleave={leave}>
   <slot>open</slot>
   {#if opened}
-  <slot name="open">Empty "open" slot.</slot>
+  <div on:click|stopPropagation>
+    <slot name="open">Empty "open" slot.</slot>
+  </div>
   {/if}
 </div>

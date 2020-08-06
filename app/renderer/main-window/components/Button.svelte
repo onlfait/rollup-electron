@@ -49,6 +49,6 @@
   }
 </script>
 
-<button class="{cls}" {disabled} on:click|stopPropagation>
+<button class="{cls}" {disabled} on:click>
   <slot />
 </button>
