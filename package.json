@@ -41,7 +41,7 @@
     "rollup-plugin-svelte-svg": "^0.2.3",
     "rollup-plugin-terser": "^6.1.0",
     "svelte": "^3.24.0",
-    "svelte-color": "^1.0.2",
+    "svelte-color": "https://github.com/skarab42/svelte-color",
     "svelte-grid": "^1.11.0",
     "svelte-icons": "^2.1.0",
     "tailwindcss": "^1.5.2",

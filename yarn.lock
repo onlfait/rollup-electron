@@ -3910,10 +3910,9 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-svelte-color@^1.0.2:
+"svelte-color@https://github.com/skarab42/svelte-color":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/svelte-color/-/svelte-color-1.0.2.tgz#5ce13d3e4948b22a5ee78e0bbbc11310f583324e"
-  integrity sha512-4wSMwh4b0E9Xf+8k8BW0tgsp6rm1ghpOBERH5eWjIwZwMU72oax4gMxU4WB4qv8Iwusgw45GoxBhZsgr/GIx4w==
+  resolved "https://github.com/skarab42/svelte-color#be91f265f64fdbf9057938566080159c46b1ce71"
   dependencies:
     tinycolor2 "^1.4.1"
 

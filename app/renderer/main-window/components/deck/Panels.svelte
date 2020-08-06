@@ -6,6 +6,7 @@
   import HOverflow from "../HOverflow.svelte";
   import InputText from "../InputText.svelte";
   import GridItem from "./GridItem.svelte";
+  import EditItem from "./EditItem.svelte";
 
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdApps from "svelte-icons/md/MdApps.svelte";
@@ -44,6 +45,7 @@
   }
 
   $: panel && updatePanel();
+  $: editItem && updateGridItem(editItem);
 
   function toggleEditMode() {
     $panels.editMode = !$panels.editMode;
@@ -123,8 +125,19 @@
     panel.widgets = panel.widgets.filter(widget => widget.id !== id);
   }
 
+  function updateGridItem(item) {
+    panel.widgets = panel.widgets.map(widget => {
+      if (widget.id === item.id) {
+        return { ...widget, ...item, ...editableItem() };
+      }
+      return widget;
+    });
+  }
+
   function editGridItem(item) {
-    editItem = item;
+    if ($panels.editMode) {
+      editItem = item;
+    }
   }
 
   function closeEditGrid() {
@@ -187,7 +200,6 @@
 </div>
 {/if}
 
-
 {#if panel}
 
 {#if !panel.widgets.length}
@@ -212,6 +224,7 @@
 <Modal on:click={closeEditGrid}>
   <div class="p-10 bg-light text-dark rounded overflow-auto shadow">
     <div>Edit {editItem.id}</div>
+    <EditItem bind:item={editItem} />
   </div>
 </Modal>
 {/if}
