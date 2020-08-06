@@ -4,11 +4,13 @@
 
   export let item = null;
 
-  $: icon = item && item.icon;
+  $: icon = item && item.icon && item.icon.name;
   $: color = item && item.color;
 
-  function onImage() {
-    console.log("onImage");
+  async function onImage(event) {
+    let { name, path } = event.detail;
+    name = await remote.addGridIcon({ name, path });
+    item = { ...item, icon: { name, path } };
   }
 
   function onColor(event) {

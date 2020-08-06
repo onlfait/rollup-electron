@@ -15,5 +15,6 @@ contextBridge.exposeInMainWorld("remote", {
   twitch: (api, args = []) => ipcRenderer.invoke("twitch", { api, args }),
   openTwitchChat: () => ipcRenderer.invoke("openTwitchChat"),
   setPanels: (...args) => ipcRenderer.invoke("setPanels", ...args),
-  getPanels: (...args) => ipcRenderer.invoke("getPanels", ...args)
+  getPanels: (...args) => ipcRenderer.invoke("getPanels", ...args),
+  addGridIcon: (...args) => ipcRenderer.invoke("addGridIcon", ...args)
 });

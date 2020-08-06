@@ -22,3 +22,4 @@ ipcMain.handle("openTwitchChat", openTwitchChat);
 
 ipcMain.handle("setPanels", panels.set);
 ipcMain.handle("getPanels", panels.get);
+ipcMain.handle("addGridIcon", panels.addGridIcon);
