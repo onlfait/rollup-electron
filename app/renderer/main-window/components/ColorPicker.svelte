@@ -8,10 +8,8 @@
 
   let color;
 
-  export let options = {
-    startColor: "#fff",
-    disableAlpha: true
-  };
+  export let startColor = "#fff";
+  export let disableAlpha = true;
 
   function onColor(event) {
     dispatch("color", event.detail);
@@ -23,7 +21,8 @@
   <div slot="open">
     <div class="absolute z-50 bg-gray-500 text-gray-800">
       <ChromePicker
-        {...options}
+        {startColor}
+        {disableAlpha}
         bind:color
         on:input={onColor}
       />

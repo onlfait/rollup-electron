@@ -45,7 +45,7 @@
   <div class="flex flex-col">
     <div class="font-medium">Background color</div>
     <div class="flex items-center">
-      <ColorPicker options={{startColor:color}} on:color={onColor} />
+      <ColorPicker startColor={color} disableAlpha={true} on:color={onColor} />
       <div class="ml-2 w-10 h-10" style="background-color: {color}"></div>
     </div>
   </div>
