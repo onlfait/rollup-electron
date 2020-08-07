@@ -4,6 +4,7 @@ let obs = null;
 let reconnectionTimeout = 5000;
 
 function log(...args) {
+  // eslint-disable-next-line
   console.log(">>> OBS:", ...args);
 }
 
