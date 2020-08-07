@@ -4,15 +4,21 @@ const {
   setDarkModeRemote
 } = require("../../app/setDarkMode");
 
+const events = require("events");
+const obsEmitter = new events.EventEmitter();
+
 ipcRenderer.on("setDarkMode", (event, darkMode) => {
   setDarkModeLocale(darkMode);
 });
 
-ipcRenderer.on("obs", (event, { type, args }) => {
-  console.log("obs:", { type, args });
+ipcRenderer.on("obs", (event, { type, data }) => {
+  obsEmitter.emit(type, data);
 });
 
 contextBridge.exposeInMainWorld("remote", {
+  obs: {
+    on: (...args) => obsEmitter.on(...args)
+  },
   setDarkMode: setDarkModeRemote(ipcRenderer),
   isDarkMode: () => ipcRenderer.invoke("isDarkMode"),
   uncaughtError: error => ipcRenderer.invoke("uncaughtError", error),

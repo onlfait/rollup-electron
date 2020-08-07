@@ -5,3 +5,6 @@ require("../commons/styles/index.css");
 
 const App = require("./App.svelte");
 new App({ target: document.body });
+
+remote.obs.on("opened", () => console.log("OBS opened !"));
+remote.obs.on("closed", () => console.log("OBS closed !"));

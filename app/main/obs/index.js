@@ -23,11 +23,11 @@ module.exports = function connect({
     obs = null;
     setTimeout(() => {
       log("Reconnection...");
-      connect({ host, port, password });
+      connect({ host, port, password, win });
     }, reconnectionTimeout);
   };
 
-  const send = (type, ...args) => win.webContents.send("obs", { type, args });
+  const send = (type, data) => win.webContents.send("obs", { type, data });
 
   obs.on("ConnectionOpened", () => {
     log("Connection opened");
