@@ -9,7 +9,7 @@ function log(...args) {
 }
 
 exports.send = function(...args) {
-  return obs.send(...args);
+  return obs && obs.send(...args);
 };
 
 exports.connect = function connect({
@@ -49,9 +49,19 @@ exports.connect = function connect({
     .connect({ address, password })
     .then(() => {
       log("Connected");
+      const onmessage = obs._socket.onmessage;
+      obs._socket.onmessage = msg => {
+        onmessage(msg);
+        const message = JSON.parse(msg.data);
+        if (message["update-type"]) {
+          const type = message["update-type"];
+          send(type, message);
+          log("event:", type);
+        }
+      };
     })
     .catch(error => {
-      log("Error:", error);
+      log("Error:", error.code);
       reconnect();
     });
 };
