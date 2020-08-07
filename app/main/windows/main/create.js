@@ -3,7 +3,7 @@ const { hasDevTools, appName, appIcon, obsConfig } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
 const storeWindow = require("../../app/storeWindow");
-const obsConnect = require("../../obs");
+const { connect: obsConnect } = require("../../obs");
 const path = require("path");
 
 let win = null;

@@ -7,7 +7,11 @@ function log(...args) {
   console.log(">>> OBS:", ...args);
 }
 
-module.exports = function connect({
+exports.send = function(...args) {
+  return obs.send(...args);
+};
+
+exports.connect = function connect({
   host = "localhost",
   port = 4444,
   password = null,

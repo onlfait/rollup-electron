@@ -8,6 +8,7 @@ const relaunchApp = require("../app/relaunch");
 const exitApp = require("../app/exit");
 
 const panels = require("./panels");
+const { send: obsSend } = require("../obs");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
@@ -23,3 +24,5 @@ ipcMain.handle("openTwitchChat", openTwitchChat);
 ipcMain.handle("setPanels", panels.set);
 ipcMain.handle("getPanels", panels.get);
 ipcMain.handle("addGridIcon", panels.addGridIcon);
+
+ipcMain.handle("obs", async (event, ...args) => await obsSend(...args));
