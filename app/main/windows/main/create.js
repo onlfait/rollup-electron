@@ -1,8 +1,9 @@
 const createBrowserWindow = require("../../app/security/createBrowserWindow");
-const { hasDevTools, appName, appIcon } = require("../../config");
+const { hasDevTools, appName, appIcon, obsConfig } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
 const storeWindow = require("../../app/storeWindow");
+const obsConnect = require("../../obs");
 const path = require("path");
 
 let win = null;
@@ -33,6 +34,7 @@ module.exports = function create({ show = true } = {}) {
   hasDevTools && win.webContents.openDevTools();
 
   win.webContents.on("did-finish-load", () => {
+    obsConnect({ ...obsConfig, win });
     show && win.show();
   });
 

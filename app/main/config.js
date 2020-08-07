@@ -24,5 +24,10 @@ module.exports = {
   twitchConfig: {
     clientId: "imjraqfj76pwp3za7hagehonex3xph",
     forceVerify: false
+  },
+  obsConfig: {
+    password: "$up3rSecretP@ssw0rd",
+    host: "localhost",
+    port: 4444
   }
 };

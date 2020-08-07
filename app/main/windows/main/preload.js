@@ -8,6 +8,10 @@ ipcRenderer.on("setDarkMode", (event, darkMode) => {
   setDarkModeLocale(darkMode);
 });
 
+ipcRenderer.on("obs", (event, { type, args }) => {
+  console.log("obs:", { type, args });
+});
+
 contextBridge.exposeInMainWorld("remote", {
   setDarkMode: setDarkModeRemote(ipcRenderer),
   isDarkMode: () => ipcRenderer.invoke("isDarkMode"),
