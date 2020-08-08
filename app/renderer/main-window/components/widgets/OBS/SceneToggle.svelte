@@ -13,8 +13,12 @@
 
 <div
   on:click={setCurrentScene.bind(null, target)}
-  class="flex flex-col w-full"
+  class="flex flex-col w-full h-full items-center cursor-pointer hover:bg-black hover:bg-opacity-25"
 >
-	<div class="p-2 opacity-25">{$scene}</div>
-  <div class="p-2 font-bold text-xl cursor-pointer hover:bg-black hover:bg-opacity-25">{target}</div>
+	<div class="px-2 pt-2 text-xs opacity-25">{$scene}</div>
+  <div class="flex p-2 font-bold text-xl h-full items-center">
+    <div class="">
+      {target}
+    </div>
+  </div>
 </div>
