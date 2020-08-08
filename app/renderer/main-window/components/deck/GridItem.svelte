@@ -2,9 +2,10 @@
   import { createEventDispatcher } from "svelte";
 
   import SceneList from "../widgets/OBS/SceneList.svelte";
+  import SceneButton from "../widgets/OBS/SceneButton.svelte";
   import SceneToggle from "../widgets/OBS/SceneToggle.svelte";
 
-  const widgets = { SceneList, SceneToggle };
+  const widgets = { SceneList, SceneButton, SceneToggle };
 
   export let item = null;
   export let editMode = false;

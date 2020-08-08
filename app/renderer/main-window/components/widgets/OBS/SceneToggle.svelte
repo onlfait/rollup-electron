@@ -1,14 +1,10 @@
 <script>
-  import { scene } from "../../../stores/obs";
+  import { scene, setCurrentScene } from "../../../stores/obs";
 
   export let scene1 = null;
   export let scene2 = null;
 
   $: target = $scene === scene2 ? scene1 : scene2;
-
-  function setCurrentScene(name) {
-    remote.obs.send("SetCurrentScene", { "scene-name": name });
-  }
 </script>
 
 <div

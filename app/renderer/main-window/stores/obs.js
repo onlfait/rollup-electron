@@ -5,17 +5,18 @@ export const scenes = writable(null);
 export const scene = writable(null);
 export const stats = writable(null);
 
-function send(...args) {
-  return remote.obs
-    .send(...args)
-    .then(data => Promise.resolve(data))
-    .catch(e => {
-      console.warn("OBS is probably not opened...", e);
-    });
+export function send(...args) {
+  return remote.obs.send(...args).catch(e => {
+    console.warn("OBS is probably not opened...", e);
+  });
+}
+
+export function setCurrentScene(name) {
+  return send("SetCurrentScene", { "scene-name": name });
 }
 
 export function updateSceneList() {
-  send("GetSceneList").then(async data => {
+  return send("GetSceneList").then(async data => {
     if (!data) {
       data = await remote.obs.store.get("scenes", {});
     }

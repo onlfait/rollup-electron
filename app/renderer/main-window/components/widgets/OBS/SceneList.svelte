@@ -1,11 +1,7 @@
 <script>
-  import { scenes, scene } from "../../../stores/obs";
+  import { scenes, scene, setCurrentScene } from "../../../stores/obs";
 
   $: scenesArray = ($scenes && $scenes.scenes) || [];
-
-  function setCurrentScene(name) {
-    remote.obs.send("SetCurrentScene", { "scene-name": name });
-  }
 </script>
 
 <div class="flex flex-col w-full">

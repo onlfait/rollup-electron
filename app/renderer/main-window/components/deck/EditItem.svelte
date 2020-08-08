@@ -5,9 +5,10 @@
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import SceneButton from "../widgets/OBS/SceneButtonSettings.svelte";
   import SceneToggle from "../widgets/OBS/SceneToggleSettings.svelte";
 
-  const widgetsSettings = { SceneToggle };
+  const widgetsSettings = { SceneButton, SceneToggle };
 
   export let item = null;
 
@@ -16,6 +17,7 @@
   let widgets = [
     { label: "None", name: null },
     { label: "Scene list", name: "SceneList" },
+    { label: "Go to scene", name: "SceneButton", props: { scene: null } },
     { label: "Toggle scene", name: "SceneToggle", props: { scene1: null, scene2: null } },
     { label: "Live ON/OFF", name: "LiveToggle" },
     { label: "Record ON/OFF", name: "RecordToggle" },
