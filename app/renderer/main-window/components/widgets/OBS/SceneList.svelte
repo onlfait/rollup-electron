@@ -2,9 +2,6 @@
   import { onMount } from "svelte";
   import { opened, scenes, scene, updateSceneList } from "../../../stores/obs";
 
-  // $: console.log("$scenes:", $scenes);
-  $: console.log("$scene:", $scene);
-
   $: scenesArray = ($scenes && $scenes.scenes) || [];
 
   onMount(() => {
