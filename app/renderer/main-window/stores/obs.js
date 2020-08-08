@@ -5,6 +5,9 @@ export const scenes = writable(null);
 export const scene = writable(null);
 export const stats = writable(null);
 
+export const streaming = writable(null);
+export const recording = writable(null);
+
 export function send(...args) {
   return remote.obs.send(...args).catch(e => {
     console.warn("OBS is probably not opened...", e);
@@ -30,6 +33,22 @@ export function updateSceneList() {
 
 export async function updateStats() {
   stats.set(await send("GetStats"));
+  const streamStats = await send("GetStreamingStatus");
+  streaming.set(
+    !streamStats.streaming
+      ? false
+      : {
+        timecode: streamStats["stream-timecode"]
+      }
+  );
+  recording.set(
+    !streamStats.recording
+      ? false
+      : {
+        paused: streamStats["recording-paused"],
+        timecode: streamStats["rec-timecode"]
+      }
+  );
 }
 
 function updateStatsAndCheckIfOpened() {
@@ -57,4 +76,12 @@ remote.obs.on("ScenesChanged", () => {
 
 remote.obs.on("SwitchScenes", data => {
   scene.set(data["scene-name"]);
+});
+
+remote.obs.on("RecordingStarted", data => {
+  recording.set({ timecode: data["rec-timecode"] });
+});
+
+remote.obs.on("RecordingStopped", () => {
+  recording.set(false);
 });
