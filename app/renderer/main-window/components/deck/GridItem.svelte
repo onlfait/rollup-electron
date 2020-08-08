@@ -2,8 +2,9 @@
   import { createEventDispatcher } from "svelte";
 
   import SceneList from "../widgets/OBS/SceneList.svelte";
+  import SceneToggle from "../widgets/OBS/SceneToggle.svelte";
 
-  const widgets = { SceneList };
+  const widgets = { SceneList, SceneToggle };
 
   export let item = null;
   export let editMode = false;
@@ -29,7 +30,7 @@
     {/if}
 
     {#if item.widget}
-    <svelte:component this={widgets[item.widget.name]} />
+    <svelte:component this={widgets[item.widget.name]} {...item.widget.props} />
     {/if}
 
   </div>

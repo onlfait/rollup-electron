@@ -6,6 +6,7 @@ export const scene = writable(null);
 export const stats = writable(null);
 
 export async function updateSceneList() {
+  // TODO debounce/throttle ?
   const _scenes = await remote.obs.emit("GetSceneList");
   scene.set(_scenes["current-scene"]);
   scenes.set(_scenes);

@@ -5,12 +5,18 @@
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import SceneToggle from "../widgets/OBS/SceneToggleSettings.svelte";
+
+  const widgetsSettings = { SceneToggle };
+
   export let item = null;
 
   $: type = item && item.widget;
 
   let widgets = [
+    { label: "None", name: null },
     { label: "Scene list", name: "SceneList" },
+    { label: "Toggle scene", name: "SceneToggle", props: { scene1: null, scene2: null } },
     { label: "Live ON/OFF", name: "LiveToggle" },
     { label: "Record ON/OFF", name: "RecordToggle" },
   ];
@@ -49,9 +55,13 @@
           {t.label}
         </option>
       {/each}
-    </select>
+      </select>
     </div>
   </div>
+
+  {#if type}
+  <svelte:component this={widgetsSettings[type.name]} bind:item={item} />
+  {/if}
 
   <div class="flex flex-col">
     <div class="font-medium">Background image</div>
