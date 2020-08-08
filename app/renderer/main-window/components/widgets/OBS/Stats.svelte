@@ -12,8 +12,6 @@
     mem = parseInt(_stats["memory-usage"]);
     cpu = parseFloat(_stats["cpu-usage"]).toFixed(1);
   }
-
-  // $: console.log("_stats:", _stats);
 </script>
 
 {#if $opened && _stats}
