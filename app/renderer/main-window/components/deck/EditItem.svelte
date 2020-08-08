@@ -5,10 +5,7 @@
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import SceneButton from "../widgets/OBS/SceneButtonSettings.svelte";
-  import SceneToggle from "../widgets/OBS/SceneToggleSettings.svelte";
-
-  const widgetsSettings = { SceneButton, SceneToggle };
+  import widgetsSettings from "../widgets/settings";
 
   export let item = null;
 
