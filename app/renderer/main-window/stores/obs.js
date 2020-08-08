@@ -2,10 +2,13 @@ import { writable } from "svelte/store";
 
 export const opened = writable(false);
 export const scenes = writable(null);
+export const scene = writable(null);
 export const stats = writable(null);
 
 export async function updateSceneList() {
-  scenes.set(await remote.obs.emit("GetSceneList"));
+  const _scenes = await remote.obs.emit("GetSceneList");
+  scene.set(_scenes["current-scene"]);
+  scenes.set(_scenes);
 }
 
 export async function updateStats() {
@@ -33,4 +36,8 @@ remote.obs.on("closed", () => {
 
 remote.obs.on("ScenesChanged", () => {
   updateSceneList();
+});
+
+remote.obs.on("SwitchScenes", data => {
+  scene.set(data["scene-name"]);
 });

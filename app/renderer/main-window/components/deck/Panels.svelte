@@ -37,7 +37,8 @@
     min: { w: 2, h: 2 },
     color: "#424242",
     icon: null,
-    label: null
+    label: null,
+    widget: null,
   };
 
   $: if ($panels) {

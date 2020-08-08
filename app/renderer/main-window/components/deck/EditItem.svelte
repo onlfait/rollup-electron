@@ -7,6 +7,14 @@
 
   export let item = null;
 
+  $: type = item && item.widget;
+
+  let widgets = [
+    { label: "Scene list", name: "SceneList" },
+    { label: "Live ON/OFF", name: "LiveToggle" },
+    { label: "Record ON/OFF", name: "RecordToggle" },
+  ];
+
   $: icon = item && item.icon && item.icon.name;
   $: color = item && item.color;
 
@@ -24,9 +32,26 @@
   function onColor({ detail }) {
     item = { ...item, color: detail.hex };
   }
+
+  function onTypeChange() {
+    item = { ...item, widget: type };
+  }
 </script>
 
 <div class="flex flex-col mx-2 space-y-2">
+
+  <div class="flex flex-col">
+    <div class="font-medium">Type</div>
+    <div class="flex items-center">
+      <select bind:value={type} on:change={onTypeChange}>
+      {#each widgets as t}
+        <option value={t} selected={type && type.name === t.name}>
+          {t.label}
+        </option>
+      {/each}
+    </select>
+    </div>
+  </div>
 
   <div class="flex flex-col">
     <div class="font-medium">Background image</div>

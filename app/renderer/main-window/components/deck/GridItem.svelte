@@ -1,6 +1,10 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
+  import SceneList from "../widgets/OBS/SceneList.svelte";
+
+  const widgets = { SceneList };
+
   export let item = null;
   export let editMode = false;
 
@@ -13,17 +17,29 @@
 <div
   style="{icon} {bg}"
   on:dblclick={dispatch.bind(null, "edit")}
-  class="flex h-full bg-center bg-no-repeat bg-cover"
+  class="flex h-full bg-center bg-no-repeat bg-cover overflow-auto"
 >
+
+  <div class="flex flex-col w-full">
+
+    {#if item.label || (item.widget && item.widget.label)}
+    <div class="bg-black text-light opacity-50 text-center px-2">
+      {item.label || item.widget.label}
+    </div>
+    {/if}
+
+    {#if item.widget}
+    <svelte:component this={widgets[item.widget.name]} />
+    {/if}
+
+  </div>
+
   {#if editMode}
+  <div class="absolute inset-0"></div>
   <span
     on:click={dispatch.bind(null, "remove")}
     class="absolute text-danger hover:bg-red-800 hover:text-gray-200 right-0 px-1 cursor-pointer"
   >✕</span>
   {/if}
-  {#if item.label}
-  <div class="bg-black text-light opacity-50 text-center absolute bottom-0 right-0 left-0 px-2 overflow-hidden truncate">
-    {item.label}
-  </div>
-  {/if}
+
 </div>
