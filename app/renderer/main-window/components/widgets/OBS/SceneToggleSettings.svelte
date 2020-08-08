@@ -1,16 +1,9 @@
 <script>
-  import { onMount } from "svelte";
-  import { opened, scenes, updateSceneList } from "../../../stores/obs";
+  import { scenes  } from "../../../stores/obs";
 
   export let item = null;
 
   $: scenesArray = ($scenes && $scenes.scenes) || [];
-
-  $: console.log("item:", item);
-
-  onMount(() => {
-    opened && updateSceneList();
-  });
 </script>
 
 <div class="flex flex-wrap">

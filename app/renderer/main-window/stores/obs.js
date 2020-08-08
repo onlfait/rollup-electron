@@ -5,15 +5,30 @@ export const scenes = writable(null);
 export const scene = writable(null);
 export const stats = writable(null);
 
-export async function updateSceneList() {
-  // TODO debounce/throttle ?
-  const _scenes = await remote.obs.emit("GetSceneList");
-  scene.set(_scenes["current-scene"]);
-  scenes.set(_scenes);
+function send(...args) {
+  return remote.obs
+    .send(...args)
+    .then(data => Promise.resolve(data))
+    .catch(e => {
+      console.warn("OBS is probably not opened...", e);
+    });
+}
+
+export function updateSceneList() {
+  send("GetSceneList").then(async data => {
+    if (!data) {
+      data = await remote.obs.store.get("scenes", {});
+    }
+    if (data) {
+      remote.obs.store.set("scenes", data);
+      scene.set(data["current-scene"]);
+      scenes.set(data);
+    }
+  });
 }
 
 export async function updateStats() {
-  stats.set(await remote.obs.emit("GetStats"));
+  stats.set(await send("GetStats"));
 }
 
 function updateStatsAndCheckIfOpened() {

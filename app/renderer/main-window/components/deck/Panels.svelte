@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { v4 as uuid } from "uuid";
 
   import Modal from "../Modal.svelte";
@@ -18,6 +19,11 @@
   import gridHelp from "svelte-grid/src/utils/helper";
 
   import { panels } from "../../stores/panels";
+  import { opened, updateSceneList } from "../../stores/obs";
+
+  onMount(() => {
+    opened && updateSceneList();
+  });
 
   let of = null;
   let panel = null;

@@ -1,3 +1,4 @@
+const store = require("../stores/obs");
 const OBSWebSocket = require("obs-websocket-js");
 
 let obs = null;
@@ -7,6 +8,8 @@ function log(...args) {
   // eslint-disable-next-line
   console.log(">>> OBS:", ...args);
 }
+
+exports.store = store;
 
 exports.send = function(...args) {
   return obs && obs.send(...args);

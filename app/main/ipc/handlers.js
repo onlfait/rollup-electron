@@ -8,7 +8,7 @@ const relaunchApp = require("../app/relaunch");
 const exitApp = require("../app/exit");
 
 const panels = require("./panels");
-const { send: obsSend } = require("../obs");
+const { send: obsSend, store: obsStore } = require("../obs");
 
 ipcMain.handle("uncaughtError", uncaughtError);
 
@@ -25,4 +25,6 @@ ipcMain.handle("setPanels", panels.set);
 ipcMain.handle("getPanels", panels.get);
 ipcMain.handle("addGridIcon", panels.addGridIcon);
 
-ipcMain.handle("obs", async (event, ...args) => await obsSend(...args));
+ipcMain.handle("obs.send", (event, ...args) => obsSend(...args));
+ipcMain.handle("obs.store.get", (event, ...args) => obsStore.get(...args));
+ipcMain.handle("obs.store.set", (event, ...args) => obsStore.set(...args));

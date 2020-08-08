@@ -1,15 +1,10 @@
 <script>
-  import { onMount } from "svelte";
-  import { opened, scenes, scene, updateSceneList } from "../../../stores/obs";
+  import { scenes, scene } from "../../../stores/obs";
 
   $: scenesArray = ($scenes && $scenes.scenes) || [];
 
-  onMount(() => {
-    opened && updateSceneList();
-  });
-
   function setCurrentScene(name) {
-    remote.obs.emit("SetCurrentScene", { "scene-name": name });
+    remote.obs.send("SetCurrentScene", { "scene-name": name });
   }
 </script>
 

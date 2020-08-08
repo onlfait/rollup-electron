@@ -18,7 +18,11 @@ ipcRenderer.on("obs", (event, { type, data }) => {
 contextBridge.exposeInMainWorld("remote", {
   obs: {
     on: (...args) => obsEmitter.on(...args),
-    emit: (...args) => ipcRenderer.invoke("obs", ...args)
+    send: (...args) => ipcRenderer.invoke("obs.send", ...args),
+    store: {
+      get: (...args) => ipcRenderer.invoke("obs.store.get", ...args),
+      set: (...args) => ipcRenderer.invoke("obs.store.set", ...args)
+    }
   },
   setDarkMode: setDarkModeRemote(ipcRenderer),
   isDarkMode: () => ipcRenderer.invoke("isDarkMode"),
