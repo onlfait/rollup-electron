@@ -2,18 +2,19 @@ const { app } = require("electron");
 
 const registerAppProtocol = require("./app/protocol");
 const singleInstance = require("./app/singleInstance");
+
+const preventRemoteEvents = require("./security/preventRemoteEvents");
+const webContentsSecurity = require("./security/webContentsSecurity");
+const setPermissions = require("./security/setPermissions");
+const setCSP = require("./security/setCSP");
+
 const createMainWindow = require("./windows/main/create");
 const createTray = require("./tray/create");
-
-const preventRemoteEvents = require("./app/security/preventRemoteEvents");
-const webContentsSecurity = require("./app/security/webContentsSecurity");
-const setPermissions = require("./app/security/setPermissions");
-const setCSP = require("./app/security/setCSP");
 
 const { isDev, livereload } = require("./config");
 
 if (isDev) {
-  require("./app/livereload")(livereload);
+  require("./livereload")(livereload);
 }
 
 registerAppProtocol();

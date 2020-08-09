@@ -1,4 +1,4 @@
-const createBrowserWindow = require("../../app/security/createBrowserWindow");
+const createBrowserWindow = require("../../security/createBrowserWindow");
 const { hasDevTools, appName, appIcon } = require("../../config");
 const hideWinOnClose = require("../../app/hideWinOnClose");
 const createTitlebar = require("../../app/titlebar");
