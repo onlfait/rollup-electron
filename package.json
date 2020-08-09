@@ -24,14 +24,12 @@
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-replace": "^2.3.3",
-    "animejs": "^3.2.0",
     "chalk": "^4.1.0",
     "chokidar": "^3.4.1",
     "electron": "^9.1.0",
     "electron-builder": "^22.7.0",
     "eslint": "^7.5.0",
     "eslint-plugin-svelte3": "^2.7.3",
-    "minireset.css": "^0.0.6",
     "postcss-import": "^12.0.1",
     "rollup": "^2.22.1",
     "rollup-plugin-cleaner": "^1.0.0",
@@ -41,22 +39,13 @@
     "rollup-plugin-svelte-svg": "^0.2.3",
     "rollup-plugin-terser": "^6.1.0",
     "svelte": "^3.24.0",
-    "svelte-color": "https://github.com/skarab42/svelte-color",
-    "svelte-grid": "^1.11.0",
     "svelte-icons": "^2.1.0",
     "tailwindcss": "^1.5.2",
-    "throttle-debounce": "^2.2.1",
     "tree-kill": "^1.2.2",
     "ws": "^7.3.1"
   },
   "dependencies": {
     "electron-store": "^6.0.0",
-    "fs-extra": "^9.0.1",
-    "obs-websocket-js": "^4.0.1",
-    "open": "^7.1.0",
-    "qs": "^6.9.4",
-    "twitch": "^4.0.10",
-    "twitch-chat-client": "^4.0.10",
-    "uuid": "^8.3.0"
+    "fs-extra": "^9.0.1"
   }
 }

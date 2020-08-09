@@ -1,8 +1,7 @@
 <script>
-  // import Landing from "./components/Landing.svelte";
-  import Topbar from "./components/app/Topbar.svelte";
-  import Content from "./components/app/Content.svelte";
+  import "./index.css";
+
+  let world = "World";
 </script>
 
-<Topbar />
-<Content />
+Hello {world}

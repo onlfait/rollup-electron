@@ -12,12 +12,6 @@
   },
   "dependencies": {
     "electron-store": "^6.0.0",
-    "fs-extra": "^9.0.1",
-    "obs-websocket-js": "^4.0.1",
-    "open": "^7.1.0",
-    "qs": "^6.9.4",
-    "twitch": "^4.0.10",
-    "twitch-chat-client": "^4.0.10",
-    "uuid": "^8.3.0"
+    "fs-extra": "^9.0.1"
   }
 }

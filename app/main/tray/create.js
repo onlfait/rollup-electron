@@ -1,26 +1,17 @@
 const { Tray, Menu } = require("electron");
 const showMainWindow = require("../windows/main/create");
-const showChatWindow = require("../windows/twitch-chat/create");
-const { appIcon, appName } = require("../config");
 const toggleWindow = require("../app/toggleWindow");
+const { appIcon, appName } = require("../config");
 const quit = require("../app/quit");
 const path = require("path");
 
 let tray = null;
-
-function show(args) {
-  console.log("SHOW", args);
-}
 
 function createMenu() {
   return Menu.buildFromTemplate([
     { label: appName, enabled: false },
     { type: "separator" },
     { label: "Main", click: () => showMainWindow() },
-    { label: "Chat", click: () => showChatWindow() },
-    { type: "separator" },
-    { label: "Help", click: () => show({ path: "/help" }) },
-    { label: "About", click: () => show({ path: "/about" }) },
     { type: "separator" },
     { label: "Quit", click: () => quit() }
   ]);

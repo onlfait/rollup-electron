@@ -20,14 +20,5 @@ module.exports = {
   appName: appConfig.name,
   appIcon: appConfig.icon,
   hasDevTools: isDev || isDebug,
-  livereload: { host: "localhost", port: 42042 },
-  twitchConfig: {
-    clientId: "imjraqfj76pwp3za7hagehonex3xph",
-    forceVerify: false
-  },
-  obsConfig: {
-    password: "$up3rSecretP@ssw0rd",
-    host: "localhost",
-    port: 4444
-  }
+  livereload: { host: "localhost", port: 42042 }
 };
