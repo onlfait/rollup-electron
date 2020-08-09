@@ -20,7 +20,7 @@ const watch = process.env.ROLLUP_WATCH;
 const sourcemap = watch ? "inline" : false;
 const dir = watch ? "dev" : "prod";
 
-const entries = ["main-window"];
+const entries = ["windows/main"];
 
 (async function functionName() {
   await makePackageJSON({

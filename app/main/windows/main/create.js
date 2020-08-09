@@ -25,7 +25,7 @@ module.exports = function create({ show = true } = {}) {
     }
   });
 
-  win.loadURL("app://renderer/main-window/index.html");
+  win.loadURL("app://renderer/windows/main/index.html");
   hasDevTools && win.webContents.openDevTools();
 
   win.webContents.on("did-finish-load", () => {
