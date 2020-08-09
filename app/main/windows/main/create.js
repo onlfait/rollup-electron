@@ -1,8 +1,5 @@
-const createBrowserWindow = require("../../security/createBrowserWindow");
-const { hasDevTools, appName, appIcon } = require("../../config");
-const hideWinOnClose = require("../../app/hideWinOnClose");
-const createTitlebar = require("../../app/titlebar");
-const storeWindow = require("../../app/storeWindow");
+const createBrowserWindow = require("../../app/createBrowserWindow");
+const { hasDevTools } = require("../../config");
 const path = require("path");
 
 let win = null;
@@ -14,20 +11,19 @@ module.exports = function create({ show = true } = {}) {
   }
 
   win = createBrowserWindow({
+    title: "main",
     width: 800,
     height: 600,
     show: false,
     frame: false,
-    title: "MainWindow",
+    titlebar: true,
+    hideOnClose: true,
+    storeBounds: true,
     webPreferences: {
       devTools: hasDevTools,
       preload: path.resolve(__dirname, "preload.js")
     }
   });
-
-  hideWinOnClose(win);
-  storeWindow({ win, name: "main" });
-  createTitlebar({ win, title: appName, icon: appIcon });
 
   win.loadURL("app://renderer/main-window/index.html");
   hasDevTools && win.webContents.openDevTools();
