@@ -2,7 +2,7 @@ const { session } = require("electron");
 
 // https://github.com/reZach/secure-electron-template/blob/master/app/electron/main.js#L109
 // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
-module.exports = function setCSP(cspRules = {}) {
+module.exports = function setContentSecurityPolicy(cspRules = {}) {
   let cspRulesArray = Object.entries(cspRules);
 
   if (!cspRulesArray.length) {

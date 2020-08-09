@@ -3,15 +3,23 @@ const { app } = require("electron");
 const registerAppProtocol = require("./app/protocol");
 const singleInstance = require("./app/singleInstance");
 
+const setWebContentsSecurity = require("./security/setWebContentsSecurity");
 const preventRemoteEvents = require("./security/preventRemoteEvents");
-const webContentsSecurity = require("./security/webContentsSecurity");
 const setPermissions = require("./security/setPermissions");
-const setCSP = require("./security/setCSP");
+const setContentSecurityPolicy = require("./security/setContentSecurityPolicy");
 
 const createMainWindow = require("./windows/main/create");
 const createTray = require("./tray/create");
 
-const { isDev, livereload } = require("./config");
+const {
+  isDev,
+  livereload,
+  permissions,
+  webContentsSecurity,
+  contentSecurityPolicy
+} = require("./config");
+
+singleInstance(() => createMainWindow());
 
 if (isDev) {
   require("./livereload")(livereload);
@@ -20,16 +28,10 @@ if (isDev) {
 registerAppProtocol();
 preventRemoteEvents();
 
-singleInstance(() => createMainWindow());
-
 app.whenReady().then(() => {
-  setCSP({});
-  setPermissions([]);
-  webContentsSecurity({
-    redirectOrigins: [],
-    navigateOrigins: [],
-    newWindowOrigins: []
-  });
+  setPermissions(permissions);
+  setWebContentsSecurity(webContentsSecurity);
+  setContentSecurityPolicy(contentSecurityPolicy);
   const mainWin = createMainWindow();
   createTray({ mainWin });
 });

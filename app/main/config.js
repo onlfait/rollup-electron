@@ -10,6 +10,16 @@ const userPath = app.getPath("userData");
 const publicPath = path.resolve(userPath, "public");
 const staticPath = path.resolve(__dirname, "../static");
 
+const permissions = [];
+
+const webContentsSecurity = {
+  redirectOrigins: [],
+  navigateOrigins: [],
+  newWindowOrigins: []
+};
+
+const contentSecurityPolicy = {};
+
 module.exports = {
   isDev,
   isDebug,
@@ -17,6 +27,9 @@ module.exports = {
   userPath,
   publicPath,
   staticPath,
+  permissions,
+  webContentsSecurity,
+  contentSecurityPolicy,
   appName: appConfig.name,
   appIcon: appConfig.icon,
   hasDevTools: isDev || isDebug,
