@@ -9,8 +9,8 @@ export const streaming = writable(null);
 export const recording = writable(null);
 
 export function send(...args) {
-  return remote.obs.send(...args).catch(e => {
-    console.warn("OBS is probably not opened...", e);
+  return remote.obs.send(...args).catch(() => {
+    console.warn("OBS is probably not opened...");
   });
 }
 
@@ -55,7 +55,7 @@ function updateStatsAndCheckIfOpened() {
   updateStats()
     .then(() => opened.set(true))
     .catch(() => opened.set(false));
-  setTimeout(updateStatsAndCheckIfOpened, 2000);
+  // setTimeout(updateStatsAndCheckIfOpened, 2000);
 }
 
 updateStatsAndCheckIfOpened();
@@ -84,4 +84,12 @@ remote.obs.on("RecordingStarted", data => {
 
 remote.obs.on("RecordingStopped", () => {
   recording.set(false);
+});
+
+remote.obs.on("StreamStarted", data => {
+  streaming.set({ timecode: data["stream-timecode"] });
+});
+
+remote.obs.on("StreamStopped", () => {
+  streaming.set(false);
 });

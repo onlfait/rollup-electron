@@ -12,7 +12,10 @@ function log(...args) {
 exports.store = store;
 
 exports.send = function(...args) {
-  return obs && obs.send(...args);
+  if (!obs) {
+    return Promise.reject("OBS is not initialized");
+  }
+  return obs.send(...args);
 };
 
 exports.connect = function connect({
@@ -29,10 +32,10 @@ exports.connect = function connect({
 
   const reconnect = () => {
     obs = null;
-    setTimeout(() => {
-      log("Reconnection...");
-      connect({ host, port, password, win });
-    }, reconnectionTimeout);
+    // setTimeout(() => {
+    //   log("Reconnection...");
+    //   connect({ host, port, password, win });
+    // }, reconnectionTimeout);
   };
 
   const send = (type, data) => win.webContents.send("obs", { type, data });

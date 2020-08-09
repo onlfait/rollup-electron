@@ -18,7 +18,10 @@ ipcRenderer.on("obs", (event, { type, data }) => {
 contextBridge.exposeInMainWorld("remote", {
   obs: {
     on: (...args) => obsEmitter.on(...args),
-    send: (...args) => ipcRenderer.invoke("obs.send", ...args),
+    send: (...args) =>
+      ipcRenderer
+        .invoke("obs.send", ...args)
+        .catch(e => console.log("caca>>>>")),
     store: {
       get: (...args) => ipcRenderer.invoke("obs.store.get", ...args),
       set: (...args) => ipcRenderer.invoke("obs.store.set", ...args)

@@ -26,7 +26,7 @@
     {/if}
 
     {#if item.widget}
-    <svelte:component this={widgets[item.widget.name]} {...item.widget.props} />
+    <svelte:component this={widgets[item.widget.name]} bind:item {...item.widget.props} />
     {/if}
 
   </div>
