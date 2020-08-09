@@ -1,10 +1,19 @@
 <script>
+  import { onMount } from "svelte";
+
+  let element = null;
+
   function stopPropagation(e) {
     e.stopPropagation();
   }
+
+  onMount(() => {
+    document.body.append(element);
+  });
+
 </script>
 
-<div class="modal">
+<div bind:this={element} class="modal">
   <div on:click class="absolute z-50 inset-0 bg-black opacity-75"></div>
   <div on:click class="absolute z-50 inset-0">
     <div class="flex justify-center h-screen">
