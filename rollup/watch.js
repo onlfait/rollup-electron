@@ -39,6 +39,12 @@ function cleanStack(stack) {
   return { message, location };
 }
 
+function printStack(stack) {
+  const { message, location } = cleanStack(stack);
+  error("Electron:", message);
+  error("Electron:", location);
+}
+
 function launchElectron() {
   if (electronApp) return;
   log("Starting electron app...");
@@ -47,6 +53,9 @@ function launchElectron() {
     stdio: "ignore"
   });
   electronApp.unref(); // detach
+  electronApp.on("error", err => {
+    printStack(err.stack);
+  });
   electronApp.on("exit", code => {
     log(`Electron app exited (code: ${code}).`);
     electronApp = null;
@@ -63,9 +72,7 @@ const events = {
     log(`Bundling took ${duration} ms`);
   },
   ["ERROR"](event) {
-    const { message, location } = cleanStack(event.error.stack);
-    error(message);
-    error(location);
+    printStack(event.error.stack);
   },
   ["END"]() {
     launchElectron();

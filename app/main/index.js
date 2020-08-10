@@ -19,7 +19,3 @@ function createMainWindow() {
 app.whenReady().then(() => {
   createMainWindow();
 });
-
-process.on("message", m => {
-  console.log("CHILD got message:", m);
-});
