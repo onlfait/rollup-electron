@@ -1,2 +1,1 @@
-const App = require("./App.svelte");
-new App({ target: document.body });
+console.log("renderer/windows/main/index.js");

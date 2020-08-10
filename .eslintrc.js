@@ -10,17 +10,6 @@ module.exports = {
     ecmaVersion: 2019,
     sourceType: "module"
   },
-  plugins: ["svelte3"],
-  overrides: [
-    {
-      files: ["*.svelte"],
-      processor: "svelte3/svelte3"
-    }
-  ],
-  globals: {
-    remote: true,
-    __isDev__: true
-  },
   rules: {
     "no-console": "warn",
     "no-debugger": "warn",

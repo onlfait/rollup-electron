@@ -1,37 +1,21 @@
-const { app } = require("electron");
+const { app, BrowserWindow } = require("electron");
+const { isDev } = require("./config");
 
-const registerAppProtocol = require("./app/protocol");
-const singleInstance = require("./app/singleInstance");
+let win = null;
 
-const setWebContentsSecurity = require("./security/setWebContentsSecurity");
-const preventRemoteEvents = require("./security/preventRemoteEvents");
-const setPermissions = require("./security/setPermissions");
-const setContentSecurityPolicy = require("./security/setContentSecurityPolicy");
+function createMainWindow() {
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    backgroundColor: "#fff"
+  });
 
-const createMainWindow = require("./windows/main/create");
-const createTray = require("./tray/create");
+  const path = isDev ? "../../dist/rollup/dev" : "..";
 
-const {
-  isDev,
-  livereload,
-  permissions,
-  webContentsSecurity,
-  contentSecurityPolicy
-} = require("./config");
-
-singleInstance(() => createMainWindow());
-
-if (isDev) {
-  require("./livereload")(livereload);
+  win.loadFile(`${path}/renderer/windows/main/index.html`);
+  win.webContents.openDevTools();
 }
 
-registerAppProtocol();
-preventRemoteEvents();
-
 app.whenReady().then(() => {
-  setPermissions(permissions);
-  setWebContentsSecurity(webContentsSecurity);
-  setContentSecurityPolicy(contentSecurityPolicy);
-  const mainWin = createMainWindow();
-  createTray({ mainWin });
+  createMainWindow();
 });
