@@ -5,11 +5,12 @@ const rollup = require("rollup");
 const chalk = require("chalk");
 const path = require("path");
 
-const electronArgs = ["app/main/index.js"];
 const rootPath = path.resolve(__dirname, "..");
 const configFile = path.resolve(__dirname, "config.js");
 
-let electronStarted = false;
+const electronArgs = ["app/main/index.js"];
+
+let electronApp = null;
 
 process.argv.push("--dev");
 
@@ -38,6 +39,20 @@ function cleanStack(stack) {
   return { message, location };
 }
 
+function launchElectron() {
+  if (electronApp) return;
+  log("Starting electron app...");
+  electronApp = spawn(electron, electronArgs, {
+    detached: true,
+    stdio: "ignore"
+  });
+  electronApp.unref(); // detach
+  electronApp.on("exit", code => {
+    log(`Electron app exited (code: ${code}).`);
+    electronApp = null;
+  });
+}
+
 const events = {
   ["START"]() {},
   ["BUNDLE_START"]({ input }) {
@@ -53,19 +68,7 @@ const events = {
     error(location);
   },
   ["END"]() {
-    if (!electronStarted) {
-      electronStarted = true;
-      log("Starting electron app...");
-      const app = spawn(electron, electronArgs, {
-        detached: true,
-        stdio: "ignore"
-      });
-      app.unref();
-      app.on("exit", code => {
-        log(`Electron app exited (code: ${code}).`);
-        electronStarted = false;
-      });
-    }
+    launchElectron();
     log("Waiting for change...");
   }
 };
