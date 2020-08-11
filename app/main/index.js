@@ -1,8 +1,11 @@
 const { app, BrowserWindow } = require("electron");
+
+const registerAppProtocol = require("./app/protocol");
+
 const { isDev } = require("./config");
 
 if (isDev) {
-  require("./livereload");
+  require("./app/livereload");
 }
 
 let win = null;
@@ -14,11 +17,11 @@ function createMainWindow() {
     backgroundColor: "#fff"
   });
 
-  const path = isDev ? "../../dist/rollup/dev" : "..";
-
-  win.loadFile(`${path}/renderer/windows/main/index.html`);
+  win.loadURL("app://renderer/windows/main/index.html");
   win.webContents.openDevTools();
 }
+
+registerAppProtocol();
 
 app.whenReady().then(() => {
   createMainWindow();
