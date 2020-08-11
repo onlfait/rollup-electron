@@ -19,3 +19,7 @@ function createMainWindow() {
 app.whenReady().then(() => {
   createMainWindow();
 });
+
+if (isDev) {
+  require("./livereload");
+}
