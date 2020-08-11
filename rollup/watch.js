@@ -100,8 +100,8 @@ loadConfigFile(configFile, { format: "es" })
       events[event.code](event);
     });
   })
-  .catch(() => {
-    rp.error(`Could not resolve config (${configFile}).`);
+  .catch(err => {
+    printStack(err.stack);
   });
 
 const watcher = chokidar.watch("app/main/**/*");

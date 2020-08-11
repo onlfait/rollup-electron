@@ -9,13 +9,24 @@
     "electron:prod": "electron dist/rollup/prod/main/index.js",
     "electron:dev": "electron app/main/index.js --dev",
     "watch": "node rollup/watch.js",
+    "dist": "node rollup/dist.js",
     "lint": "eslint --fix app"
+  },
+  "build": {
+    "productName": "Marv",
+    "icon": "app/static/icon.ico",
+    "directories": {
+      "app": "dist/rollup/prod",
+      "output": "dist/app"
+    }
   },
   "devDependencies": {
     "chalk": "^4.1.0",
     "chokidar": "^3.4.2",
     "electron": "^9.2.0",
+    "electron-builder": "^22.8.0",
     "eslint": "^7.6.0",
+    "fs-extra": "^9.0.1",
     "rollup": "^2.23.1",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0"
