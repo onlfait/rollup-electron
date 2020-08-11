@@ -48,9 +48,9 @@ function launchElectron() {
   rp.info("Starting electron app...");
   electronApp = spawn(electron, electronArgs, {
     stdio: ["inherit", "pipe", "inherit", "ipc"],
-    detached: true
+    detached: false
   });
-  electronApp.unref(); // detach
+  // electronApp.unref(); // detach
   electronApp.stdout.on("data", data => {
     const str = data.toString();
     let type = str.match(/warning/i) ? "warn" : "info";
@@ -65,7 +65,7 @@ function launchElectron() {
     printStack(err.stack);
   });
   electronApp.on("exit", code => {
-    rp.info(`Electron app exited (code: ${code}).`);
+    rp.info(`Electron app exited (code: ${code})`);
     electronApp = null;
     if (relaunch) {
       relaunch = false;
