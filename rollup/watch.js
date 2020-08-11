@@ -14,8 +14,8 @@ const ep = print("electron", { info: "#1789d6" });
 const rootPath = path.resolve(__dirname, "..");
 const configFile = path.resolve(__dirname, "config.js");
 
+let relaunch = false;
 let electronApp = null;
-let firstBundle = true;
 const electronArgs = ["app/main/index.js", "--dev"];
 
 process.argv.push("--dev");
@@ -39,9 +39,12 @@ function electronPrint(type, message) {
   message && ep[type](message);
 }
 
+function electronSend(...args) {
+  electronApp && electronApp.send(...args);
+}
+
 function launchElectron() {
   if (electronApp) return;
-  firstBundle = true;
   rp.info("Starting electron app...");
   electronApp = spawn(electron, electronArgs, {
     stdio: ["inherit", "pipe", "inherit", "ipc"],
@@ -54,7 +57,7 @@ function launchElectron() {
     type = str.match(/error|exception|rejection/i) ? "error" : type;
     str.split("\n").forEach(line => electronPrint(type, line));
   });
-  // Uncomment to get some feedback from the renderer
+  // [!!!] Uncomment to get some feedback from the renderer
   // electronApp.on("message", msg => {
   //   console.log(">>>", msg);
   // });
@@ -64,6 +67,10 @@ function launchElectron() {
   electronApp.on("exit", code => {
     rp.info(`Electron app exited (code: ${code}).`);
     electronApp = null;
+    if (relaunch) {
+      relaunch = false;
+      launchElectron();
+    }
   });
 }
 
@@ -82,11 +89,7 @@ const events = {
   ["END"]() {
     rp.info("Waiting for change...");
     launchElectron();
-    if (firstBundle) {
-      firstBundle = false;
-    } else {
-      electronApp.send("rollup.end");
-    }
+    electronSend("rollup.end");
   }
 };
 
@@ -107,6 +110,11 @@ watcher.on("ready", () => {
   watcher.on("change", path => {
     ep.info(chalk.green(`♻ ${cleanPath(path)}`));
     ep.info("Waiting for change...");
-    // relaunch();
+    if (electronApp) {
+      electronSend("exit");
+      relaunch = true;
+    } else {
+      launchElectron();
+    }
   });
 });

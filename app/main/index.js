@@ -1,6 +1,10 @@
 const { app, BrowserWindow } = require("electron");
 const { isDev } = require("./config");
 
+if (isDev) {
+  require("./livereload");
+}
+
 let win = null;
 
 function createMainWindow() {
@@ -19,7 +23,3 @@ function createMainWindow() {
 app.whenReady().then(() => {
   createMainWindow();
 });
-
-if (isDev) {
-  require("./livereload");
-}
