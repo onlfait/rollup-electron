@@ -1,15 +1,18 @@
 const { createSecureWindow } = require("../security");
-const { isDev, isDebug } = require("../../config");
+const hideWinOnClose = require("./hideOnClose");
+const config = require("../../config");
 const path = require("path");
 
 let win = null;
 
-const devTools = isDev || isDebug;
+const devTools = config.isDev || config.isDebug;
 
 module.exports = function createWindow({
   name,
   show = true,
-  preload = false
+  preload = false,
+  hideOnClose = false,
+  ...options
 } = {}) {
   if (win) {
     show && win.show();
@@ -21,6 +24,7 @@ module.exports = function createWindow({
   }
 
   win = createSecureWindow({
+    ...options,
     width: 800,
     height: 600,
     show: false,
@@ -31,6 +35,8 @@ module.exports = function createWindow({
   win.name = name;
 
   win.loadURL(`app://renderer/windows/${name}/index.html`);
+
+  hideOnClose && hideWinOnClose(win);
 
   win.webContents.once("did-finish-load", () => {
     devTools && win.webContents.openDevTools();
