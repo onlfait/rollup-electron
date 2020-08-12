@@ -1,5 +1,9 @@
+const pkg = require("../../package");
 const { app } = require("electron");
 const path = require("path");
+
+const appName = pkg.build.productName;
+const appIcon = pkg.build.icon;
 
 const isDev = process.argv.includes("--dev");
 const isDebug = process.argv.includes("--debug");
@@ -20,6 +24,8 @@ const contentSecurityPolicy = {};
 module.exports = {
   isDev,
   isDebug,
+  appName,
+  appIcon,
   appPath,
   userPath,
   publicPath,
