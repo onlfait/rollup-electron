@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require("electron");
+const { BrowserWindow } = require("electron");
+const quit = require("./quit");
 
 function log(...args) {
   // eslint-disable-next-line
@@ -16,6 +17,6 @@ process.on("message", msg => {
       win.webContents.reloadIgnoringCache();
     });
   } else if (msg === "exit") {
-    app.quit();
+    quit();
   }
 });
