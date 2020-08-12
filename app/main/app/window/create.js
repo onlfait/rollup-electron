@@ -7,6 +7,7 @@ const path = require("path");
 let win = null;
 
 const devTools = config.isDev || config.isDebug;
+const icon = path.resolve(__dirname, `../../../../${config.appIcon}`);
 
 module.exports = function createWindow({
   name,
@@ -26,6 +27,7 @@ module.exports = function createWindow({
   }
 
   win = createSecureWindow({
+    icon,
     ...options,
     width: 800,
     height: 600,
@@ -36,13 +38,15 @@ module.exports = function createWindow({
 
   win.name = name;
 
-  win.loadURL(`app://renderer/windows/${name}/index.html`);
-
   storeBounds && winStoreBounds(win);
   hideOnClose && winHideOnClose(win);
+
+  win.loadURL(`app://renderer/windows/${name}/index.html`);
 
   win.webContents.once("did-finish-load", () => {
     devTools && win.webContents.openDevTools();
     show && win.show();
   });
+
+  return win;
 };
