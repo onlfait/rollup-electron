@@ -5,6 +5,7 @@ module.exports = function createMainWindow(options = {}) {
     ...options,
     name: "main",
     preload: true,
+    storeBounds: true,
     hideOnClose: true
   });
 };
