@@ -1,24 +1,13 @@
-const { app, BrowserWindow } = require("electron");
+const { app } = require("electron");
 
 const registerAppProtocol = require("./app/protocol");
+
+const createMainWindow = require("./windows/main/create");
 
 const { isDev } = require("./config");
 
 if (isDev) {
   require("./app/livereload");
-}
-
-let win = null;
-
-function createMainWindow() {
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    backgroundColor: "#fff"
-  });
-
-  win.loadURL("app://renderer/windows/main/index.html");
-  win.webContents.openDevTools();
 }
 
 registerAppProtocol();
