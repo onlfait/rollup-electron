@@ -1,4 +1,4 @@
-const { BrowserWindow } = require("electron");
+const createSecureWindow = require("../security/window/create");
 const { isDev, isDebug } = require("../../config");
 const path = require("path");
 
@@ -20,7 +20,7 @@ module.exports = function createWindow({
     preload = path.resolve(__dirname, `../../windows/${name}/preload.js`);
   }
 
-  win = new BrowserWindow({
+  win = createSecureWindow({
     width: 800,
     height: 600,
     show: false,
