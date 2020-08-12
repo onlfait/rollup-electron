@@ -1,4 +1,4 @@
-const createSecureWindow = require("../security/window/create");
+const { createSecureWindow } = require("../security");
 const { isDev, isDebug } = require("../../config");
 const path = require("path");
 
