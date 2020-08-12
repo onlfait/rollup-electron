@@ -6,13 +6,19 @@ let win = null;
 
 const devTools = isDev || isDebug;
 
-module.exports = function createWindow({ name, show = true } = {}) {
+module.exports = function createWindow({
+  name,
+  show = true,
+  preload = false
+} = {}) {
   if (win) {
     show && win.show();
     return win;
   }
 
-  const preload = path.resolve(__dirname, `../../windows/${name}/preload.js`);
+  if (preload) {
+    preload = path.resolve(__dirname, `../../windows/${name}/preload.js`);
+  }
 
   win = new BrowserWindow({
     width: 800,
