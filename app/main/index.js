@@ -2,6 +2,7 @@ const { app } = require("electron");
 
 const appSecurity = require("./app/security");
 const registerAppProtocol = require("./app/protocol");
+const singleInstance = require("./app/singleInstance");
 const createMainWindow = require("./windows/main/create");
 
 const config = require("./config");
@@ -11,6 +12,7 @@ if (config.isDev) {
 }
 
 registerAppProtocol();
+singleInstance(createMainWindow);
 appSecurity.preventRemoteEvents();
 
 app.whenReady().then(() => {
