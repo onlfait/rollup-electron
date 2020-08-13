@@ -8,6 +8,7 @@
   "scripts": {
     "electron:prod": "electron dist/rollup/prod/main/index.js",
     "electron:dev": "electron app/main/index.js --dev",
+    "tailwind": "node tailwind/build.js",
     "watch": "node rollup/watch.js",
     "dist": "node rollup/dist.js",
     "lint": "eslint --fix app"
@@ -29,7 +30,8 @@
     "fs-extra": "^9.0.1",
     "rollup": "^2.23.1",
     "rollup-plugin-cleaner": "^1.0.0",
-    "rollup-plugin-copy": "^3.3.0"
+    "rollup-plugin-copy": "^3.3.0",
+    "tailwindcss": "^1.6.2"
   },
   "dependencies": {
     "electron-store": "^6.0.0"
