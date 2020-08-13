@@ -1,6 +1,7 @@
 const { createSecureWindow } = require("../security");
 const winStoreBounds = require("./storeBounds");
 const winHideOnClose = require("./hideOnClose");
+const winTitlebar = require("./titlebar");
 const config = require("../../config");
 const path = require("path");
 
@@ -12,6 +13,7 @@ const icon = path.resolve(__dirname, `../../../../${config.appIcon}`);
 module.exports = function createWindow({
   name,
   show = true,
+  titlebar = true,
   preload = false,
   storeBounds = false,
   hideOnClose = false,
@@ -32,12 +34,14 @@ module.exports = function createWindow({
     width: 800,
     height: 600,
     show: false,
+    frame: false,
     backgroundColor: "#fff",
     webPreferences: { devTools, preload }
   });
 
   win.name = name;
 
+  titlebar && winTitlebar(win);
   storeBounds && winStoreBounds(win);
   hideOnClose && winHideOnClose(win);
 
