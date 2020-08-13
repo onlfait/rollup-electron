@@ -1,3 +1,4 @@
+import commonsConfig from "./commons.config";
 import windowsConfig from "./windows.config";
 
-module.exports = [...windowsConfig()];
+module.exports = [...commonsConfig(), ...windowsConfig()];
