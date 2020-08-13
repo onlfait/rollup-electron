@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const loadConfigFile = require("rollup/dist/loadConfigFile");
 const { spawn } = require("child_process");
 const chokidar = require("chokidar");

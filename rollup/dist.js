@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const loadConfigFile = require("rollup/dist/loadConfigFile");
 const builder = require("electron-builder");
 const rollup = require("rollup");
