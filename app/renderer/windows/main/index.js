@@ -1,7 +1,6 @@
 console.log("renderer/windows/main/index.js");
 
 document.addEventListener("click", () => {
-  const darkMode = titlebar.getDarkMode();
-  titlebar.setDarkMode(!darkMode);
+  let darkMode = titlebar.toggleDarkMode();
   titlebar.setTitle(`${darkMode ? "Dark" : "Light"} mode`);
 });

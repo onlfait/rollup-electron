@@ -25,7 +25,7 @@ function insertTailwind(wc) {
 function createTitlebar(wc, title) {
   prependHTML(
     wc,
-    `<div id="app-titlebar" class="flex items-center bg-black text-white dark:bg-white dark:text-black">
+    `<div id="app-titlebar" class="flex items-center bg-white text-black dark:bg-black dark:text-white">
       <div class="icon p-1"><img class="h-4" src="app://renderer/static/icon.ico" alt="icon" /></div>
       <div class="title p-1 flex-auto" style="-webkit-app-region: drag;">title</div>
       <div class="close p-1 w-8 hover:bg-red-600 text-center cursor-default">⨉</div>
