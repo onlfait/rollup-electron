@@ -28,8 +28,11 @@ module.exports = function createWindow({
     preload = path.resolve(__dirname, `../../windows/${name}/preload.js`);
   }
 
+  const title = options.title || name;
+
   win = createSecureWindow({
     icon,
+    title,
     ...options,
     width: 800,
     height: 600,
@@ -41,9 +44,9 @@ module.exports = function createWindow({
 
   win.name = name;
 
-  titlebar && winTitlebar(win);
   storeBounds && winStoreBounds(win);
   hideOnClose && winHideOnClose(win);
+  titlebar && winTitlebar(win, { title });
 
   win.loadURL(`app://renderer/windows/${name}/index.html`);
 
