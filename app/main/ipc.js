@@ -1,9 +1,29 @@
-const { ipcMain } = require("electron");
-
 const appStore = require("./stores/app");
+const { ipcMain } = require("electron");
+const dotProp = require("dot-prop");
 
-ipcMain.handle("remote", (event, method, ...args) => {
-  if (method === "app.setDarkMode") {
-    appStore.set("darkMode", args[0]);
+const remote = {
+  app: {
+    setDarkMode(enable = true) {
+      appStore.set("darkMode", enable);
+    }
   }
+};
+
+ipcMain.handle("remote", (event, endpoint, ...args) => {
+  if (typeof endpoint !== "string") {
+    throw new Error("Remote endpoint must be string");
+  }
+
+  const func = dotProp.get(remote, endpoint, null);
+
+  if (!func) {
+    throw new Error(`Undefined remote endpoint: ${endpoint}`);
+  }
+
+  if (typeof func !== "function") {
+    throw new Error(`Remote endpoint must be callable: ${endpoint}`);
+  }
+
+  return func(...args);
 });
