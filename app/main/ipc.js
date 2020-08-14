@@ -1,5 +1,9 @@
 const { ipcMain } = require("electron");
 
-ipcMain.handle("remote", (event, ...args) => {
-  console.log(">>> remote", args);
+const appStore = require("./stores/app");
+
+ipcMain.handle("remote", (event, method, ...args) => {
+  if (method === "app.setDarkMode") {
+    appStore.set("darkMode", args[0]);
+  }
 });
