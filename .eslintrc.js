@@ -17,5 +17,8 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "linebreak-style": ["error", "unix"]
+  },
+  globals: {
+    titlebar: true
   }
 };

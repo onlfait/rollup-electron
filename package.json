@@ -31,7 +31,8 @@
     "rollup": "^2.23.1",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0",
-    "tailwindcss": "^1.6.2"
+    "tailwindcss": "^1.6.2",
+    "tailwindcss-dark-mode": "^1.1.6"
   },
   "dependencies": {
     "electron-store": "^6.0.0"
