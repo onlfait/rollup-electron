@@ -12,6 +12,8 @@ if (config.isDev) {
   require("./app/livereload");
 }
 
+require("./ipc");
+
 registerAppProtocol();
 singleInstance(createMainWindow);
 appSecurity.preventRemoteEvents();

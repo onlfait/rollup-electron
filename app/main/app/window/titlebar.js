@@ -22,7 +22,7 @@ function insertTailwind(wc) {
   insertStyle(wc, "app://renderer/static/styles/tailwind.css");
 }
 
-function createTitlebar(wc, title) {
+function createTitlebar(wc, { title, darkMode }) {
   prependHTML(
     wc,
     `<div id="app-titlebar" class="flex items-center bg-white text-black dark:bg-black dark:text-white">
@@ -36,7 +36,7 @@ function createTitlebar(wc, title) {
       $element: document.querySelector('#app-titlebar'),
       $title: document.querySelector('#app-titlebar .title'),
       $close: document.querySelector('#app-titlebar .close'),
-      darkMode: false,
+      darkMode: true,
       setTitle(title) {
         titlebar.$title.innerText = title;
       },
@@ -47,11 +47,14 @@ function createTitlebar(wc, title) {
         return titlebar.darkMode;
       },
       setDarkMode(enable = true) {
+        enable = !!enable;
+        titlebar.darkMode = enable;
         titlebar.$html.classList.toggle("theme--dark", enable);
         titlebar.$html.classList.toggle("theme--light", !enable);
         titlebar.$html.classList.toggle("tw-root--theme-dark", enable);
         titlebar.$html.classList.toggle("tw-root--theme-light", !enable);
-        return (titlebar.darkMode = !!enable);
+        remote.call('app.setDarkMode', enable);
+        return enable;
       },
       toggleDarkMode() {
         return titlebar.setDarkMode(!titlebar.darkMode);
@@ -59,15 +62,19 @@ function createTitlebar(wc, title) {
     }
 
     titlebar.setTitle('${title}');
+    titlebar.setDarkMode(${darkMode ? "true" : "false"});
     titlebar.$close.addEventListener('click', () => window.close());
     `
   );
 }
 
-module.exports = function titlebar(win, { title = "My app" } = {}) {
+module.exports = function titlebar(
+  win,
+  { title = "My app", darkMode = true } = {}
+) {
   const wc = win.webContents;
   wc.on("dom-ready", () => {
     insertTailwind(wc);
-    createTitlebar(wc, title);
+    createTitlebar(wc, { title, darkMode });
   });
 };

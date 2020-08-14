@@ -1,12 +1,14 @@
 const { createSecureWindow } = require("../security");
 const winStoreBounds = require("./storeBounds");
 const winHideOnClose = require("./hideOnClose");
+const appStore = require("../../stores/app");
 const winTitlebar = require("./titlebar");
 const config = require("../../config");
 const path = require("path");
 
 let win = null;
 
+const darkMode = appStore.get("darkMode", true);
 const devTools = config.isDev || config.isDebug;
 const icon = path.resolve(__dirname, `../../../../${config.appIcon}`);
 
@@ -46,7 +48,7 @@ module.exports = function createWindow({
 
   storeBounds && winStoreBounds(win);
   hideOnClose && winHideOnClose(win);
-  titlebar && winTitlebar(win, { title });
+  titlebar && winTitlebar(win, { title, darkMode });
 
   win.loadURL(`app://renderer/windows/${name}/index.html`);
 
