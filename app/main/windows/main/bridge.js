@@ -1,5 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("remote", {
-  call: (...args) => ipcRenderer.invoke("remote", ...args)
+  get: (...args) => ipcRenderer.invoke("remote.get", ...args),
+  call: (...args) => ipcRenderer.invoke("remote.call", ...args)
 });
