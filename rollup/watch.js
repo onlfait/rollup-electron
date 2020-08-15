@@ -125,7 +125,7 @@ watcher.on("ready", () => {
 });
 
 async function makePackage() {
-  ep.info(chalk.green("♻ package.json"));
+  ep.info(chalk.green("♻ app/package.json"));
   await makePackageJSON({
     from: packageFile,
     to: path.join(appPath, "package.json")
