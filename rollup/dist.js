@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const loadConfigFile = require("rollup/dist/loadConfigFile");
+const makePackageJSON = require("./makePackageJSON");
 const builder = require("electron-builder");
 const rollup = require("rollup");
 const chalk = require("chalk");
@@ -54,28 +55,6 @@ async function copy(dir) {
   const dest = path.join(distPath, dir);
   rp.info(chalk.green(`=> ${dest}`));
   await fs.copy(path.join(srcPath, dir), dest);
-}
-
-async function makePackageJSON({ from, to }) {
-  const pkg = await fs.readJson(from);
-  await fs.writeJson(
-    to,
-    {
-      license: pkg.license,
-      version: pkg.version,
-      name: pkg.name,
-      description: pkg.description,
-      author: pkg.author,
-      repository: pkg.repository,
-      main: "main/index.js",
-      appConfig: {
-        name: pkg.build.productName,
-        icon: pkg.build.icon.replace(/^app\//, "")
-      },
-      dependencies: pkg.dependencies
-    },
-    { spaces: 2 }
-  );
 }
 
 async function dist() {

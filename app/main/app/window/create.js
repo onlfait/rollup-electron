@@ -10,7 +10,7 @@ let win = null;
 
 const darkMode = appStore.get("darkMode", true);
 const devTools = config.isDev || config.isDebug;
-const icon = path.resolve(__dirname, `../../../../${config.appIcon}`);
+const icon = path.resolve(__dirname, `../../../${config.appIcon}`);
 
 module.exports = function createWindow({
   name,

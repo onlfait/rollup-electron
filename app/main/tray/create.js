@@ -6,7 +6,7 @@ const path = require("path");
 let tray = null;
 let mainWin = null;
 
-const icon = path.resolve(__dirname, `../../../${appIcon}`);
+const icon = path.resolve(__dirname, `../../${appIcon}`);
 
 function showMainWindow() {
   mainWin.show();

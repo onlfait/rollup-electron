@@ -1,9 +1,9 @@
-const pkg = require("../../package");
+const pkg = require("../package");
 const { app } = require("electron");
 const path = require("path");
 
-const appName = pkg.build.productName;
-const appIcon = pkg.build.icon;
+const appName = pkg.appConfig.name;
+const appIcon = pkg.appConfig.icon;
 
 const isDev = process.argv.includes("--dev");
 const isDebug = process.argv.includes("--debug");

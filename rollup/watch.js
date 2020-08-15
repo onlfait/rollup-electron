@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const loadConfigFile = require("rollup/dist/loadConfigFile");
+const makePackageJSON = require("./makePackageJSON");
 const { spawn } = require("child_process");
 const chokidar = require("chokidar");
 const electron = require("electron");
@@ -14,6 +15,8 @@ const rp = print("rollup", { info: "#17ccd6" });
 const ep = print("electron", { info: "#1789d6" });
 
 const rootPath = path.resolve(__dirname, "..");
+const appPath = path.resolve(rootPath, "app");
+const packageFile = path.join(rootPath, "package.json");
 const configFile = path.resolve(__dirname, "config.js");
 
 let relaunch = false;
@@ -119,4 +122,19 @@ watcher.on("ready", () => {
       launchElectron();
     }
   });
+});
+
+async function makePackage() {
+  ep.info(chalk.green("♻ package.json"));
+  await makePackageJSON({
+    from: packageFile,
+    to: path.join(appPath, "package.json")
+  });
+}
+
+const watchPackage = chokidar.watch(packageFile);
+
+watchPackage.on("ready", () => {
+  makePackage();
+  watchPackage.on("change", makePackage);
 });
