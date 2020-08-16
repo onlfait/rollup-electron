@@ -18,7 +18,7 @@ function createTitlebar(title) {
   `);
 }
 
-async function create({ title = null } = {}) {
+async function init({ title = null } = {}) {
   title = title || (await remote.api.get("app.name"));
   const $titlebar = createTitlebar(title);
   $title = $titlebar.querySelector(".title");
@@ -31,4 +31,4 @@ function setTitle(title) {
   document.title = title;
 }
 
-module.exports = { create, api: { setTitle } };
+module.exports = { init, api: { setTitle } };
