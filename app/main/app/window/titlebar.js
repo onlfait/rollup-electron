@@ -12,7 +12,7 @@ function prependHTML(wc, html, js = "") {
   wc.executeJavaScript(`
     let $titlebar = document.createElement('div');
     $titlebar.innerHTML = \`${html}\`;
-    document.body.prepend($titlebar);
+    document.body.prepend($titlebar.firstElementChild);
     $titlebar = undefined;
     ${js}
   `);
