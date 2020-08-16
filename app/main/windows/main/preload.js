@@ -1,3 +1,3 @@
-require("./bridge");
+require("../remote");
 
-console.log("main win preload");
+console.log("app/main/windows/main/preload.js");
