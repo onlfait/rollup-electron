@@ -19,7 +19,6 @@ module.exports = {
     "linebreak-style": ["error", "unix"]
   },
   globals: {
-    titlebar: true,
-    remote: true
+    app: true
   }
 };

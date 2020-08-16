@@ -34,7 +34,7 @@ module.exports = {
     content: [
       "app/renderer/**/*.html",
       "app/renderer/**/*.svelte",
-      "app/main/app/window/titlebar.js"
+      "app/main/windows/titlebar.js"
     ],
     options: {
       whitelist: ["theme--dark"]

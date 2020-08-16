@@ -12,7 +12,7 @@ if (config.isDev) {
   require("./app/livereload");
 }
 
-require("./ipc");
+// require("./ipc");
 
 registerAppProtocol();
 singleInstance(createMainWindow);
