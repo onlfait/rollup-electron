@@ -10,7 +10,7 @@ module.exports = names => {
       options = name.options || {};
       name = name.name;
     }
-    const bridge = require(`../bridges/${name}`);
+    const bridge = require(`./modules/${name}`);
     bridge.init && init.push([bridge.init, options]);
     api[name] = bridge.api;
   });
