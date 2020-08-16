@@ -1,15 +1,14 @@
 const { ipcRenderer } = require("electron");
-
 const remote = require("./remote");
 
 let $html = null;
 
 async function get() {
-  return await remote.call("app.darkMode.get");
+  return await remote.api.call("app.darkMode.get");
 }
 
 async function set(enable = true) {
-  await remote.call("app.darkMode.set", enable);
+  await remote.api.call("app.darkMode.set", enable);
   return enable;
 }
 
@@ -25,11 +24,10 @@ function setDarkMode(enable = true) {
   return enable;
 }
 
-ipcRenderer.on("app.darkMode.set", (event, enable) => setDarkMode(enable));
-
-document.addEventListener("DOMContentLoaded", async () => {
+async function init() {
   $html = document.querySelector("html");
+  ipcRenderer.on("app.darkMode.set", (event, enable) => setDarkMode(enable));
   setDarkMode(await get());
-});
+}
 
-module.exports = { get, set, toggle };
+module.exports = { init, api: { get, set, toggle } };

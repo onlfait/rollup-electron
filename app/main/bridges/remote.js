@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
 
-module.exports = {
+const api = {
   get: (...args) => ipcRenderer.invoke("remote.get", ...args),
   call: (...args) => ipcRenderer.invoke("remote.call", ...args)
 };
+
+module.exports = { api };
