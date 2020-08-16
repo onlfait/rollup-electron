@@ -1,4 +1,4 @@
-console.log("renderer/windows/main/index.js");
+console.log("app/renderer/windows/main/index.js");
 
 document.addEventListener("click", () => {
   let darkMode = titlebar.toggleDarkMode();
