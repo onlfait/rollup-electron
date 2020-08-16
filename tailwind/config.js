@@ -1,6 +1,8 @@
 const darkMode = require("tailwindcss-dark-mode");
 const defaultConfig = require("tailwindcss/defaultConfig");
 
+const purge = process.argv.includes("--prod");
+
 const { variants } = defaultConfig;
 
 const darkVariants = [
@@ -27,7 +29,17 @@ function mergeDarkVariantes(key) {
 }
 
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: purge,
+    content: [
+      "app/renderer/**/*.html",
+      "app/renderer/**/*.svelte",
+      "app/main/app/window/titlebar.js"
+    ],
+    options: {
+      whitelist: ["theme--dark"]
+    }
+  },
   theme: {
     darkSelector: ".theme--dark",
     extend: {}
