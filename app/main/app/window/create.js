@@ -6,24 +6,26 @@ const winTitlebar = require("./titlebar");
 const config = require("../../config");
 const path = require("path");
 
-let win = null;
-
 const darkMode = appStore.get("darkMode", true);
 const devTools = config.isDev || config.isDebug;
 const icon = path.resolve(__dirname, `../../../${config.appIcon}`);
 
+const uniqueWindows = new Map();
+
 module.exports = function createWindow({
   name,
   show = true,
+  unique = false,
   titlebar = true,
   preload = false,
   storeBounds = false,
   hideOnClose = false,
   ...options
 } = {}) {
-  if (win) {
-    show && win.show();
-    return win;
+  if (uniqueWindows.has(name)) {
+    const uniqueWindow = uniqueWindows.get(name);
+    show && uniqueWindow.show();
+    return uniqueWindow;
   }
 
   if (preload) {
@@ -32,7 +34,7 @@ module.exports = function createWindow({
 
   const title = options.title || name;
 
-  win = createSecureWindow({
+  const win = createSecureWindow({
     icon,
     title,
     ...options,
@@ -48,6 +50,7 @@ module.exports = function createWindow({
 
   storeBounds && winStoreBounds(win);
   hideOnClose && winHideOnClose(win);
+  unique && uniqueWindows.set(name, win);
   titlebar && winTitlebar(win, { title, darkMode });
 
   win.loadURL(`app://renderer/windows/${name}/index.html`);
