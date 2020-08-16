@@ -1,8 +1,7 @@
 console.log("app/renderer/windows/main/index.js");
 
 document.addEventListener("click", () => {
-  let darkMode = titlebar.toggleDarkMode();
-  titlebar.setTitle(`${darkMode ? "Dark" : "Light"} mode`);
+  console.log("toggleDarkMode...");
 });
 
 remote.get("app.version").then(version => console.log(version));
