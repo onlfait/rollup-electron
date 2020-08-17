@@ -21,7 +21,7 @@ async function createTitlebar() {
   const $close = $titlebar.querySelector(".close");
   $close.addEventListener("click", window.close);
   $title = $titlebar.querySelector(".title");
-  document.body.appendChild($titlebar);
+  document.body.prepend($titlebar);
 }
 
 function setTitle(title = null) {
