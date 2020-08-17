@@ -1,4 +1,4 @@
-const windows = ["main"];
+const windows = ["main", "error"];
 const commons = ["scripts/index.js", "styles/index.css"];
 
 const watch = process.argv.includes("--dev");

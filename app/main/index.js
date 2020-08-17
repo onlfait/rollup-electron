@@ -3,6 +3,7 @@ const appSecurity = require("./app/security");
 const registerAppProtocol = require("./app/protocol");
 const singleInstance = require("./app/singleInstance");
 const createMainWindow = require("./windows/main/create");
+const uncaughtError = require("./app/uncaughtError");
 const ipcRegister = require("./ipc/register");
 const createTray = require("./tray/create");
 const config = require("./config");
@@ -20,5 +21,7 @@ app.whenReady().then(() => {
   appSecurity.setWebContentsSecurity(config.webContentsSecurity);
   appSecurity.setContentSecurityPolicy(config.contentSecurityPolicy);
   ipcRegister();
+  uncaughtError();
   createTray(createMainWindow());
+  console.log(undefinedVar);
 });
