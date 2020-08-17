@@ -1,6 +1,6 @@
 const createWindow = require("../../app/window/create");
 
-module.exports = function createMainWindow(options = {}) {
+module.exports = function create(options = {}) {
   return createWindow({
     ...options,
     unique: true,
