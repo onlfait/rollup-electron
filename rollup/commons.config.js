@@ -1,7 +1,8 @@
+import { terser } from "rollup-plugin-terser";
 import cleaner from "rollup-plugin-cleaner";
 import path from "path";
 
-import { commons, appPath, distPath, sourcemap } from "./commons";
+import { watch, commons, appPath, distPath, sourcemap } from "./commons";
 
 function makeOptions(entry) {
   const name = path.basename(entry);
@@ -18,7 +19,7 @@ function makeOptions(entry) {
       format: "iife",
       file: `${outputPath}/${name}`
     },
-    plugins: [cleaner({ targets: [outputPath] })]
+    plugins: [cleaner({ targets: [outputPath] }), watch && terser()]
   };
 }
 

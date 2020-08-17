@@ -1,5 +1,6 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import { terser } from "rollup-plugin-terser";
 import cleaner from "rollup-plugin-cleaner";
 import svelte from "rollup-plugin-svelte";
 import copy from "rollup-plugin-copy";
@@ -24,7 +25,8 @@ function makeOptions(entry) {
       copy({ targets: [{ src: indexFile, dest: outputPath }] }),
       resolve({ browser: true, dedupe: ["svelte"] }),
       commonjs(),
-      svelte({ dev: watch })
+      svelte({ dev: watch }),
+      watch && terser()
     ]
   };
 }
