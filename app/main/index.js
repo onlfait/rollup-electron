@@ -21,7 +21,6 @@ app.whenReady().then(() => {
   appSecurity.setWebContentsSecurity(config.webContentsSecurity);
   appSecurity.setContentSecurityPolicy(config.contentSecurityPolicy);
   ipcRegister();
-  uncaughtError();
+  !config.isDev && uncaughtError();
   createTray(createMainWindow());
-  console.log(undefinedVar);
 });
