@@ -12,7 +12,7 @@ module.exports = names => {
     }
     const bridge = require(`./modules/${name}`);
     bridge.init && init.push([bridge.init, options]);
-    api[name] = bridge.api;
+    bridge.api && (api[name] = bridge.api);
   });
 
   contextBridge.exposeInMainWorld("app", api);
