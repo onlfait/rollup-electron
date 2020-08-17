@@ -23,5 +23,5 @@ app.whenReady().then(() => {
   ipcRegister();
   uncaughtError();
   createTray(createMainWindow());
-  console.log(undefinedVar);
+  // console.log(undefinedVar);
 });
