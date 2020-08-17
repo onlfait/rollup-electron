@@ -13,7 +13,7 @@ module.exports = function create({ error, ...options } = {}) {
     parent: getMainWindow()
   });
 
-  win.webContents.once("did-finish-load", () => {
+  win.webContents.on("did-finish-load", () => {
     win.webContents.send("app.uncaughtError", error);
   });
 
