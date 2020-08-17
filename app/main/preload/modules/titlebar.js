@@ -25,7 +25,7 @@ async function createTitlebar() {
 }
 
 function setTitle(title = null) {
-  title = title ? `${appName} — ${title}` : appName;
+  title = title ? `${title} — ${appName}` : appName;
   $title.innerHTML = title;
   document.title = title;
 }
