@@ -1,3 +1,5 @@
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleaner from "rollup-plugin-cleaner";
 import path from "path";
@@ -19,7 +21,12 @@ function makeOptions(entry) {
       format: "iife",
       file: `${outputPath}/${name}`
     },
-    plugins: [cleaner({ targets: [outputPath] }), watch && terser()]
+    plugins: [
+      cleaner({ targets: [outputPath] }),
+      resolve({ browser: true }),
+      commonjs(),
+      !watch && terser()
+    ]
   };
 }
 

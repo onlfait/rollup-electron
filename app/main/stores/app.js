@@ -1,7 +1,8 @@
 const create = require("./create");
 
 const defaults = {
-  darkMode: true
+  darkMode: true,
+  language: "en"
 };
 
 module.exports = create({ name: "app", defaults });

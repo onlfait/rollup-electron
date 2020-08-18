@@ -1,3 +1,3 @@
 const preload = require("../../preload");
 
-preload(["remote", "darkMode", "titlebar"]);
+preload(["remote", "darkMode", "titlebar", "language"]);

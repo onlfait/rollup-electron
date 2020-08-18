@@ -26,7 +26,7 @@ function makeOptions(entry) {
       resolve({ browser: true, dedupe: ["svelte"] }),
       commonjs(),
       svelte({ dev: watch }),
-      watch && terser()
+      !watch && terser()
     ]
   };
 }
