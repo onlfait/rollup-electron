@@ -1,5 +1,6 @@
 const { app } = require("electron");
 const { dirname } = require("path");
+const { isDev } = require("../../config");
 
 const createErrorWindow = require("../../windows/error/create");
 
@@ -16,6 +17,7 @@ function cleanStack(stack) {
 }
 
 module.exports = function handler({ error, origin } = {}) {
+  if (isDev) return;
   createErrorWindow({
     error: {
       origin,
