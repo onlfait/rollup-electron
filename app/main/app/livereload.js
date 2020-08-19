@@ -8,8 +8,14 @@ function log(...args) {
 
 log("Livereload enabled");
 
+let firstBundle = true;
+
 process.on("message", msg => {
   if (msg === "rollup.end") {
+    if (firstBundle) {
+      firstBundle = false;
+      return;
+    }
     const windows = BrowserWindow.getAllWindows();
     log(`Reloading ${windows.length} windows...`);
     windows.forEach(win => {
