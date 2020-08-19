@@ -71,6 +71,7 @@ function launchElectron() {
   });
   electronApp.on("exit", code => {
     rp.info(`Electron app exited (code: ${code})`);
+    relaunch = relaunch || code === 42;
     electronApp = null;
     if (relaunch) {
       relaunch = false;

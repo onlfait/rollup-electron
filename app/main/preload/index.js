@@ -16,13 +16,25 @@ module.exports = names => {
       bridge.api && (api[name] = bridge.api);
     });
 
-    contextBridge.exposeInMainWorld("app", api);
+    let whenReadyCallback = null;
+
+    function ready() {
+      whenReadyCallback && whenReadyCallback();
+    }
+
+    contextBridge.exposeInMainWorld("app", {
+      ...api,
+      whenReady(callback) {
+        whenReadyCallback = callback;
+      }
+    });
 
     document.addEventListener("DOMContentLoaded", async () => {
       for (let i = 0; i < init.length; i++) {
         const [func, options] = init[i];
         await func(options);
       }
+      ready();
       resolve();
     });
   });

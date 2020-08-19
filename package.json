@@ -43,6 +43,7 @@
   "dependencies": {
     "dot-prop": "^5.2.0",
     "electron-store": "^6.0.0",
-    "i18next": "^19.6.3"
+    "i18next": "^19.6.3",
+    "obs-websocket-js": "^4.0.1"
   }
 }

@@ -3,7 +3,8 @@ import en from "./languages/en";
 import fr from "./languages/fr";
 
 i18next.init({
-  lng: "fr",
+  // debug: true,
+  lng: "en",
   fallbackLng: "en",
   resources: {
     en: { translation: en },

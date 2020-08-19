@@ -7,5 +7,6 @@ module.exports = {
     language: require("./remote/language"),
     relaunchApp: require("./remote/relaunchApp"),
     uncaughtError: require("./remote/uncaughtError")
-  }
+  },
+  obs: require("./remote/obs")
 };

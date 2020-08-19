@@ -1,0 +1,47 @@
+<script>
+  import { streaming, recording, status } from "../../../stores/obs";
+  import { _ } from "../../../../../i18n"
+
+  let _off = _('words.off');
+
+  let recordingStatus = _off;
+  let streamingStatus = _off;
+
+  let fps = '0';
+  let cpu = '0';
+  let mem = '0';
+
+  const timecode = t => $status[`${t}-timecode`].split('.')[0];
+
+  $: streamingStatus = $status && $streaming ? timecode('stream') : _off;
+  $: recordingStatus = $status && $recording ? timecode('rec') : _off;
+
+  $: if ($status) {
+    fps = parseInt($status["fps"]);
+    mem = parseInt($status["memory-usage"]);
+    cpu = parseFloat($status["cpu-usage"]).toFixed(1);
+  }
+</script>
+
+<div class="flex items-center">
+  <div class="flex space-x-1 text-sm">
+    <div class="bg-black opacity-25 rounded px-2">
+      {_("words.stream")}: {streamingStatus}
+    </div>
+    <div class="bg-black opacity-25 rounded px-2">
+      {_("words.record")}: {recordingStatus}
+    </div>
+  </div>
+  <div class="flex-auto mx-1"></div>
+  <div class="flex-auto">
+    {#if $status}
+    <div class="flex space-x-1 text-sm">
+      <div class="bg-black opacity-25 rounded px-2">FPS {fps}</div>
+      <div class="bg-black opacity-25 rounded px-2">MEM <span class="inline-block">{mem} MB</span></div>
+      <div class="bg-black opacity-25 rounded px-2">CPU <span class="inline-block">{cpu} %</span></div>
+    </div>
+    {:else}
+    <div>OBS {_("words.closed")}</div>
+    {/if}
+  </div>
+</div>

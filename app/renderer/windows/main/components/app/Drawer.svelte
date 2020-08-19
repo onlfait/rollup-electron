@@ -4,6 +4,7 @@
   import Openable from "../Openable.svelte";
   import DarkModeSwitch from "./DarkModeSwitch.svelte";
   import LanguageSelect from "./LanguageSelect.svelte";
+  import OBSAutoConnectSwitch from "./OBS/AutoConnectSwitch.svelte"
 
   import MdMenu from 'svelte-icons/md/MdMenu.svelte'
 </script>
@@ -25,6 +26,7 @@
       <span class="p-2">Action 2</span>
       <span class="p-2">Action 3</span>
       <DarkModeSwitch class="p-2" />
+      <OBSAutoConnectSwitch class="p-2" />
       <LanguageSelect class="text-black" />
     </div>
   </div>
