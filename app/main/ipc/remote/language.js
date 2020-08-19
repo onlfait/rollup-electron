@@ -1,10 +1,10 @@
-const appStore = require("../../stores/app");
+const store = require("../../stores/app");
 
 module.exports = {
   set(language) {
-    appStore.set("language", language);
+    store.set("language", language);
   },
   get() {
-    return appStore.get("language", "en");
+    return store.get("language", "en");
   }
 };

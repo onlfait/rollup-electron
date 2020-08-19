@@ -8,5 +8,6 @@ module.exports = {
     relaunchApp: require("./remote/relaunchApp"),
     uncaughtError: require("./remote/uncaughtError")
   },
-  obs: require("./remote/obs")
+  obs: require("./remote/obs"),
+  deck: require("./remote/deck")
 };

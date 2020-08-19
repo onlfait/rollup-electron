@@ -1,4 +1,4 @@
-const appStore = require("../../stores/obs");
+const store = require("../../stores/obs");
 const { connect, disconnect } = require("../../obs");
 
 module.exports = {
@@ -6,10 +6,10 @@ module.exports = {
   disconnect,
   autoConnectAtStartup: {
     set(enable) {
-      appStore.set("autoConnectAtStartup", enable);
+      store.set("autoConnectAtStartup", enable);
     },
     get() {
-      return appStore.get("autoConnectAtStartup");
+      return store.get("autoConnectAtStartup");
     }
   }
 };

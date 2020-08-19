@@ -17,6 +17,8 @@ module.exports = {
     darkMode: "Mode sombre",
     autoConnectAtStartup: "Connection auto au démarrage",
     askForAppRestart:
-      "Souhaitez-vous redémarrer l'application maintenant pour appliquer les modifications?"
+      "Souhaitez-vous redémarrer l'application maintenant pour appliquer les modifications?",
+    noPanelsFound:
+      "Aucun panneau trouvé o_O! Cliquez sur la croix pour ajouter votre premier groupe de pouvoirs!"
   }
 };
