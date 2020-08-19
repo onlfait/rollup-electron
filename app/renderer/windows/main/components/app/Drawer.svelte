@@ -4,7 +4,7 @@
   import Openable from "../Openable.svelte";
   import DarkModeSwitch from "./DarkModeSwitch.svelte";
   import LanguageSelect from "./LanguageSelect.svelte";
-  import OBSAutoConnectSwitch from "./OBS/AutoConnectSwitch.svelte"
+  import OBSAutoConnectSwitch from "../OBS/AutoConnectSwitch.svelte"
 
   import MdMenu from 'svelte-icons/md/MdMenu.svelte'
 </script>

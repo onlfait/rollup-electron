@@ -1,6 +1,6 @@
 <script>
-  import { _ } from "../../../../../i18n"
-  import { autoConnectAtStartup } from "../../../stores/obs";
+  import { _ } from "../../../../i18n"
+  import { autoConnectAtStartup } from "../../stores/obs";
 </script>
 
 <label {...$$props}>
