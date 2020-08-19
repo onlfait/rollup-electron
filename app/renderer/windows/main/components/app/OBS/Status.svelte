@@ -1,5 +1,6 @@
 <script>
-  import { streaming, recording, status } from "../../../stores/obs";
+  import { connected, streaming, recording, status } from "../../../stores/obs";
+  import OBSConnectButton from "./ConnectButton.svelte";
   import { _ } from "../../../../../i18n"
 
   let _off = _('words.off');
@@ -21,10 +22,15 @@
     mem = parseInt($status["memory-usage"]);
     cpu = parseFloat($status["cpu-usage"]).toFixed(1);
   }
+
+  $: connectButtonColor = $connected ? 'bg-red-500' : 'bg-green-500';
 </script>
 
-<div class="flex items-center">
+<div class="flex  items-center">
   <div class="flex space-x-1 text-sm">
+    <div class="px-2 flex">
+      <OBSConnectButton class="flex-auto px-2 uppercase {connectButtonColor} rounded" />
+    </div>
     <div class="bg-black opacity-25 rounded px-2">
       {_("words.stream")}: {streamingStatus}
     </div>

@@ -1,7 +1,7 @@
 <script>
-  import OBSConnectButton from "./OBS/ConnectButton.svelte";
+  let title = 'pouet';
 </script>
 
 <div id="app-content" class="flex flex-col h-full flex-auto overflow-auto">
-  <OBSConnectButton />
+pouet...{title}
 </div>

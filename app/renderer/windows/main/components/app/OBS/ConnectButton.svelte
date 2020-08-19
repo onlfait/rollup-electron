@@ -18,7 +18,7 @@
 </script>
 
 {#if !$connected}
-<button class="bg-gray-500" disabled={$connecting} on:click={connect}>OBS {_('words.connect')}</button>
+<button {...$$props} disabled={$connecting} on:click={connect}>{_('words.connect')}</button>
 {:else}
-<button class="bg-gray-500" on:click={disconnect}>OBS {_('words.disconnect')}</button>
+<button {...$$props} on:click={disconnect}>{_('words.disconnect')}</button>
 {/if}
