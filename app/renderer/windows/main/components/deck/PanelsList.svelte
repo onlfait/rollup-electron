@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { v4 as uuid } from "uuid";
   import { _ } from "../../../../i18n"
   import { panels, editMode, currentId } from "../../stores/deck";
@@ -22,9 +23,30 @@
     overflowElement && overflowElement.scrollRight();
   }
 
+  function editableItem() {
+    return {
+      static: !$editMode,
+      resizable: $editMode,
+      draggable: $editMode
+    };
+  }
+
+  function fixPanelEditMode() {
+    console.log("pouet");
+    $panels = $panels.map(panel => {
+      panel.widgets = panel.widgets.map(widget => {
+        return { ...widget, ...editableItem() };
+      });
+      return panel;
+    });
+  }
+
   function toggleEditMode() {
     $editMode = !$editMode;
+    fixPanelEditMode();
   }
+
+  onMount(fixPanelEditMode);
 
   $: toggleButtonBg = $editMode ? "text-red-500" : "text-gray-200";
 </script>

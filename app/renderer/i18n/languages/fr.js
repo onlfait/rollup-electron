@@ -20,6 +20,8 @@ module.exports = {
       "Souhaitez-vous redémarrer l'application maintenant pour appliquer les modifications?",
     noPanelsFound:
       "Aucun panneau trouvé o_O! Cliquez sur la croix pour ajouter votre premier groupe de pouvoirs!",
+    noWidgetsFound:
+      "Aucun widget trouvé o_O! Cliquez sur le bouton d'engrenage pour ajouter votre première puissance!",
     waitingForConnection: "En attente de connexion"
   }
 };

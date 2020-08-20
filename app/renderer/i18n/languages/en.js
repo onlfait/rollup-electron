@@ -20,6 +20,8 @@ module.exports = {
       "Would you like to restart the application now to apply changes ?",
     noPanelsFound:
       "No panel found o_O ! Click on the cross to add your first group of powers !",
+    noWidgetsFound:
+      "No widgets found o_O ! Click on the cog button to add your first power !",
     waitingForConnection: "Waiting for connection"
   }
 };

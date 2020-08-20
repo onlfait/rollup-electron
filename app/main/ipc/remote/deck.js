@@ -2,11 +2,11 @@ const store = require("../../stores/deck");
 
 module.exports = {
   panels: {
-    set(enable) {
-      store.set("panels", enable);
+    set(items) {
+      store.set("panels", items);
     },
     get() {
-      return store.get("panels");
+      return store.get("panels", []);
     }
   },
   currentId: {
@@ -14,7 +14,7 @@ module.exports = {
       store.set("currentId", id);
     },
     get() {
-      return store.get("currentId");
+      return store.get("currentId", null);
     }
   }
 };

@@ -1,4 +1,6 @@
 <script>
+  import { v4 as uuid } from "uuid"
+  import gridOptions from "./gridOptions"
   import { panels, editMode, currentId } from "../../stores/deck";
 
   import InputText from "../InputText.svelte";
@@ -7,7 +9,20 @@
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
   import MdAddToPhotos from "svelte-icons/md/MdAddToPhotos.svelte";
 
+  import gridHelp from "svelte-grid/src/utils/helper";
+
   let panelName = '';
+  let panel = null;
+
+  const defaultItem =  {
+    x: 0, y: 0,
+    w: 2, h: 2,
+    min: { w: 2, h: 2 },
+    color: "#6d80a5",
+    icon: null,
+    label: null,
+    widget: null,
+  };
 
   $: if ($currentId) {
     panelName = getPanelById($currentId).name;
@@ -18,7 +33,7 @@
   }
 
   function getPanelById(id) {
-    return $panels.find(panel => panel.id === $currentId);
+    return $panels.find(panel => panel.id === id);
   }
 
   function setPanelById(id, panel) {
@@ -54,15 +69,35 @@
   }
 
   function adjustGrid() {
-    console.log("adjustGrid");
-  }
-
-  function addGridItem() {
-    console.log("addGridItem");
+    const { cols } = gridOptions;
+    const panel = getPanelById($currentId);
+    panel.widgets = gridHelp.resizeItems(panel.widgets, cols);
+    setPanelById($currentId, panel);
   }
 
   function toggleEditMode() {
     $editMode = !$editMode;
+  }
+
+  function editableItem() {
+    return {
+      static: !$editMode,
+      resizable: $editMode,
+      draggable: $editMode
+    };
+  }
+
+  function createItem() {
+    return { id: uuid(), ...defaultItem, ...editableItem() };
+  }
+
+  function addGridItem() {
+    const { cols } = gridOptions;
+    const panel = getPanelById($currentId);
+    const newItem = gridHelp.item(createItem());
+    const oldItems = gridHelp.findSpaceForItem(newItem, panel.widgets, cols);
+    panel.widgets = [...panel.widgets, ...[{ ...newItem, ...oldItems }]];
+    setPanelById($currentId, panel);
   }
 </script>
 
