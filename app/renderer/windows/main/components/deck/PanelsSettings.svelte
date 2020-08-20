@@ -67,15 +67,15 @@
 </script>
 
 {#if $editMode}
-<div class="bg-secondary flex flex-wrap mx-2 p-1 space-x-2">
+<div class="bg-gray-600 flex flex-wrap p-2 space-x-2">
   <div>
-    <button text="light" on:click={adjustGrid}>
+    <button class="p-2 flex" on:click={adjustGrid}>
       <span class="inline-block w-6 h-6"><MdApps /></span>
       <span class="hidden md:inline md:ml-2">Adjust grid</span>
     </button>
   </div>
   <div>
-    <button text="light" on:click={addGridItem}>
+    <button class="p-2 flex" on:click={addGridItem}>
       <span class="inline-block w-6 h-6"><MdAddToPhotos /></span>
       <span class="hidden md:inline md:ml-2">Add item</span>
     </button>
@@ -88,9 +88,9 @@
     >Rename</InputText>
   </div>
   <div>
-    <button class="bg-red-500 rounded" on:click={removeCurrentPanel}>
+    <button class="p-2 flex bg-red-500 rounded" on:click={removeCurrentPanel}>
       <div class="w-6 h-6"><MdDelete /></div>
-      <span class="hidden md:inline md:ml-2">Remove panel</span>
+      <div class="hidden md:inline md:ml-2">Remove panel</div>
     </button>
   </div>
 </div>

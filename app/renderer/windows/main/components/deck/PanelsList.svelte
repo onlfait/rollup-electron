@@ -15,7 +15,6 @@
   }
 
   function addPanel() {
-    console.log("addPanel");
     const id = uuid();
     const name = `Powers group n°${$panels.length + 1}`;
     $panels = [...$panels, { id, name, widgets: [] }];
@@ -32,11 +31,18 @@
 
 <div class="bg-purple-800 flex items-center">
 
-  <div class="inline-flex p-2">
-    <button on:click={addPanel}>
+  <div class="inline-flex p-2 space-x-2">
+    <button
+      on:click={addPanel}
+      class="p-2 bg-purple-500 rounded"
+    >
       <div class="w-6 h-6"><MdAdd /></div>
     </button>
-    <button on:click={toggleEditMode} disabled={!$panels.length} class={toggleButtonBg}>
+    <button
+      on:click={toggleEditMode}
+      disabled={!$panels.length}
+      class="p-2 bg-purple-500 rounded {toggleButtonBg}"
+    >
       <div class="w-6 h-6"><MdSettings /></div>
     </button>
   </div>
@@ -50,7 +56,7 @@
   <HOverflow bind:this={overflowElement} gap="2">
     {#each $panels as panel}
     <button
-      class="p-2 rounded {$currentId === panel.id ? "bg-gray-600" : "bg-gray-400"}"
+      class="p-2 flex-shrink-0 rounded {$currentId === panel.id ? "bg-gray-600" : "bg-gray-400"}"
       on:click={setCurrentId.bind(null, panel.id)}
     >
       {panel.name}
