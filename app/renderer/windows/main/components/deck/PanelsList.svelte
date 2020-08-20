@@ -24,7 +24,7 @@
   }
 
   function toggleEditMode() {
-    console.log("toggleEditMode");
+    $editMode = !$editMode;
   }
 
   $: toggleButtonBg = $editMode ? "text-red-500" : "text-gray-200";
@@ -50,7 +50,7 @@
   <HOverflow bind:this={overflowElement} gap="2">
     {#each $panels as panel}
     <button
-      class="rounded {$currentId === panel.id ? "bg-gray-600" : "bg-gray-400"}"
+      class="p-2 rounded {$currentId === panel.id ? "bg-gray-600" : "bg-gray-400"}"
       on:click={setCurrentId.bind(null, panel.id)}
     >
       {panel.name}

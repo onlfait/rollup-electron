@@ -18,7 +18,7 @@ const setConnected = () => {
 app.obs.on("connect", () => connecting.set(true));
 app.obs.on("connected", setConnected);
 app.obs.on("disconnected", () => {
-  status.set(false);
+  // status.set(false);
   streaming.set(false);
   recording.set(false);
   connecting.set(false);
@@ -39,5 +39,10 @@ app.obs.on("StreamStatus", (event, data) => {
 });
 
 // sync main <-> renderer store
+app.obs.getStatus().then(s => {
+  connected.set(s.connected);
+  connecting.set(s.connecting);
+});
+
 app.obs.autoConnectAtStartup.get().then(autoConnectAtStartup.set);
 autoConnectAtStartup.subscribe(app.obs.autoConnectAtStartup.set);

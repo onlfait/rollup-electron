@@ -19,6 +19,7 @@ module.exports = {
     askForAppRestart:
       "Would you like to restart the application now to apply changes ?",
     noPanelsFound:
-      "No panel found o_O ! Click on the cross to add your first group of powers !"
+      "No panel found o_O ! Click on the cross to add your first group of powers !",
+    waitingForConnection: "Waiting for connection"
   }
 };

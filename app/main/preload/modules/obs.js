@@ -9,6 +9,10 @@ async function disconnect() {
   return await remote.api.call("obs.disconnect");
 }
 
+async function getStatus() {
+  return await remote.api.call("obs.getStatus");
+}
+
 function on(type, callback) {
   ipcRenderer.on(`obs.${type}`, callback);
 }
@@ -22,4 +26,12 @@ const autoConnectAtStartup = {
   }
 };
 
-module.exports = { api: { connect, disconnect, on, autoConnectAtStartup } };
+module.exports = {
+  api: {
+    on,
+    connect,
+    disconnect,
+    getStatus,
+    autoConnectAtStartup
+  }
+};

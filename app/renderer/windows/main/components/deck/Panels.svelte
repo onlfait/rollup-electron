@@ -1,13 +1,9 @@
 <script>
   import PanelsList from "./PanelsList.svelte"
+  import PanelsSettings from "./PanelsSettings.svelte"
+  import PanelsGrid from "./PanelsGrid.svelte"
 </script>
 
 <PanelsList />
-
-<div class="">
-  panels settings
-</div>
-
-<div class="">
-  panel grid
-</div>
+<PanelsSettings />
+<PanelsGrid />

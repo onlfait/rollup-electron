@@ -1,7 +1,8 @@
 const store = require("../../stores/obs");
-const { connect, disconnect } = require("../../obs");
+const { connect, disconnect, getStatus } = require("../../obs");
 
 module.exports = {
+  getStatus,
   connect,
   disconnect,
   autoConnectAtStartup: {

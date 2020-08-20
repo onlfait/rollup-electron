@@ -18,7 +18,9 @@
 </script>
 
 {#if !$connected}
-<button {...$$props} disabled={$connecting} on:click={connect}>{_('words.connect')}</button>
+<button {...$$props} disabled={$connecting} on:click={connect}>
+  {$connecting ? _('sentences.waitingForConnection') : _('words.connect')}
+</button>
 {:else}
 <button {...$$props} on:click={disconnect}>{_('words.disconnect')}</button>
 {/if}

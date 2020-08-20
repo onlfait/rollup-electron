@@ -12,7 +12,10 @@
   let cpu = '0';
   let mem = '0';
 
-  const timecode = t => $status[`${t}-timecode`].split('.')[0];
+  const timecode = t => {
+    const timecode = $status[`${t}-timecode`];
+    return timecode && timecode.split('.')[0] || _off;
+  }
 
   $: streamingStatus = $status && $streaming ? timecode('stream') : _off;
   $: recordingStatus = $status && $recording ? timecode('rec') : _off;
@@ -38,16 +41,14 @@
       {_("words.record")}: {recordingStatus}
     </div>
   </div>
+  {#if $connected}
   <div class="flex-auto mx-1"></div>
   <div class="flex-auto">
-    {#if $status}
     <div class="flex space-x-1 text-sm">
       <div class="bg-black opacity-25 rounded px-2">FPS {fps}</div>
       <div class="bg-black opacity-25 rounded px-2">MEM <span class="inline-block">{mem} MB</span></div>
       <div class="bg-black opacity-25 rounded px-2">CPU <span class="inline-block">{cpu} %</span></div>
     </div>
-    {:else}
-    <div>OBS {_("words.closed")}</div>
-    {/if}
   </div>
+  {/if}
 </div>

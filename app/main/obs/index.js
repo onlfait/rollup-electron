@@ -5,6 +5,11 @@ let obs = null;
 let doNotReconnect = false;
 let reconnectionTimeout = 5000;
 
+let status = {
+  connected: false,
+  connecting: false
+};
+
 function log(...args) {
   // eslint-disable-next-line
   console.log(">>> OBS:", ...args);
@@ -12,6 +17,7 @@ function log(...args) {
 
 function reconnect(settings) {
   obs = null;
+  setStatus({ connected: false, connecting: true });
   log(`Reconnecting in ${reconnectionTimeout / 1000} sec.`);
   setTimeout(() => {
     connect(settings);
@@ -35,16 +41,27 @@ function onMessage(obs) {
   };
 }
 
+function getStatus() {
+  return status;
+}
+
+function setStatus(newStatus) {
+  status = { ...status, ...newStatus };
+}
+
 function connect({ host = "localhost", port = 4444, password = null } = {}) {
   if (obs) return;
 
-  obs = new OBSWebSocket();
   const address = `${host}:${port}`;
 
+  setStatus({ connected: false, connecting: true });
   log(`Connect (${address})`);
   send("connect");
 
+  obs = new OBSWebSocket();
+
   obs.on("ConnectionClosed", () => {
+    setStatus({ connected: false, connecting: false });
     log("Connection closed");
     send("disconnected");
     obs = null;
@@ -57,11 +74,13 @@ function connect({ host = "localhost", port = 4444, password = null } = {}) {
   obs
     .connect({ address, password })
     .then(() => {
+      setStatus({ connected: true, connecting: false });
       log("Connected");
       send("connected");
       onMessage(obs);
     })
     .catch(error => {
+      setStatus({ connected: false, connecting: false });
       log(`Error: ${error.code}`);
       reconnect({ host, port, password });
     });
@@ -73,6 +92,7 @@ function disconnect() {
 }
 
 module.exports = {
+  getStatus,
   connect,
   disconnect
 };
