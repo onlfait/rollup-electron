@@ -7,7 +7,7 @@
   const dispatch = createEventDispatcher();
 
   $: bg = `background-color: ${item.color};`;
-  $: icon = item.icon ? `background-image: url("/public/grid-icons/${item.icon.name}");` : "";
+  $: icon = item.icon ? `background-image: url("/public/media/images/${item.icon.name}");` : "";
 </script>
 
 <div

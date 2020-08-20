@@ -9,5 +9,6 @@ module.exports = {
     uncaughtError: require("./remote/uncaughtError")
   },
   obs: require("./remote/obs"),
-  deck: require("./remote/deck")
+  deck: require("./remote/deck"),
+  upload: require("./remote/upload")
 };
