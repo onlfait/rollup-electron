@@ -1,8 +1,10 @@
 <script>
   import { v4 as uuid } from "uuid"
-  import gridOptions from "./gridOptions"
+  import { _ } from "../../../../i18n"
   import { panels, editMode, currentId } from "../../stores/deck";
+  import gridOptions from "./gridOptions"
 
+  import Modal from "../Modal.svelte";
   import InputText from "../InputText.svelte";
 
   import MdApps from "svelte-icons/md/MdApps.svelte";
@@ -13,6 +15,8 @@
 
   let panelName = '';
   let panel = null;
+
+  let confirmRemoveModal = false;
 
   const defaultItem =  {
     x: 0, y: 0,
@@ -64,8 +68,17 @@
     }
   }
 
+  function askRemoveCurrentPanel() {
+    confirmRemoveModal = true;
+  }
+
+  function closeConfirmRemoveModal() {
+    confirmRemoveModal = false;
+  }
+
   function removeCurrentPanel() {
     removePanel($currentId);
+    closeConfirmRemoveModal();
   }
 
   function adjustGrid() {
@@ -123,10 +136,28 @@
     >Rename</InputText>
   </div>
   <div>
-    <button class="p-2 flex bg-red-500 rounded" on:click={removeCurrentPanel}>
+    <button class="p-2 flex bg-red-500 rounded" on:click={askRemoveCurrentPanel}>
       <div class="w-6 h-6"><MdDelete /></div>
       <div class="hidden md:inline md:ml-2">Remove panel</div>
     </button>
   </div>
 </div>
+{/if}
+
+{#if confirmRemoveModal}
+<Modal>
+  <div class="bg-gray-200 text-gray-800 rounded flex flex-col p-2">
+    <div class="font-bold p-2">
+      {_('sentences.askForPanelDeletion', { name: panelName })}
+    </div>
+    <div class="flex p-2 space-x-2">
+      <button class="uppercase bg-purple-500 p-2 rounded" on:click={removeCurrentPanel}>
+        {_('words.yes')}
+      </button>
+      <button class="uppercase bg-gray-500 p-2 rounded" on:click={closeConfirmRemoveModal}>
+        {_('words.no')}
+      </button>
+    </div>
+  </div>
+</Modal>
 {/if}

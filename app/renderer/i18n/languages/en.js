@@ -22,6 +22,8 @@ module.exports = {
       "No panel found o_O ! Click on the cross to add your first group of powers !",
     noWidgetsFound:
       "No widgets found o_O ! Click on the cog button to add your first power !",
-    waitingForConnection: "Waiting for connection"
+    waitingForConnection: "Waiting for connection",
+    askForPanelDeletion: "Would you like to remove the \"{{name}}\" panel?",
+    askForWidgetDeletion: "Would you like to remove the \"{{name}}\" widget?"
   }
 };
