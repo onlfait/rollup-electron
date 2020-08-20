@@ -20,7 +20,7 @@
     const name = `Powers group n°${$panels.length + 1}`;
     $panels = [...$panels, { id, name, widgets: [] }];
     setCurrentId(id);
-    overflowElement.scrollRight();
+    overflowElement && overflowElement.scrollRight();
   }
 
   function toggleEditMode() {
