@@ -32,7 +32,6 @@
   }
 
   function fixPanelEditMode() {
-    console.log("pouet");
     $panels = $panels.map(panel => {
       panel.widgets = panel.widgets.map(widget => {
         return { ...widget, ...editableItem() };

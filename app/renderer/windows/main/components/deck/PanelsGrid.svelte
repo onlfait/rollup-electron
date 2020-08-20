@@ -2,17 +2,15 @@
   import Grid from "svelte-grid";
   import Modal from "../Modal.svelte";
   import { _ } from "../../../../i18n";
-  import gridOptions from "./gridOptions";
   import GridItem from "./GridItem.svelte";
+  import EditWidget from "./EditWidget.svelte";
+  import { gridOptions } from "../../utils/deck";
   import { panels, currentId, editMode } from "../../stores/deck";
 
   let panel = null;
+  let editWidget = null;
   let currentWidget = null;
   let confirmRemoveModal = false;
-
-  $: if ($panels) {
-    panel = getCurrentPanel();
-  }
 
   function getPanelById(id) {
     return $panels.find(panel => panel.id === id);
@@ -20,10 +18,6 @@
 
   function getCurrentPanel() {
     return getPanelById($currentId);
-  }
-
-  function editWidget(widget) {
-    console.log("editWidget", widget);
   }
 
   function removeWidgetFromPanel(panel, widget) {
@@ -54,6 +48,41 @@
   function closeConfirmRemoveModal() {
     confirmRemoveModal = false;
   }
+
+  function setEditWidget(widget) {
+    editWidget = $editMode && widget;
+  }
+
+  function closeEditWidget() {
+    editWidget = null;
+  }
+
+  function updatePanel(panel) {
+    $panels = $panels.map((p, i) => {
+      if (p.id === panel.id) {
+        return { ...p, ...panel };
+      }
+      return p;
+    });
+  }
+
+  function updateWidget(newWidget) {
+    panel.widgets = panel.widgets.map(widget => {
+      if (widget.id === newWidget.id) {
+        return { ...widget, ...newWidget };
+      }
+      return widget;
+    })
+  }
+
+  $: if ($panels) {
+    panel = getCurrentPanel();
+  }
+
+  $: if (editWidget) {
+    updateWidget(editWidget);
+    updatePanel(panel);
+  }
 </script>
 
 {#if panel}
@@ -66,7 +95,7 @@
   <div class="flex-auto overflow-auto p-1">
     <Grid bind:items={panel.widgets} let:item {...gridOptions}>
       <GridItem {item} editMode={$editMode}
-        on:edit={editWidget.bind(null, item)}
+        on:edit={setEditWidget.bind(null, item)}
         on:remove={askRemoveWidget.bind(null, item)}
       />
     </Grid>
@@ -89,6 +118,14 @@
         {_('words.no')}
       </button>
     </div>
+  </div>
+</Modal>
+{/if}
+
+{#if editWidget}
+<Modal on:click={closeEditWidget}>
+  <div class="p-10 bg-gray-200 text-gray-800 rounded overflow-auto shadow">
+    <EditWidget bind:widget={editWidget} />
   </div>
 </Modal>
 {/if}
