@@ -4,11 +4,14 @@
   import Openable from "../Openable.svelte";
   import DarkModeSwitch from "./DarkModeSwitch.svelte";
   import LanguageSelect from "./LanguageSelect.svelte";
+
   import OBSAutoConnectSwitch from "../OBS/AutoConnectSwitch.svelte";
+
+  import TwitchConnectButton from '../Twitch/ConnectButton.svelte';
+  import TwitchOpenChatButton from '../Twitch/OpenChatButton.svelte';
 
   import MdMenu from 'svelte-icons/md/MdMenu.svelte';
 
-  import TwitchConnectButton from '../Twitch/ConnectButton.svelte';
 </script>
 
 <Openable class="flex w-6 h-6">
@@ -23,6 +26,7 @@
   >
     <div class="flex flex-col">
       <TwitchConnectButton />
+      <TwitchOpenChatButton />
       <span class="p-2">{_('words.settings')}</span>
       <span class="p-2">Action 1</span>
       <span class="p-2">Action 2</span>

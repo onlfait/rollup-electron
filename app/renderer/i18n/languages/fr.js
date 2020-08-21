@@ -25,6 +25,7 @@ module.exports = {
     waitingForConnection: "En attente de connexion",
     askForPanelDeletion: "Tu veux vraiment supprimer le paneau \"{{name}}\"?",
     askForWidgetDeletion: "Tu veux vraiment supprimer le widget \"{{name}}\"?",
-    loginTwitch: "Connexion avec Twitch"
+    loginTwitch: "Connexion avec Twitch",
+    openTwitchChatWindow: "Ouvrir le chat Twitch"
   }
 };

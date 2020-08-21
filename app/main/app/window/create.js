@@ -26,7 +26,11 @@ module.exports = function createWindow({
   }
 
   if (preload) {
-    preload = path.resolve(__dirname, `../../windows/${name}/preload.js`);
+    const preloadName = typeof preload === "string" ? preload : name;
+    preload = path.resolve(
+      __dirname,
+      `../../windows/${preloadName}/preload.js`
+    );
   }
 
   const title = options.title || name;

@@ -24,10 +24,11 @@ function setDarkMode(enable = true) {
   return enable;
 }
 
-async function init() {
+async function init({ delay = 0 } = {}) {
   $html = document.querySelector("html");
   ipcRenderer.on("app.darkMode.set", (event, enable) => setDarkMode(enable));
-  setDarkMode(await get());
+  const enable = await get();
+  delay ? setTimeout(() => setDarkMode(enable), delay) : setDarkMode(enable);
 }
 
 module.exports = { init, api: { get, set, toggle } };

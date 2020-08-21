@@ -7,7 +7,7 @@ const open = require("open");
 
 const authBaseURL = "https://id.twitch.tv/oauth2/authorize?response_type=token";
 
-const stylesPath = path.resolve(__dirname, "styles.css");
+const stylesPath = path.resolve(__dirname, "../styles.css");
 const styles = fs.readFileSync(stylesPath).toString();
 
 function cancelButtonHook() {
@@ -34,6 +34,7 @@ module.exports = function create({ uri, onError }) {
     show: true,
     width: 540,
     height: 480,
+    modal: true,
     preload: true,
     parent: getMainWindow(),
     loadURL: `${authBaseURL}&${uri}`
