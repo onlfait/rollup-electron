@@ -50,9 +50,9 @@ module.exports = function createWindow({
   unique && uniqueWindows.set(name, win);
 
   win.loadURL(loadURL || `app://renderer/windows/${name}/index.html`);
+  devTools && win.webContents.openDevTools();
 
   win.webContents.once("did-finish-load", () => {
-    devTools && win.webContents.openDevTools();
     show && win.show();
   });
 
