@@ -5,6 +5,7 @@
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
   import { components } from "../../utils/obs";
+  import componentSettings from "../OBS/widgets/settings";
 
   export let widget = null;
 
@@ -45,6 +46,10 @@
       </select>
     </div>
   </div>
+
+  {#if component}
+  <svelte:component this={componentSettings[component.name]} bind:widget />
+  {/if}
 
   <div class="flex flex-col">
     <div class="font-medium">Background image</div>

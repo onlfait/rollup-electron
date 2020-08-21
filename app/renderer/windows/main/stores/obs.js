@@ -15,6 +15,7 @@ export const autoConnectAtStartup = writable(false);
 
 export function send(...args) {
   return app.obs.send(...args).catch(() => {
+    // eslint-disable-next-line
     console.warn("OBS is probably not opened...");
   });
 }
@@ -44,7 +45,6 @@ const setConnected = () => {
 app.obs.on("connect", () => connecting.set(true));
 app.obs.on("connected", setConnected);
 app.obs.on("disconnected", () => {
-  // status.set(false);
   streaming.set(false);
   recording.set(false);
   connecting.set(false);
@@ -66,6 +66,10 @@ app.obs.on("StreamStatus", (event, data) => {
 
 app.obs.on("SwitchScenes", (event, data) => {
   currentScene.set(data["scene-name"]);
+});
+
+app.obs.on("ScenesChanged", () => {
+  updateSceneList();
 });
 
 // sync main <-> renderer store

@@ -5,7 +5,7 @@ export const components = [
   },
   {
     label: "Go to scene",
-    name: "SceneButton",
+    name: "SceneSwitch",
     props: {
       scene: null
     }

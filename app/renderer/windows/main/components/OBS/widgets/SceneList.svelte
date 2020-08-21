@@ -5,7 +5,7 @@
     currentScene,
     updateSceneList,
     setCurrentScene
-  } from "../../stores/obs";
+  } from "../../../stores/obs";
 
   export let item = null;
 

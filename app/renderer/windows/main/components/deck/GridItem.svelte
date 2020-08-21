@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import components from "../OBS/components";
+  import components from "../OBS/widgets/components";
 
   export let item = null;
   export let editMode = false;
