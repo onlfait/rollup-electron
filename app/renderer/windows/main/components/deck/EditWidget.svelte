@@ -4,6 +4,8 @@
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import { components } from "../../utils/obs";
+
   export let widget = null;
 
   function onColor({ detail }) {
@@ -14,16 +16,35 @@
     if (!detail) return;
     let { name, path } = detail;
     name = await app.remote.call('upload.gridIcon', { name, path });
-    console.log(">Y>>", name);
     widget = { ...widget, icon: { name, path } };
   }
 
   function removeIcon() {
     widget = { ...widget, icon: null };
   }
+
+  $: component = widget && widget.component;
+
+  function onTypeChange() {
+    widget = { ...widget, component };
+  }
 </script>
 
 <div class="flex flex-col bg-gray-200 mx-2 space-y-2">
+
+  <div class="flex flex-col">
+    <div class="font-medium">Component</div>
+    <div class="flex items-center">
+      <select bind:value={component} on:change={onTypeChange}>
+      <option value="null">None</option>
+      {#each components as item}
+        <option value={item} selected={component && component.name === item.name}>
+          {item.label}
+        </option>
+      {/each}
+      </select>
+    </div>
+  </div>
 
   <div class="flex flex-col">
     <div class="font-medium">Background image</div>

@@ -1,8 +1,8 @@
 <script>
   import { v4 as uuid } from "uuid"
   import { _ } from "../../../../i18n"
+  import { gridOptions } from "../../utils/deck";
   import { panels, editMode, currentId } from "../../stores/deck";
-  import gridOptions from "./gridOptions"
 
   import Modal from "../Modal.svelte";
   import InputText from "../InputText.svelte";
@@ -25,7 +25,7 @@
     color: "#6d80a5",
     icon: null,
     label: null,
-    widget: null,
+    component: null,
   };
 
   $: if ($currentId) {

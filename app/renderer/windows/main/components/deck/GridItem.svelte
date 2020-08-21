@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
+  import components from "../OBS/components";
+
   export let item = null;
   export let editMode = false;
 
@@ -18,13 +20,15 @@
 
   <div class="flex flex-col w-full">
 
-    {#if item.label || (item.widget && item.widget.label)}
+    {#if item.label || (item.component && item.component.label)}
     <div class="bg-black text-light opacity-50 text-center px-2">
-      {item.label || item.widget.label}
+      {item.label || item.component.label}
     </div>
     {/if}
 
-    pouet
+    {#if item.component}
+    <svelte:component this={components[item.component.name]} bind:item {...item.component.props} />
+    {/if}
 
   </div>
 

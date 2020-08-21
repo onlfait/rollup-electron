@@ -26,9 +26,14 @@ const autoConnectAtStartup = {
   }
 };
 
+function send(...args) {
+  return remote.api.call("obs.send", ...args);
+}
+
 module.exports = {
   api: {
     on,
+    send,
     connect,
     disconnect,
     getStatus,

@@ -1,5 +1,8 @@
-export const widgets = [
-  { label: "Scene list", name: "SceneList" },
+export const components = [
+  {
+    label: "Scene list",
+    name: "SceneList"
+  },
   {
     label: "Go to scene",
     name: "SceneButton",
@@ -15,7 +18,14 @@ export const widgets = [
       scene2: null
     }
   },
-  { label: "Live ON/OFF", name: "LiveToggle" },
+  {
+    label: "Live ON/OFF",
+    name: "LiveToggle",
+    confirm: {
+      start: true,
+      stop: true
+    }
+  },
   {
     label: "Record ON/OFF",
     name: "RecordToggle",

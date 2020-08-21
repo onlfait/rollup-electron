@@ -91,8 +91,16 @@ function disconnect() {
   obs && obs.disconnect();
 }
 
+function obsSend(...args) {
+  if (!obs) {
+    return Promise.reject("OBS is not initialized");
+  }
+  return obs.send(...args);
+}
+
 module.exports = {
   getStatus,
   connect,
-  disconnect
+  disconnect,
+  send: obsSend
 };

@@ -8,7 +8,33 @@ export const recording = writable(false);
 
 export const status = writable(null);
 
+export const currentScene = writable(null);
+export const scenesList = writable([]);
+
 export const autoConnectAtStartup = writable(false);
+
+export function send(...args) {
+  return app.obs.send(...args).catch(() => {
+    console.warn("OBS is probably not opened...");
+  });
+}
+
+export function setCurrentScene(name) {
+  return send("SetCurrentScene", { "scene-name": name }).then(() => {
+    currentScene.set(name);
+  });
+}
+
+function updateSceneListData(data) {
+  currentScene.set(data["current-scene"]);
+  scenesList.set(data.scenes);
+}
+
+export function updateSceneList() {
+  return send("GetSceneList").then(async data => {
+    data && updateSceneListData(data);
+  });
+}
 
 const setConnected = () => {
   connecting.set(false);
@@ -36,6 +62,10 @@ app.obs.on("StreamStatus", (event, data) => {
   status.set(data);
   streaming.set(data["streaming"]);
   recording.set(data["recording"]);
+});
+
+app.obs.on("SwitchScenes", (event, data) => {
+  currentScene.set(data["scene-name"]);
 });
 
 // sync main <-> renderer store
