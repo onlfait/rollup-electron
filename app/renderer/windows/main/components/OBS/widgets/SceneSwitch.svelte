@@ -1,6 +1,7 @@
 <script>
   import { currentScene, setCurrentScene } from "../../../stores/obs";
 
+  export let item = null;
   export let scene = null;
 </script>
 
@@ -9,8 +10,6 @@
   class="flex flex-col w-full h-full items-center cursor-pointer hover:bg-black hover:bg-opacity-25"
 >
 	<div class="flex p-2 font-bold text-xl h-full items-center">
-    <div class="">
-      {scene}
-    </div>
+    <div>{scene}</div>
   </div>
 </div>

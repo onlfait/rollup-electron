@@ -1,6 +1,7 @@
 <script>
   import { currentScene, setCurrentScene } from "../../../stores/obs";
 
+  export let item = null;
   export let scene1 = null;
   export let scene2 = null;
 
@@ -13,8 +14,6 @@
 >
 	<div class="px-2 pt-2 text-xs opacity-25">{$currentScene}</div>
   <div class="flex p-2 font-bold text-xl h-full items-center">
-    <div class="">
-      {target}
-    </div>
+    <div>{target}</div>
   </div>
 </div>

@@ -13,6 +13,7 @@ module.exports = function createWindow({
   name,
   show = true,
   unique = false,
+  loadURL = null,
   preload = false,
   storeBounds = false,
   hideOnClose = false,
@@ -48,7 +49,7 @@ module.exports = function createWindow({
   hideOnClose && winHideOnClose(win);
   unique && uniqueWindows.set(name, win);
 
-  win.loadURL(`app://renderer/windows/${name}/index.html`);
+  win.loadURL(loadURL || `app://renderer/windows/${name}/index.html`);
 
   win.webContents.once("did-finish-load", () => {
     devTools && win.webContents.openDevTools();

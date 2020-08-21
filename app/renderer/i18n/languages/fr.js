@@ -24,6 +24,7 @@ module.exports = {
       "Aucun widget trouvé o_O! Cliquez sur le bouton d'engrenage pour ajouter votre première puissance!",
     waitingForConnection: "En attente de connexion",
     askForPanelDeletion: "Tu veux vraiment supprimer le paneau \"{{name}}\"?",
-    askForWidgetDeletion: "Tu veux vraiment supprimer le widget \"{{name}}\"?"
+    askForWidgetDeletion: "Tu veux vraiment supprimer le widget \"{{name}}\"?",
+    loginTwitch: "Connexion avec Twitch"
   }
 };

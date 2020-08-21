@@ -8,6 +8,8 @@ const ipcRegister = require("./ipc/register");
 const createTray = require("./tray/create");
 const config = require("./config");
 
+const twitchClient = require("./twitch/client");
+
 if (config.isDev) {
   require("./app/livereload");
 }
@@ -20,6 +22,7 @@ app.whenReady().then(() => {
   appSecurity.setPermissions(config.permissions);
   appSecurity.setWebContentsSecurity(config.webContentsSecurity);
   appSecurity.setContentSecurityPolicy(config.contentSecurityPolicy);
+  twitchClient(config.twitchConfig);
   ipcRegister();
   uncaughtError();
   createTray(createMainWindow());

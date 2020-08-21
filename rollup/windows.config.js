@@ -1,4 +1,5 @@
 import resolve from "@rollup/plugin-node-resolve";
+import svelteSVG from "rollup-plugin-svelte-svg";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleaner from "rollup-plugin-cleaner";
@@ -25,6 +26,7 @@ function makeOptions(entry) {
       copy({ targets: [{ src: indexFile, dest: outputPath }] }),
       resolve({ browser: true, dedupe: ["svelte"] }),
       commonjs(),
+      svelteSVG(),
       svelte({ dev: watch }),
       !watch && terser()
     ]

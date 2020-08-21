@@ -24,6 +24,7 @@ module.exports = {
       "No widgets found o_O ! Click on the cog button to add your first power !",
     waitingForConnection: "Waiting for connection",
     askForPanelDeletion: "Would you like to remove the \"{{name}}\" panel?",
-    askForWidgetDeletion: "Would you like to remove the \"{{name}}\" widget?"
+    askForWidgetDeletion: "Would you like to remove the \"{{name}}\" widget?",
+    loginTwitch: "Login with Twitch"
   }
 };
