@@ -1,5 +1,5 @@
 <script>
-  import { _ } from "../../../../i18n"
+  import { _ } from "@/renderer/i18n";
   import { darkMode } from "../../stores/app";
 </script>
 

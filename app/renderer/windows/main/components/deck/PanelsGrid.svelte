@@ -1,7 +1,7 @@
 <script>
   import Grid from "svelte-grid";
   import Modal from "../Modal.svelte";
-  import { _ } from "../../../../i18n";
+  import { _ } from "@/renderer/i18n";
   import GridItem from "./GridItem.svelte";
   import EditWidget from "./EditWidget.svelte";
   import { gridOptions } from "../../utils/deck";

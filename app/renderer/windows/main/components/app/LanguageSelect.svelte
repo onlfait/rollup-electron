@@ -1,6 +1,6 @@
 <script>
   import { language, languages } from "../../stores/app";
-  import i18n, { _ } from "../../../../i18n";
+  import { _ } from "@/renderer/i18n";
   import Modal from "../Modal.svelte";
 
   let openModal = false;

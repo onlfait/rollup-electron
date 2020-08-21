@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { v4 as uuid } from "uuid";
-  import { _ } from "../../../../i18n"
+  import { _ } from "@/renderer/i18n";
   import { panels, editMode, currentId } from "../../stores/deck";
 
   import HOverflow from "../HOverflow.svelte";

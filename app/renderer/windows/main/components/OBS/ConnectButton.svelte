@@ -1,6 +1,6 @@
 <script>
   import { connecting, connected, autoConnectAtStartup } from "../../stores/obs";
-  import { _ } from "../../../../i18n"
+  import { _ } from "@/renderer/i18n";
 
   function connect() {
     if ($connected || $connecting) return;

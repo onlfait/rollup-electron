@@ -1,7 +1,6 @@
 <script>
-  import { _ } from "../../../../i18n";
-
-  import TwitchIcon from '../../../../../static/images/Twitch_Icon.svg';
+  import { _ } from "@/renderer/i18n";
+  import TwitchIcon from '@/static/images/Twitch_Icon.svg';
 
   async function loginTwitch() {
     try {

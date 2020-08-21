@@ -1,5 +1,5 @@
 <script>
-  import { _ } from "../../../../i18n";
+  import { _ } from "@/renderer/i18n";
 
   import Openable from "../Openable.svelte";
   import DarkModeSwitch from "./DarkModeSwitch.svelte";

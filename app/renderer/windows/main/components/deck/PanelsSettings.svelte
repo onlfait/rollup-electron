@@ -1,6 +1,6 @@
 <script>
-  import { v4 as uuid } from "uuid"
-  import { _ } from "../../../../i18n"
+  import { v4 as uuid } from "uuid";
+  import { _ } from "@/renderer/i18n";
   import { gridOptions } from "../../utils/deck";
   import { panels, editMode, currentId } from "../../stores/deck";
 

@@ -1,7 +1,7 @@
 <script>
   import { connected, streaming, recording, status } from "../../stores/obs";
   import OBSConnectButton from "./ConnectButton.svelte";
-  import { _ } from "../../../../i18n"
+  import { _ } from "@/renderer/i18n";
 
   let _off = _('words.off');
 
