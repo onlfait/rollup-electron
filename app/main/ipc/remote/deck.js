@@ -9,12 +9,12 @@ module.exports = {
       return store.get("panels", []);
     }
   },
-  currentId: {
+  currentPanelId: {
     set(id) {
-      store.set("currentId", id);
+      store.set("currentPanelId", id);
     },
     get() {
-      return store.get("currentId", null);
+      return store.get("currentPanelId", null);
     }
   }
 };

@@ -9,13 +9,13 @@ const panels = {
   }
 };
 
-const currentId = {
+const currentPanelId = {
   async set(id) {
-    await remote.api.call("deck.currentId.set", id);
+    await remote.api.call("deck.currentPanelId.set", id);
   },
   async get() {
-    return await remote.api.call("deck.currentId.get");
+    return await remote.api.call("deck.currentPanelId.get");
   }
 };
 
-module.exports = { api: { panels, currentId } };
+module.exports = { api: { panels, currentPanelId } };

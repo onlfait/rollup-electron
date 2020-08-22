@@ -27,6 +27,9 @@ module.exports = {
     askForWidgetDeletion: "Would you like to remove the \"{{name}}\" widget?",
     loginTwitch: "Login with Twitch",
     openTwitchChatWindow: "Open Twitch chat",
-    obsIsOffline: "OBS offline"
+    obsIsOffline: "OBS offline",
+    powersGroup: "Power group",
+    adjustGrid: "Adjust grid",
+    addGridWidget: "Add widget"
   }
 };
