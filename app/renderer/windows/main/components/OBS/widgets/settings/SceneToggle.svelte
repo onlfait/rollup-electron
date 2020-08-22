@@ -1,5 +1,5 @@
 <script>
-  import { scenesList } from "../../../stores/obs";
+  import { scenesList } from "../../../../stores/obs";
 
   export let widget = null;
 

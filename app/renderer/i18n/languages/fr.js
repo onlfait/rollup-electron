@@ -26,6 +26,7 @@ module.exports = {
     askForPanelDeletion: "Tu veux vraiment supprimer le paneau \"{{name}}\"?",
     askForWidgetDeletion: "Tu veux vraiment supprimer le widget \"{{name}}\"?",
     loginTwitch: "Connexion avec Twitch",
-    openTwitchChatWindow: "Ouvrir le chat Twitch"
+    openTwitchChatWindow: "Ouvrir le chat Twitch",
+    obsIsOffline: "OBS déconecté"
   }
 };

@@ -1,4 +1,4 @@
-import SceneToggle from "./SceneToggleSettings.svelte";
-import SceneSwitch from "./SceneSwitchSettings.svelte";
+import SceneToggle from "./settings/SceneToggle.svelte";
+import SceneSwitch from "./settings/SceneSwitch.svelte";
 
 export default { SceneToggle, SceneSwitch };

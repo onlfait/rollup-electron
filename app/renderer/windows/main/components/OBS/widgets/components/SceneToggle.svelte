@@ -1,5 +1,7 @@
 <script>
-  import { currentScene, setCurrentScene } from "../../../stores/obs";
+  import { currentScene, setCurrentScene } from "../../../../stores/obs";
+
+  import WidgetWrapper from "../../WidgetWrapper.svelte";
 
   export let item = null;
   export let scene1 = null;
@@ -8,12 +10,12 @@
   $: target = $currentScene === scene2 ? scene1 : scene2;
 </script>
 
-<div
+<WidgetWrapper
   on:click={setCurrentScene.bind(null, target)}
-  class="flex flex-col w-full h-full items-center cursor-pointer hover:bg-black hover:bg-opacity-25"
+  class="items-center cursor-pointer hover:bg-black hover:bg-opacity-25"
 >
 	<div class="px-2 pt-2 text-xs opacity-25">{$currentScene}</div>
   <div class="flex p-2 font-bold text-xl h-full items-center">
     <div>{target}</div>
   </div>
-</div>
+</WidgetWrapper>
