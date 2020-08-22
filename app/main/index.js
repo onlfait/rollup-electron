@@ -12,6 +12,7 @@ const twitchClient = require("./twitch/client");
 
 if (config.isDev) {
   require("./app/livereload");
+  require("electron-context-menu")();
 }
 
 registerAppProtocol();
