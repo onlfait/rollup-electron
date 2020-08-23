@@ -12,6 +12,8 @@
   import Modal from "../Modal.svelte";
   import HOverflow from "../HOverflow.svelte";
   import InputText from "../InputText.svelte";
+  import EditWidget from "./EditWidget.svelte";
+  import GridWidget from "./GridWidget.svelte";
 
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdSettings from "svelte-icons/md/MdSettings.svelte";
@@ -21,9 +23,12 @@
   import MdAddToPhotos from "svelte-icons/md/MdAddToPhotos.svelte";
 
   let panelName = null;
+  let editWidget = null;
   let currentGrid = null;
+  let currentWidget = null;
   let overflowElement = null;
   let confirmRemoveModal = false;
+  let confirmRemoveWidgetModal = false;
 
   function askRemoveCurrentPanel() {
     confirmRemoveModal = true;
@@ -140,6 +145,40 @@
   function onGridAdjust() {
     updatePanel({ id: $currentPanelId, widgets: currentGrid });
   }
+
+  function setEditWidget(widget) {
+    editWidget = $editMode && widget;
+  }
+
+  function removeWidget(widget) {
+    currentGrid = currentGrid.filter(w => w.id !== widget.id);
+    updatePanel({ id: $currentPanelId, widgets: currentGrid });
+  }
+
+  function removeCurrentWidget() {
+    removeWidget(currentWidget);
+    confirmRemoveWidgetModal = false;
+    currentWidget = null;
+  }
+
+  function askRemoveWidget(widget) {
+    currentWidget = widget;
+    confirmRemoveWidgetModal = true;
+  }
+
+  function onWidgetChange() {
+    currentGrid = currentGrid.map(w => {
+      if (w.id === editWidget.id) {
+        return { ...w, ...editWidget };
+      }
+      return w
+    });
+    updatePanel({ id: $currentPanelId, widgets: currentGrid });
+  }
+
+  function closeEditWidget() {
+    editWidget = null;
+  }
 </script>
 
 <div class="bg-purple-800 flex items-center">
@@ -245,8 +284,39 @@
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={currentGrid} on:adjust={onGridAdjust} let:item {...grid.defaultOptions}>
     <div class="bg-red-500 h-full">
-      {item.id}
+      <GridWidget
+        widget={item}
+        editMode={$editMode}
+        on:edit={setEditWidget.bind(null, item)}
+        on:remove={askRemoveWidget.bind(null, item)}
+      />
     </div>
   </Grid>
 </div>
+{/if}
+
+{#if confirmRemoveWidgetModal}
+<Modal>
+  <div class="bg-gray-200 text-gray-800 rounded flex flex-col p-2">
+    <div class="font-bold p-2">
+      {_('sentences.askForWidgetDeletion', { name: currentWidget.id })}
+    </div>
+    <div class="flex p-2 space-x-2">
+      <button class="uppercase bg-purple-500 p-2 rounded" on:click={removeCurrentWidget}>
+        {_('words.yes')}
+      </button>
+      <button class="uppercase bg-gray-500 p-2 rounded" on:click={closeConfirmRemoveModal}>
+        {_('words.no')}
+      </button>
+    </div>
+  </div>
+</Modal>
+{/if}
+
+{#if editWidget}
+<Modal on:click={closeEditWidget}>
+  <div class="p-10 bg-gray-200 text-gray-800 rounded overflow-auto shadow">
+    <EditWidget bind:widget={editWidget} on:change={onWidgetChange} />
+  </div>
+</Modal>
 {/if}
