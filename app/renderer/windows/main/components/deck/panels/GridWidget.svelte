@@ -1,12 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import components from "../../OBS/widgets/components";
+  import obsComponents from "../../OBS/widgets/components";
+  import actionsComponents from "../../actions/widgets/components";
 
   export let widget = null;
   export let editMode = false;
 
   const dispatch = createEventDispatcher();
+  const components = { ...obsComponents, ...actionsComponents };
 
   $: bg = `background-color: ${widget.color};`;
   $: icon = widget.icon ? `background-image: url("/public/media/images/${widget.icon.name}");` : "";

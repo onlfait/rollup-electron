@@ -11,5 +11,6 @@ module.exports = {
   obs: require("./remote/obs"),
   deck: require("./remote/deck"),
   upload: require("./remote/upload"),
-  twitch: require("./remote/twitch")
+  twitch: require("./remote/twitch"),
+  actions: require("./remote/actions")
 };

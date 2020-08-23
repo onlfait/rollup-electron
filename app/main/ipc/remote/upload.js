@@ -3,11 +3,21 @@ const fs = require("fs-extra");
 
 const { publicPath } = require("../../config");
 
+function cleanName(name) {
+  return name.replace(/[^a-z0-9_.]+/gi, "_");
+}
+
+async function upload({ name, source, dest }) {
+  name = cleanName(name);
+  await fs.copy(source, path.resolve(publicPath, `media/${dest}`, name));
+  return name;
+}
+
 module.exports = {
   async gridIcon({ name, path: source }) {
-    name = name.replace(/[^a-z0-9_.]+/gi, "_");
-    const target = path.resolve(publicPath, "media/images", name);
-    await fs.copy(source, target);
-    return name;
+    return upload({ name, source, dest: "images" });
+  },
+  async gridSound({ name, path: source }) {
+    return upload({ name, source, dest: "sounds" });
   }
 };

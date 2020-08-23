@@ -23,3 +23,40 @@ export const panels = {
     widgets: []
   }
 };
+
+export const widgetsList = [
+  {
+    label: "Scene list",
+    name: "SceneList"
+  },
+  {
+    label: "Go to scene",
+    name: "SceneSwitch",
+    props: {
+      scene: null
+    }
+  },
+  {
+    label: "Toggle scene",
+    name: "SceneToggle",
+    props: {
+      scene1: null,
+      scene2: null
+    }
+  },
+  {
+    label: "Live ON/OFF",
+    name: "LiveToggle"
+  },
+  {
+    label: "Record ON/OFF",
+    name: "RecordToggle"
+  },
+  {
+    label: "Play sound",
+    name: "PlaySound",
+    props: {
+      file: null
+    }
+  }
+];

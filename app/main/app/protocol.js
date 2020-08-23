@@ -1,7 +1,7 @@
 const { isDev, appPath, publicPath, staticPath } = require("../config");
 const { app, protocol } = require("electron");
 const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 
 const config = {
   scheme: "app",
@@ -23,7 +23,9 @@ const mimeTypes = {
   ".gif": { mimeType: "image/gif", charset: "utf-8" },
   ".png": { mimeType: "image/png", charset: "utf-8" },
   ".jpg": { mimeType: "image/jpeg", charset: "utf-8" },
-  ".jpeg": { mimeType: "image/jpeg", charset: "utf-8" }
+  ".jpeg": { mimeType: "image/jpeg", charset: "utf-8" },
+  ".mp3": { mimeType: "audio/mpeg", charset: "utf-8" },
+  ".ogg": { mimeType: "audio/ogg", charset: "utf-8" }
 };
 
 function error(message) {
@@ -64,15 +66,17 @@ function requestHandler(req, next) {
     readPath = path.join(publicPath, ...pathParts);
   }
 
-  fs.readFile(readPath, (err, data) => {
-    err ? error(err) : next({ data, ...mimetype });
-  });
+  next(readPath);
+  // fs.readFile(readPath, (err, data) => {
+  //   console.log(data);
+  //   err ? error(err) : next({ data, ...mimetype });
+  // });
 }
 
 module.exports = function registerBufferProtocol() {
   protocol.registerSchemesAsPrivileged([config]);
 
   app.whenReady().then(() => {
-    protocol.registerBufferProtocol(config.scheme, requestHandler);
+    protocol.registerFileProtocol(config.scheme, requestHandler);
   });
 };

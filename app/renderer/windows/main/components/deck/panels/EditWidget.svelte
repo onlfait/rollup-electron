@@ -4,14 +4,17 @@
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { components } from "../../../utils/obs";
-  import componentSettings from "../../OBS/widgets/settings";
+  import { widgetsList } from "../../../utils/deck";
+
+  import obsSettings from "../../OBS/widgets/settings";
+  import actionsSettings from "../../actions/widgets/settings";
 
   import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher();
-
   export let widget = null;
+
+  const dispatch = createEventDispatcher();
+  const componentSettings = { ...obsSettings, ...actionsSettings };
 
   function onColor({ detail }) {
     widget = { ...widget, color: detail.hex };
@@ -43,7 +46,7 @@
     <div class="flex items-center">
       <select bind:value={component} on:change={onTypeChange}>
       <option value="null">None</option>
-      {#each components as item}
+      {#each widgetsList as item}
         <option value={item} selected={component && component.name === item.name}>
           {item.label}
         </option>
