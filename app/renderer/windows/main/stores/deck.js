@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 
 export const panels = writable([]);
 export const editMode = writable(false);
+export const currentGrid = writable(null);
 export const currentPanelId = writable(null);
 
 // sync main <-> renderer store

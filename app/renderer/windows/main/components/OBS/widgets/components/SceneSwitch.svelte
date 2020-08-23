@@ -3,7 +3,7 @@
 
   import WidgetWrapper from "../../WidgetWrapper.svelte";
 
-  export let item = null;
+  export let widget = null;
   export let scene = null;
 </script>
 

@@ -1,11 +1,11 @@
 <script>
-  import FileInput from "../FileInput.svelte";
-  import ColorPicker from "../ColorPicker.svelte";
+  import FileInput from "../../FileInput.svelte";
+  import ColorPicker from "../../ColorPicker.svelte";
 
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { components } from "../../utils/obs";
-  import componentSettings from "../OBS/widgets/settings";
+  import { components } from "../../../utils/obs";
+  import componentSettings from "../../OBS/widgets/settings";
 
   import { createEventDispatcher } from "svelte";
 
@@ -15,7 +15,6 @@
 
   function onColor({ detail }) {
     widget = { ...widget, color: detail.hex };
-    dispatch('change', widget);
   }
 
   async function onIcon({ detail }) {
@@ -23,20 +22,18 @@
     let { name, path } = detail;
     name = await app.remote.call('upload.gridIcon', { name, path });
     widget = { ...widget, icon: { name, path } };
-    dispatch('change', widget);
   }
 
   function removeIcon() {
     widget = { ...widget, icon: null };
-    dispatch('change', widget);
   }
 
   function onTypeChange() {
     widget = { ...widget, component };
-    dispatch('change', widget);
   }
 
   $: component = widget && widget.component;
+  $: dispatch('change', widget);
 </script>
 
 <div class="flex flex-col bg-gray-200 mx-2 space-y-2">

@@ -8,7 +8,7 @@ const appIcon = pkg.appConfig.icon;
 const twitchConfig = {
   clientId: "imjraqfj76pwp3za7hagehonex3xph",
   redirectURI: "http://localhost",
-  forceVerify: true
+  forceVerify: false
 };
 
 const isDev = process.argv.includes("--dev");
