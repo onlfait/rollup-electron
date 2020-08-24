@@ -14,10 +14,10 @@ async function upload({ name, source, dest }) {
 }
 
 module.exports = {
-  async gridIcon({ name, path: source }) {
+  async image({ name, path: source }) {
     return upload({ name, source, dest: "images" });
   },
-  async gridSound({ name, path: source }) {
+  async sound({ name, path: source }) {
     return upload({ name, source, dest: "sounds" });
   }
 };

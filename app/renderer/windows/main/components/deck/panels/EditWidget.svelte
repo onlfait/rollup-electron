@@ -23,7 +23,7 @@
   async function onIcon({ detail }) {
     if (!detail) return;
     let { name, path } = detail;
-    name = await app.remote.call('upload.gridIcon', { name, path });
+    name = await app.remote.call('upload.image', { name, path });
     widget = { ...widget, icon: { name, path } };
   }
 
