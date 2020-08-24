@@ -1,15 +1,21 @@
+const path = require("path");
+const sirv = require("sirv");
+const fs = require("fs-extra");
 const polka = require("polka");
-const sirv = require("./mw/sirv");
-const media = require("./mw/media");
 const socket = require("socket.io");
+
+const publicPath = path.normalize(process.argv.pop());
+const overlayPath = path.resolve(__dirname, "public");
 
 const port = 4242;
 
 let io = null;
 
+fs.ensureDirSync(publicPath);
+
 const server = polka()
-  .use(sirv)
-  .use(media)
+  .use(sirv(overlayPath), { dev: true }) // no cache
+  .use(sirv(publicPath), { dev: true }) // no cache
   .listen(port, err => {
     if (err) throw err;
     io = socket(server.server);

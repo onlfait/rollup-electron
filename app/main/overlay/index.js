@@ -4,11 +4,13 @@ const { userPath } = require("../config"); // TODO get from process
 
 let server = null;
 
+const publicPath = path.resolve(userPath, "public/media");
+
 module.exports = {
   start() {
     if (server) return server;
 
-    const argv = [...process.argv, "--public", userPath];
+    const argv = [...process.argv, "--public", publicPath];
     server = fork(path.resolve(__dirname, "server.js"), argv);
 
     server.on("error", err => {
