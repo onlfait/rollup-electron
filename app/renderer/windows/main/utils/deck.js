@@ -8,8 +8,13 @@ export const grid = {
     breakpoints: false
   },
   defaultWidget: {
-    x: 0,
-    y: 0,
+    props: {
+      label: null,
+      classList: "rounded-md",
+      backgroundColor: "#8fa2b5",
+      backgroundImage: null,
+      component: null
+    },
     w: 2,
     h: 2,
     min: { w: 2, h: 2 }

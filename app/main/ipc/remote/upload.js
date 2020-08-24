@@ -7,17 +7,17 @@ function cleanName(name) {
   return name.replace(/[^a-z0-9_.]+/gi, "_");
 }
 
-async function upload({ name, source, dest }) {
-  name = cleanName(name);
+async function upload({ source, dest }) {
+  const name = cleanName(path.basename(source));
   await fs.copy(source, path.resolve(publicPath, `media/${dest}`, name));
   return name;
 }
 
 module.exports = {
-  async image({ name, path: source }) {
-    return upload({ name, source, dest: "images" });
+  async image(source) {
+    return upload({ source, dest: "images" });
   },
-  async sound({ name, path: source }) {
-    return upload({ name, source, dest: "sounds" });
+  async sound(source) {
+    return upload({ source, dest: "sounds" });
   }
 };

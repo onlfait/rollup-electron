@@ -75,7 +75,7 @@
 {:else}
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={$currentGrid} on:adjust={onGridAdjust} let:item {...grid.defaultOptions}>
-    <div class="bg-red-500 h-full">
+    <div class="h-full">
       <GridWidget
         widget={item}
         editMode={$editMode}
@@ -107,7 +107,7 @@
 
 {#if editWidget}
 <Modal on:click={closeEditWidget}>
-  <div class="p-10 bg-gray-200 text-gray-800 rounded overflow-auto shadow">
+  <div class="p-5 bg-gray-200 text-gray-800 rounded overflow-auto shadow">
     <EditWidget bind:widget={editWidget} on:change={onWidgetChange} />
   </div>
 </Modal>

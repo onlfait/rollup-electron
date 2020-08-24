@@ -6,21 +6,23 @@
 
   const dispatch = createEventDispatcher();
 
-  $: bg = `background-color: ${widget.color};`;
-  $: icon = widget.icon ? `background-image: url("/public/media/images/${widget.icon.name}");` : "";
+  $: props = widget.props;
+  $: label = props.label || (props.component && props.component.label);
+  $: bgColor = `background-color: ${props.backgroundColor};`;
+  $: bgImage = props.backgroundImage ? `background-image: url("/public/media/images/${props.backgroundImage}");` : "";
 </script>
 
 <div
-  style="{icon} {bg}"
+  style="{bgColor} {bgImage}"
   on:dblclick={dispatch.bind(null, "edit")}
-  class="flex h-full bg-center bg-no-repeat bg-cover overflow-auto"
+  class="flex h-full bg-center bg-no-repeat bg-cover overflow-auto {props.classList}"
 >
 
   <div class="flex flex-col w-full">
 
-    {#if widget.label || (widget.component && widget.component.label)}
+    {#if label}
     <div class="bg-black text-light opacity-50 text-center px-2">
-      {widget.label || widget.component.label}
+      {label}
     </div>
     {/if}
 

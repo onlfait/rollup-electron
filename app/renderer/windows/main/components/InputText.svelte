@@ -2,7 +2,9 @@
   import { createEventDispatcher } from "svelte";
 
   export let value = "";
-  export let bg = "primary";
+  export let label = null;
+  export let bg = "gray-400";
+  export let text = "gray-700";
 
   const dispatch = createEventDispatcher();
 
@@ -11,9 +13,12 @@
       dispatch("enterKey");
     }
   }
+
+  $: color = `bg-${bg} text-${text}`;
+  $: inputRounded = label ? 'rounded-r' : 'rounded';
 </script>
 
-<label class="bg-{bg} text-gray-800 inline-flex flex-shrink-0 items-center rounded">
-  <span class="px-2 uppercase"><slot /></span>
-  <input bind:value on:input on:change on:keypress={onKeypress} class="p-2 text-dark rounded-r">
+<label class="{color} inline-flex flex-shrink-0 items-center rounded">
+  {#if label}<span class="px-2 uppercase">{label}</span>{/if}
+  <input bind:value on:input on:change on:keypress={onKeypress} class="p-2 text-dark {inputRounded}">
 </label>
