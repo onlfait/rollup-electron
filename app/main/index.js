@@ -9,6 +9,7 @@ const createTray = require("./tray/create");
 const config = require("./config");
 
 const twitchClient = require("./twitch/client");
+const { start: startOverlayServer } = require("./overlay");
 
 if (config.isDev) {
   require("./app/livereload");
@@ -26,5 +27,6 @@ app.whenReady().then(() => {
   twitchClient(config.twitchConfig);
   ipcRegister();
   uncaughtError();
+  startOverlayServer();
   createTray(createMainWindow());
 });
