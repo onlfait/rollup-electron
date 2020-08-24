@@ -7,6 +7,9 @@
 
   let color;
 
+  let classList;
+  export { classList as class };
+
   export let startColor = "#fff";
   export let disableAlpha = true;
 
@@ -16,7 +19,7 @@
 </script>
 
 <Openable>
-  <button class="p-2 bg-purple-500 rounded">Select a color</button>
+  <button class="p-2 bg-purple-500 rounded {classList}">Select a color</button>
   <div slot="open">
     <div class="absolute z-50 bg-gray-500 text-gray-800">
       <ChromePicker

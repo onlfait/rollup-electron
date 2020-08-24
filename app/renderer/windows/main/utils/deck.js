@@ -10,6 +10,8 @@ export const grid = {
   defaultWidget: {
     props: {
       label: null,
+      labelSize: 16,
+      labelPadding: 8,
       labelPosition: "text-center",
       classList: "rounded-md",
       backgroundColor: "#8fa2b5",

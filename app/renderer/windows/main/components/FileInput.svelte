@@ -3,6 +3,9 @@
 
   const dispatch = createEventDispatcher();
 
+  let classList;
+  export { classList as class };
+
   export let label = "Select a file";
   export let accept = "*";
 
@@ -15,7 +18,7 @@
 </script>
 
 <div class="file-input">
-  <button class="p-2 bg-purple-500 rounded">{label}</button>
+  <button class="p-2 bg-purple-500 rounded {classList}">{label}</button>
   <input type="file" bind:this={input} {accept} on:change="{onChange}"/>
 </div>
 

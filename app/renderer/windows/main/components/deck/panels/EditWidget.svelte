@@ -33,9 +33,28 @@
     updateProps({ backgroundImage: null });
   }
 
+  function onLabelChange({ target }) {
+    updateProps({ label: target.value });
+  }
+
+  function onLabelSizeChange({ target }) {
+    updateProps({ labelSize: target.value });
+  }
+
+  function onLabelPaddingChange({ target }) {
+    updateProps({ labelPadding: target.value });
+  }
+
+  function getLabel(props) {
+    if (props.label && props.label.length) {
+      return props.label;
+    }
+    return props.component && props.component.label;
+  }
+
   $: props = widget.props;
   $: component = props.component;
-  $: label = props.label || (component && component.label);
+  $: label = getLabel(widget.props);
 
   $: dispatch('change', widget);
 </script>
@@ -62,11 +81,53 @@
       <div class="text-lg font-medium text-gray-700">Button settings</div>
     </div>
 
+    <div class="flex space-x-2">
+      <div class="flex flex-col">
+        <div class="font-medium">Label</div>
+        <div class="flex items-center">
+          <InputText value={label} on:input={onLabelChange} />
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <div class="font-medium">Size</div>
+        <input
+          type="number"
+          min={2}
+          bind:value={props.labelSize}
+          on:input={onLabelSizeChange}
+          class="flex-auto rounded w-16"
+        />
+      </div>
+
+      <div class="flex flex-col">
+        <div class="font-medium">Padding</div>
+        <input
+          type="number"
+          min={0}
+          bind:value={props.labelPadding}
+          on:input={onLabelPaddingChange}
+          class="flex-auto rounded w-16"
+        />
+      </div>
+
+      <div class="flex flex-col">
+        <div class="font-medium">Position</div>
+        <div class="flex items-center">
+          <select class="p-2 rounded" bind:value={props.labelPosition}>
+          <option value="text-left">Left</option>
+          <option value="text-center">Center</option>
+          <option value="text-right">Right</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div class="flex flex-col">
       <div class="font-medium">Background image</div>
       <div class="flex items-center space-x-2">
-        <FileInput label="Upload image" accept="image/*" on:file="{onBackgroundImage}" />
-        <button class="p-2 bg-purple-600 rounded">Select image</button>
+        <FileInput class="text-gray-200" label="Upload image" accept="image/*" on:file="{onBackgroundImage}" />
+        <button class="p-2 text-gray-200 bg-purple-600 rounded">Select image</button>
         {#if props.backgroundImage}
         <img class="h-10" src="/public/media/images/{props.backgroundImage}" alt={props.backgroundImage}>
         <span on:click={removeBackgroundImage} class="ml-2 w-8 h-8 text-gray-500 hover:text-danger-dark"><MdDelete /></span>
@@ -80,22 +141,12 @@
       <div class="font-medium">Background color</div>
       <div class="flex items-center">
         <ColorPicker
+          class="text-gray-200"
           startColor={props.backgroundColor}
           disableAlpha={true}
           on:color={onBackgroundColor}
         />
         <div class="ml-2 w-10 h-10" style="background-color: {props.backgroundColor}"></div>
-      </div>
-    </div>
-
-    <div class="flex flex-col">
-      <div class="font-medium">Label position</div>
-      <div class="flex items-center">
-        <select class="p-2 rounded" bind:value={props.labelPosition}>
-        <option value="text-left">Left</option>
-        <option value="text-center">Center</option>
-        <option value="text-right">Right</option>
-        </select>
       </div>
     </div>
 
