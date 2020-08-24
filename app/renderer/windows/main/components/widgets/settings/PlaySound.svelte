@@ -1,5 +1,5 @@
 <script>
-  import FileInput from "../../../FileInput.svelte";
+  import FileInput from "../../FileInput.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
   export let widget = null;

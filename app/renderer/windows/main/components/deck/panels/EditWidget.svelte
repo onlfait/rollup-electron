@@ -7,7 +7,7 @@
   import { widgetsList } from "../../../utils/deck";
 
   import obsSettings from "../../OBS/widgets/settings";
-  import actionsSettings from "../../actions/widgets/settings";
+  import actionsSettings from "../../widgets/settings";
 
   import { createEventDispatcher } from "svelte";
 
