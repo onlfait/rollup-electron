@@ -89,6 +89,17 @@
     </div>
 
     <div class="flex flex-col">
+      <div class="font-medium">Label position</div>
+      <div class="flex items-center">
+        <select class="p-2 rounded" bind:value={props.labelPosition}>
+        <option value="text-left">Left</option>
+        <option value="text-center">Center</option>
+        <option value="text-right">Right</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex flex-col">
       <div class="font-medium">Class list</div>
       <div class="flex items-center">
         <InputText bind:value={props.classList} />

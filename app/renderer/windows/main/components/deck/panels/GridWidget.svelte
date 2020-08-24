@@ -7,6 +7,7 @@
   const dispatch = createEventDispatcher();
 
   $: props = widget.props;
+  $: labelClass = props.labelPosition || 'text-center';
   $: label = props.label || (props.component && props.component.label);
   $: bgColor = `background-color: ${props.backgroundColor};`;
   $: bgImage = props.backgroundImage ? `background-image: url("/public/media/images/${props.backgroundImage}");` : "";
@@ -21,7 +22,7 @@
   <div class="flex flex-col w-full">
 
     {#if label}
-    <div class="bg-black text-light opacity-50 text-center px-2">
+    <div class="bg-black text-light opacity-50 px-2 {editMode && 'pr-8'} {labelClass}">
       {label}
     </div>
     {/if}

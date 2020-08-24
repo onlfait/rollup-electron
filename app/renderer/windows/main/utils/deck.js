@@ -10,6 +10,7 @@ export const grid = {
   defaultWidget: {
     props: {
       label: null,
+      labelPosition: "text-center",
       classList: "rounded-md",
       backgroundColor: "#8fa2b5",
       backgroundImage: null,
