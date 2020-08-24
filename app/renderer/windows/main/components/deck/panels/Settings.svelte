@@ -1,5 +1,6 @@
 <script>
   import { v4 as uuid } from "uuid";
+  import cloneDeep from "clone-deep";
   import { _ } from "@/renderer/i18n";
 
   import {
@@ -83,11 +84,11 @@
   }
 
   function createGridWidget() {
-    return { id: uuid(), ...grid.defaultWidget, ...editableItem() };
+    return { id: uuid(), ...cloneDeep(grid.defaultWidget), ...editableItem() };
   }
 
   function addGridWidget() {
-    const { cols } = grid.defaultOptions;
+    const { cols } = cloneDeep(grid.defaultOptions);
     const newItem = gridHelp.item(createGridWidget());
     const oldItems = gridHelp.findSpaceForItem(newItem, $currentGrid, cols);
     $currentGrid = [...$currentGrid, ...[{ ...newItem, ...oldItems }]];
@@ -95,7 +96,7 @@
   }
 
   function adjustGrid() {
-    const { cols } = grid.defaultOptions;
+    const { cols } = cloneDeep(grid.defaultOptions);
     $currentGrid = gridHelp.resizeItems($currentGrid, cols);
     updateCurrentPanel({ widgets: $currentGrid });
   }
@@ -152,10 +153,10 @@
   </div>
   <div>
     <InputText
-      bg="gray-400"
+      label="Rename"
       bind:value={panelName}
       on:enterKey={toggleEditMode}
-    >Rename</InputText>
+    />
   </div>
   <div>
     <button class="p-2 flex bg-red-500 rounded" on:click={openConfirmRemoveModal}>

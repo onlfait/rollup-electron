@@ -1,5 +1,6 @@
 <script>
   import { v4 as uuid } from "uuid";
+  import cloneDeep from "clone-deep";
   import { _ } from "@/renderer/i18n";
 
   import {
@@ -27,7 +28,7 @@
   }
 
   function createPanel() {
-    return { ...defaultPanel, id: uuid(), name: createPanelName() };
+    return { ...cloneDeep(defaultPanel), id: uuid(), name: createPanelName() };
   }
 
   function addPanel() {
