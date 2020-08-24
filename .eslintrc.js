@@ -19,6 +19,7 @@ module.exports = {
     "linebreak-style": ["error", "unix"]
   },
   globals: {
-    app: true
+    app: true,
+    io: true
   }
 };

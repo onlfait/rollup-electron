@@ -2,7 +2,7 @@
   export let widget = null;
   export let file = null;
   export let volume = 0.8;
-  export let playNow = true;
+  export let playNow = false;
 
   function playSoundNow() {
     return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@
     if (playNow) {
       playSoundNow();
     } else {
-      app.remote.call('actions.playSound', file);
+      app.remote.call('actions.playSound', { file, volume });
     }
   }
 </script>

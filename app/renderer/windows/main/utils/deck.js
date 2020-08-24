@@ -58,5 +58,12 @@ export const widgetsList = [
     props: {
       file: null
     }
+  },
+  {
+    label: "Show picture",
+    name: "ShowPicture",
+    props: {
+      file: null
+    }
   }
 ];
