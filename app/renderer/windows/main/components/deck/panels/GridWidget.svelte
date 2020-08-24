@@ -1,14 +1,10 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import obsComponents from "../../OBS/widgets/components";
-  import actionsComponents from "../../widgets/components";
-
   export let widget = null;
   export let editMode = false;
 
   const dispatch = createEventDispatcher();
-  const components = { ...obsComponents, ...actionsComponents };
 
   $: bg = `background-color: ${widget.color};`;
   $: icon = widget.icon ? `background-image: url("/public/media/images/${widget.icon.name}");` : "";
@@ -26,10 +22,6 @@
     <div class="bg-black text-light opacity-50 text-center px-2">
       {widget.label || widget.component.label}
     </div>
-    {/if}
-
-    {#if widget.component}
-    <svelte:component this={components[widget.component.name]} bind:widget {...widget.component.props} />
     {/if}
 
   </div>
