@@ -26,9 +26,13 @@
     {#if label}
     <div
       style="{labelSize} {labelPadding} min-height:24px;"
-      class="flex items-center bg-black text-light opacity-50 {labelClass}"
+      class="flex bg-black text-light opacity-50 {labelClass}"
     >
-      <div class="flex-auto">{label}</div>
+      <div class="flex items-center w-full h-full break-words overflow-hidden">
+        <div class="flex-auto w-full">
+          {label}
+        </div>
+      </div>
     </div>
     {/if}
 
