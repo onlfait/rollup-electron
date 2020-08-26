@@ -12,7 +12,7 @@ function createElementFromHTML(html) {
 async function createTitlebar() {
   appName = await remote.api.get("app.name");
   const $titlebar = createElementFromHTML(`
-    <div id="app-titlebar" class="flex items-center bg-white text-black dark:bg-black dark:text-white">
+    <div id="app-titlebar" class="flex items-center bg-light-darker text-dark dark:bg-dark-darker dark:text-light">
       <div class="icon p-1"><img class="h-4" src="app://renderer/static/icon.ico" alt="icon" /></div>
       <div class="title p-1 flex-auto" style="-webkit-app-region: drag;">${appName}</div>
       <div class="close p-1 w-8 hover:bg-red-600 text-center cursor-default">⨉</div>

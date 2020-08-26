@@ -1,6 +1,6 @@
 <script>
   import { _ } from "@/renderer/i18n";
-  import { darkMode } from "../../stores/app";
+  import { darkMode } from "../../../stores/app";
 </script>
 
 <label {...$$props}>

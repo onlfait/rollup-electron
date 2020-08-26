@@ -1,5 +1,6 @@
 const darkMode = require("tailwindcss-dark-mode");
 const defaultConfig = require("tailwindcss/defaultConfig");
+const { colors } = require("tailwindcss/defaultTheme");
 
 const purge = process.argv.includes("--prod");
 
@@ -42,7 +43,37 @@ module.exports = {
   },
   theme: {
     darkSelector: ".theme--dark",
-    extend: {}
+    extend: {
+      colors: {
+        primary: {
+          lighter: colors.purple["700"],
+          default: colors.purple["800"],
+          darker: colors.purple["900"]
+        },
+        secondary: {
+          lighter: colors.gray["400"],
+          default: colors.gray["500"],
+          darker: colors.gray["600"]
+        },
+        light: {
+          lighter: colors.gray["200"],
+          default: colors.gray["300"],
+          darker: colors.gray["400"]
+        },
+        dark: {
+          lighter: colors.gray["700"],
+          default: colors.gray["800"],
+          darker: colors.gray["900"]
+        }
+      }
+    },
+    minWidth: {
+      "0": "0%",
+      "1/4": "25%",
+      "1/2": "50%",
+      "3/4": "75%",
+      full: "100%"
+    }
   },
   variants: {
     textColor: mergeDarkVariantes("textColor"),

@@ -1,6 +1,6 @@
 <script>
-  import Topbar from "./components/app/Topbar.svelte";
-  import Content from "./components/app/Content.svelte";
+  import Topbar from "./components/App/Topbar.svelte";
+  import Content from "./components/App/Content.svelte";
 </script>
 
 <Topbar />

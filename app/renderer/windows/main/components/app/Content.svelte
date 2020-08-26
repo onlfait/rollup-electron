@@ -1,7 +1,7 @@
 <script>
-  import DeckPanels from "../deck/Panels.svelte";
+  console.log("Content");
 </script>
 
-<div id="app-content" class="flex flex-col h-full flex-auto overflow-auto">
-  <DeckPanels />
+<div id="app-content">
+  Topbar...
 </div>
