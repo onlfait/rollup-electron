@@ -21,7 +21,7 @@
     connect();
   }
 
-  $: connectingClass = $connecting ? 'bg-yellow-600' : 'bg-red-600'
+  $: connectingClass = $connecting ? 'bg-yellow-600' : 'bg-red-600';
 </script>
 
 <div class="flex space-x-2">
