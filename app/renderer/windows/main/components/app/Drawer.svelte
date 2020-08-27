@@ -5,7 +5,7 @@
 </script>
 
 <Openable>
-  <Trigger />
+  <Trigger/>
   <div slot="open" on:click|stopPropagation>
     <Content />
   </div>
