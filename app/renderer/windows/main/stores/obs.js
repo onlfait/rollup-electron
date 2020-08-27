@@ -37,33 +37,65 @@ export function updateSceneList() {
   });
 }
 
-const setConnected = () => {
+function setConnected() {
   connecting.set(false);
   connected.set(true);
-};
+}
+
+function onStreamStatus(data) {
+  setConnected();
+  status.set(data);
+  streaming.set(data["streaming"]);
+  recording.set(data["recording"]);
+}
+
+let recordingHeartbeatId = null;
+
+function recordingHeartbeat() {
+  recordingHeartbeatId = setTimeout(() => {
+    send("GetStreamingStatus").then(onStreamStatus);
+    recordingHeartbeat();
+  }, 2000);
+}
+
+function stopRecordingHeartbeat() {
+  clearTimeout(recordingHeartbeatId);
+  recordingHeartbeatId = null;
+}
 
 app.obs.on("connect", () => connecting.set(true));
 app.obs.on("connected", setConnected);
 app.obs.on("disconnected", () => {
   streaming.set(false);
   recording.set(false);
+  stopRecordingHeartbeat();
 });
 app.obs.on("status", (event, status) => {
   connected.set(status.connected);
   connecting.set(status.connecting);
 });
 
-app.obs.on("StreamStarted", () => streaming.set(true));
-app.obs.on("StreamStopped", () => streaming.set(false));
+app.obs.on("StreamStarted", () => {
+  stopRecordingHeartbeat();
+  streaming.set(true);
+});
+app.obs.on("StreamStopped", () => {
+  recordingHeartbeat();
+  streaming.set(false);
+});
 
-app.obs.on("RecordingStarted", () => recording.set(true));
-app.obs.on("RecordingStopped", () => recording.set(false));
+app.obs.on("RecordingStarted", () => {
+  send("GetStreamingStatus").then(onStreamStatus);
+  recordingHeartbeat();
+  recording.set(true);
+});
+app.obs.on("RecordingStopped", () => {
+  stopRecordingHeartbeat();
+  recording.set(false);
+});
 
 app.obs.on("StreamStatus", (event, data) => {
-  setConnected();
-  status.set(data);
-  streaming.set(data["streaming"]);
-  recording.set(data["recording"]);
+  onStreamStatus(data);
 });
 
 app.obs.on("SwitchScenes", (event, data) => {

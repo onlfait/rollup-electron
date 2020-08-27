@@ -26,11 +26,11 @@
 
 <div class="flex space-x-2">
   {#if $connected || $connecting}
-  <Button icon={MdPowerSettingsNew} class={connectingClass} on:click={disconnect}>
+  <Button icon={MdPowerSettingsNew} iconSize={6} class={connectingClass} on:click={disconnect}>
     <span class="hidden md:inline">{_('words.disconnect')}</span>
   </Button>
   {:else}
-  <Button icon={MdPowerSettingsNew} class="bg-primary-darker" on:click={connect}>
+  <Button icon={MdPowerSettingsNew} iconSize={6} class="bg-primary-darker" on:click={connect}>
     <span class="hidden md:inline">{_('words.connect')}</span>
   </Button>
   {/if}
