@@ -7,16 +7,22 @@
   export let dark = true;
   export let icon = null;
   export let iconSize = null;
+  export let iconColor = null;
   export let hideLabel = null;
+  export let textColor = null;
 
-  let color = dark ? 'text-light' : 'text-dark';
+  let _textColor = dark ? 'text-light' : 'text-dark';
+
+  $: if (!textColor) {
+    textColor = _textColor;
+  }
 </script>
 
 <button
-  class="{cls} flex space-x-1 p-2 uppercase rounded {color}"
+  class="flex space-x-1 p-2 uppercase rounded {textColor} {cls}"
   {...$$restProps}
   on:click
 >
-  {#if icon}<Icon {icon} size={iconSize} />{/if}
+  {#if icon}<Icon {icon} size={iconSize} color={iconColor} />{/if}
   <slot />
 </button>

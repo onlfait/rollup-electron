@@ -3,6 +3,7 @@
   export let w = 6;
   export let h = 6;
   export let size = null;
+  export let color = null;
 
   export let cls = '';
   export { cls as class };
@@ -12,6 +13,6 @@
   }
 </script>
 
-<span class="flex inline-block w-{w} h-{h} {cls}">
+<span class="flex inline-block w-{w} h-{h} {color} {cls}">
   <svelte:component this={icon} />
 </span>

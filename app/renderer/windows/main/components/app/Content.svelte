@@ -3,5 +3,5 @@
 </script>
 
 <div id="app-content">
-  Topbar...
+  Content...
 </div>

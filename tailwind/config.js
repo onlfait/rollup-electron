@@ -46,6 +46,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          light: colors.purple["600"],
           lighter: colors.purple["700"],
           default: colors.purple["800"],
           darker: colors.purple["900"]
