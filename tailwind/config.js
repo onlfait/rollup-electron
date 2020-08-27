@@ -52,9 +52,11 @@ module.exports = {
           darker: colors.purple["900"]
         },
         secondary: {
+          light: colors.gray["300"],
           lighter: colors.gray["400"],
           default: colors.gray["500"],
-          darker: colors.gray["600"]
+          darker: colors.gray["600"],
+          dark: colors.gray["700"]
         },
         light: {
           lighter: colors.gray["200"],

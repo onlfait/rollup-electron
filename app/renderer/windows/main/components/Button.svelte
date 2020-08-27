@@ -19,7 +19,7 @@
 </script>
 
 <button
-  class="flex space-x-1 p-2 uppercase rounded {textColor} {cls}"
+  class="flex items-center space-x-1 p-2 uppercase rounded {textColor} {cls}"
   {...$$restProps}
   on:click
 >

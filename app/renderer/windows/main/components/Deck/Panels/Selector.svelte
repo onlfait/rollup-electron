@@ -48,14 +48,16 @@
   }
 </script>
 
-<Button icon={MdAdd} on:click={addPanel} class="ml-2 bg-primary" />
-<Button
-  icon={MdSettings}
-  class="ml-2 bg-primary"
-  on:click={toggleEditMode}
-  disabled={!$panels.length}
-  textColor={$editMode && 'text-red-600'}
-/>
+<div class="flex items-center bg-primary-lighter text-light">
+
+  <Button icon={MdAdd} on:click={addPanel} class="ml-2 bg-primary" />
+  <Button
+    icon={MdSettings}
+    class="ml-2 bg-primary"
+    on:click={toggleEditMode}
+    disabled={!$panels.length}
+    textColor={$editMode && 'text-red-600'}
+  />
 
 {#if !$panels.length}
   <div class="p-2">
@@ -73,3 +75,5 @@
     {/each}
   </HOverflow>
 {/if}
+
+</div>

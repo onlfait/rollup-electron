@@ -1,7 +1,7 @@
 <script>
   import PanelsSelector from "./Panels/Selector.svelte";
+  import PanelsSettings from "./Panels/Settings.svelte";
 </script>
 
-  <div class="flex items-center bg-primary-lighter text-light">
-    <PanelsSelector />
-  </div>
+<PanelsSelector />
+<PanelsSettings />
