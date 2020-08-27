@@ -2,8 +2,9 @@ const OBSWebSocket = require("obs-websocket-js");
 const { getMainWindow } = require("../app/windows");
 
 let obs = null;
-let doNotReconnect = false;
+let autoReconnect = true;
 let reconnectionTimeout = 5000;
+let reconnectionTimeoutId = null;
 
 let status = {
   connected: false,
@@ -17,9 +18,9 @@ function log(...args) {
 
 function reconnect(settings) {
   obs = null;
-  setStatus({ connected: false, connecting: true });
   log(`Reconnecting in ${reconnectionTimeout / 1000} sec.`);
-  setTimeout(() => {
+  setStatus({ connected: false, connecting: true });
+  reconnectionTimeoutId = setTimeout(() => {
     connect(settings);
   }, reconnectionTimeout);
 }
@@ -47,48 +48,52 @@ function getStatus() {
 
 function setStatus(newStatus) {
   status = { ...status, ...newStatus };
+  send("status", status);
 }
 
 function connect({ host = "localhost", port = 4444, password = null } = {}) {
   if (obs) return;
 
+  autoReconnect = true;
   const address = `${host}:${port}`;
 
   setStatus({ connected: false, connecting: true });
   log(`Connect (${address})`);
   send("connect");
 
-  obs = new OBSWebSocket();
-
-  obs.on("ConnectionClosed", () => {
+  function onConnectionClosed() {
     setStatus({ connected: false, connecting: false });
     log("Connection closed");
     send("disconnected");
     obs = null;
-    if (!doNotReconnect) {
-      reconnect({ host, port, password });
-    }
-    doNotReconnect = false;
-  });
+    autoReconnect && reconnect({ host, port, password });
+  }
+
+  obs = new OBSWebSocket();
 
   obs
     .connect({ address, password })
     .then(() => {
-      setStatus({ connected: true, connecting: false });
       log("Connected");
+      setStatus({ connected: true, connecting: false });
+      obs.on("ConnectionClosed", onConnectionClosed);
       send("connected");
       onMessage(obs);
     })
     .catch(error => {
-      setStatus({ connected: false, connecting: false });
       log(`Error: ${error.code}`);
-      reconnect({ host, port, password });
+      setStatus({ connected: false, connecting: autoReconnect });
+      autoReconnect && reconnect({ host, port, password });
     });
 }
 
 function disconnect() {
-  doNotReconnect = true;
+  setStatus({ connected: false, connecting: false });
+  clearTimeout(reconnectionTimeoutId);
+  reconnectionTimeoutId = null;
   obs && obs.disconnect();
+  autoReconnect = false;
+  obs = null;
 }
 
 function obsSend(...args) {

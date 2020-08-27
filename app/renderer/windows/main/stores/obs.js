@@ -47,8 +47,10 @@ app.obs.on("connected", setConnected);
 app.obs.on("disconnected", () => {
   streaming.set(false);
   recording.set(false);
-  connecting.set(false);
-  connected.set(false);
+});
+app.obs.on("status", (event, status) => {
+  connected.set(status.connected);
+  connecting.set(status.connecting);
 });
 
 app.obs.on("StreamStarted", () => streaming.set(true));
