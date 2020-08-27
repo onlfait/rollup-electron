@@ -138,7 +138,6 @@
   editMode.subscribe(fixPanelsEditMode);
 </script>
 
-
 {#if $editMode}
 <div class="p-2 flex items-center bg-secondary-dark text-light space-x-2">
 
