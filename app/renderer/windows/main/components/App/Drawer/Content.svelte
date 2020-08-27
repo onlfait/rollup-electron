@@ -11,11 +11,11 @@
 
 <div {style} class="{position} {colors} {extra}">
   <div class="flex flex-col">
-    <span class="p-2">{_('words.settings')}</span>
-    <span class="p-2">Action 1</span>
-    <span class="p-2">Action 2</span>
-    <span class="p-2">Action 3</span>
-    <DarkModeSwitch class="p-2" />
+    <span class="p-4">{_('words.settings')}</span>
+    <span class="p-4">Action 1</span>
+    <span class="p-4">Action 2</span>
+    <span class="p-4">Action 3</span>
+    <DarkModeSwitch class="p-4" />
     <LanguageSelect class="p-2 text-dark" />
   </div>
 </div>
