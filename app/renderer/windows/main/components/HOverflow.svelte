@@ -1,10 +1,11 @@
 <script>
-	import { afterUpdate } from "svelte";
+	import { onMount, afterUpdate } from "svelte";
 	import Button from "./Button.svelte";
 
 	import MdKeyboardArrowLeft from "svelte-icons/md/MdKeyboardArrowLeft.svelte";
 	import MdKeyboardArrowRight from "svelte-icons/md/MdKeyboardArrowRight.svelte";
 
+	import { throttle } from 'throttle-debounce';
 	import anime from "animejs";
 
 	export let gap = 1;
@@ -28,9 +29,11 @@
 	};
 
 	const scroll = (n) => {
-		console.log("scroll", n);
-	  scrollTo(element.scrollLeft + n * element.clientWidth);
+		scrollTo(element.scrollLeft + n * element.clientWidth);
 	};
+
+	const throttleScroll = throttle(500, scroll);
+	const throttleScrollTo = throttle(500, scrollTo);
 
 	export const scrollLeft = () => {
 	  scrollTo(0);
@@ -39,6 +42,14 @@
 	export const scrollRight = () => {
 	  scrollTo(element.scrollWidth);
 	};
+
+	function onWheel(event) {
+		throttleScroll(event.deltaY / 100);
+	}
+
+	onMount(() => {
+		element.addEventListener("wheel", onWheel);
+	});
 
 	afterUpdate(isOverflowing);
 	window.addEventListener("resize", isOverflowing);
