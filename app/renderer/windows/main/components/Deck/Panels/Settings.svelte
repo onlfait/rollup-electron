@@ -165,18 +165,16 @@
 
 {#if confirmRemoveModal}
 <Modal>
-  <div class="bg-gray-200 text-gray-800 rounded flex flex-col p-2">
-    <div class="font-bold p-2">
-      {_('sentences.askForPanelDeletion', { name: panelName })}
-    </div>
-    <div class="flex p-2 space-x-2">
-      <Button class="bg-primary" on:click={removeCurrentPanel}>
-        {_('words.yes')}
-      </Button>
-      <Button class="bg-secondary" on:click={closeConfirmRemoveModal}>
-        {_('words.no')}
-      </Button>
-    </div>
+  <div class="font-bold p-2">
+    {_('sentences.askForPanelDeletion', { name: panelName })}
+  </div>
+  <div class="flex p-2 space-x-2">
+    <Button class="bg-primary" on:click={removeCurrentPanel}>
+      {_('words.yes')}
+    </Button>
+    <Button class="bg-secondary" on:click={closeConfirmRemoveModal}>
+      {_('words.no')}
+    </Button>
   </div>
 </Modal>
 {/if}
