@@ -34,6 +34,10 @@ export const panels = {
 
 export const widgetsList = [
   {
+    label: "None",
+    name: null
+  },
+  {
     label: "Scene list",
     name: "SceneList"
   },
