@@ -5,6 +5,7 @@
   export let label = null;
   export let bg = "gray-400";
   export let text = "gray-700";
+  export let placeholder = "";
 
   const dispatch = createEventDispatcher();
 
@@ -20,5 +21,12 @@
 
 <label class="{color} inline-flex flex-shrink-0 items-center rounded">
   {#if label}<span class="px-2 uppercase">{label}</span>{/if}
-  <input bind:value on:input on:change on:keypress={onKeypress} class="p-2 flex w-full text-dark {inputRounded}">
+  <input
+    bind:value
+    on:input
+    on:change
+    on:keypress={onKeypress}
+    {placeholder}
+    class="p-2 flex w-full text-dark {inputRounded}"
+  />
 </label>
