@@ -1,17 +1,13 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import components from "../../widgets/actions";
 
   export let widget = null;
   export let editMode = false;
 
   const dispatch = createEventDispatcher();
 
-  console.log(widget);
-
   $: props = widget.props;
   $: component = props.component;
-  $: componentGroup = component && components[component.module];
   $: labelClass = props.labelPosition || 'text-center';
   $: labelSize = `font-size: ${props.labelSize||16}px;`;
   $: labelPadding = `padding-left: ${props.labelPadding||8}px;padding-right: ${props.labelPadding||8}px;`;
@@ -39,10 +35,6 @@
         </div>
       </div>
     </div>
-    {/if}
-
-    {#if componentGroup}
-    <svelte:component this={componentGroup[component.name]} bind:widget {...component.props} />
     {/if}
 
   </div>

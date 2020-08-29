@@ -6,13 +6,13 @@
   import ColorPicker from "../../ColorPicker.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { widgetsList } from "../../../utils/deck";
-  import components from "../../widgets/settings";
   import { createEventDispatcher } from "svelte";
 
   export let widget = null;
 
   const dispatch = createEventDispatcher();
+
+  let widgetsList = [];
 
   const labelPositions = [
     { label: 'Left', value: 'text-left' },
@@ -25,7 +25,6 @@
   }
 
   function onComponentChange({ detail }) {
-    console.log("___>", detail);
     updateProps({ component: detail });
   }
 
@@ -64,7 +63,6 @@
 
   $: props = widget.props;
   $: component = props.component;
-  $: componentGroup = component && components[component.module];
   $: label = getLabel(widget.props);
 
   $: dispatch('change', widget);
@@ -88,10 +86,6 @@
       />
     </div>
   </div>
-
-  {#if componentGroup}
-  <svelte:component this={componentGroup[component.name]} bind:widget />
-  {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">
 
