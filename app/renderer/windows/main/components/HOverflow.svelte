@@ -55,7 +55,7 @@
 	window.addEventListener("resize", isOverflowing);
 </script>
 
-<div class="p-2 inline-flex items-center overflow-hidden">
+<div class="inline-flex items-center overflow-hidden">
   {#if overflowing}
 	<Button icon={MdKeyboardArrowLeft} on:click={scroll.bind(null, -1)} class="mr-2 {arrowClass}" />
   {/if}

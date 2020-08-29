@@ -69,7 +69,7 @@
 
 {#if !$currentGrid}
 {:else if !$currentGrid.length}
-<div class="p-2">
+<div class="p-4">
   {_('sentences.noWidgetsFound')}
 </div>
 {:else}

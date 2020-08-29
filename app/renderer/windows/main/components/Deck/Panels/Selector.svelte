@@ -48,16 +48,19 @@
   }
 </script>
 
-<div class="flex items-center bg-primary-lighter text-light">
+<div class="p-2 flex space-x-2 items-center bg-primary-lighter text-light">
 
-  <Button icon={MdAdd} on:click={addPanel} class="ml-2 bg-primary" />
+  <Button icon={MdAdd} on:click={addPanel} class="bg-primary" />
+
+{#if $panels.length}
   <Button
     icon={MdSettings}
-    class="ml-2 bg-primary"
+    class="bg-primary"
     on:click={toggleEditMode}
     disabled={!$panels.length}
     textColor={$editMode && 'text-red-600'}
   />
+{/if}
 
 {#if !$panels.length}
   <div class="p-2">
