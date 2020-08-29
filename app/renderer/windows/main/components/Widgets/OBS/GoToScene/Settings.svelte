@@ -1,5 +1,5 @@
 <script>
-  let widget = "GoToScene/Settings";
+  export let widget = "GoToScene/Settings";
 </script>
 
 <div class="p-2">

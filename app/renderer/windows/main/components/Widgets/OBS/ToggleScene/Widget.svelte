@@ -1,5 +1,5 @@
 <script>
-  let widget = "ToggleScene/Widget";
+  export let widget = "ToggleScene/Widget";
 </script>
 
 <div class="p-2">

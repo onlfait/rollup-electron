@@ -1,5 +1,5 @@
 <script>
-  let widget = "SceneList/Settings";
+  export let widget = "SceneList/Settings";
 </script>
 
 <div class="p-2">

@@ -17,7 +17,6 @@
   }
 
   $: isObject = items.length ? typeof items[0] !== "string" : false;
-  // $: console.log(value);
 </script>
 
 <select {...$$restProps} class="p-2 text-dark rounded {cls}" bind:value={value} on:change={change}>

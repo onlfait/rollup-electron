@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { get as getWidget } from "../../../widgets";
 
   export let widget = null;
   export let editMode = false;
@@ -8,10 +9,12 @@
 
   $: props = widget.props;
   $: component = props.component;
+  $: componentWidget = component && getWidget(component).Widget;
+  $: label = (props.label || (props.component && props.component.label) || "").trim();
+
   $: labelClass = props.labelPosition || "text-center";
   $: labelSize = `font-size: ${props.labelSize||16}px;`;
   $: labelPadding = `padding-left: ${props.labelPadding||8}px;padding-right: ${props.labelPadding||8}px;`;
-  $: label = (props.label || (props.component && props.component.label) || "").trim();
   $: bgColor = `background-color: ${props.backgroundColor};`;
   $: bgImage = props.backgroundImage ? `background-image: url("/public/media/images/${props.backgroundImage}");` : "";
 </script>
@@ -35,6 +38,10 @@
         </div>
       </div>
     </div>
+    {/if}
+
+    {#if componentWidget}
+    <svelte:component bind:widget this={componentWidget} />
     {/if}
 
   </div>

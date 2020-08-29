@@ -6,7 +6,10 @@
   import ColorPicker from "../../ColorPicker.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { getList as getWidgetList } from "../../../widgets";
+  import {
+    get as getWidget,
+    getList as getWidgetList
+  } from "../../../widgets";
 
   import { createEventDispatcher } from "svelte";
 
@@ -65,6 +68,7 @@
   $: widgetLabel = widget.props.label;
   $: componentName = component && component.name;
   $: componentLabel = component && component.label;
+  $: componentSettings = component && getWidget(component).Settings;
 
   $: dispatch("change", widget);
 </script>
@@ -87,6 +91,10 @@
       />
     </div>
   </div>
+
+  {#if componentSettings}
+  <svelte:component bind:widget this={componentSettings} />
+  {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">
 

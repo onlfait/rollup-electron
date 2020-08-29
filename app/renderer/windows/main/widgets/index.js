@@ -9,7 +9,9 @@ export function getList() {
 }
 
 export function get({ group, name } = {}) {
-  return widgets.find(widget => widget.group === group && widget.name === name);
+  return widgets.find(({ config }) => {
+    return config.group === group && config.name === name;
+  });
 }
 
 export default widgets;
