@@ -20,14 +20,14 @@
   // $: console.log(value);
 </script>
 
-<select class="p-2 text-dark rounded {cls}" bind:value={value} on:blur={change}>
+<select {...$$restProps} class="p-2 text-dark rounded {cls}" bind:value={value} on:change={change}>
   {#each items as item}
     {#if isObject}
-      <option value={item[valueKey]} disabled={!item[valueKey]}>
+      <option value={item[valueKey]} disabled={item[valueKey] === value}>
         {item[labelKey]}
       </option>
     {:else}
-      <option value={item} class="active:bg-red-500">{item}</option>
+      <option value={item} disabled={item === value}>{item}</option>
     {/if}
   {/each}
 </select>
