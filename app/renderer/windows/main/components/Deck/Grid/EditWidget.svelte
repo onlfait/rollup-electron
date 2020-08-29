@@ -6,13 +6,18 @@
   import ColorPicker from "../../ColorPicker.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import { getList as getWidgetList } from "../../../widgets";
+
   import { createEventDispatcher } from "svelte";
 
   export let widget = null;
 
   const dispatch = createEventDispatcher();
 
-  let widgetsList = [];
+  let widgetsList = [
+    { label: "None", name: null },
+    ...getWidgetList()
+  ];
 
   const labelPositions = [
     { label: "Left", value: "text-left" },
@@ -25,7 +30,8 @@
   }
 
   function onComponentChange({ detail }) {
-    updateProps({ component: detail });
+    component = detail.name && detail;
+    updateProps({ component });
   }
 
   function onBackgroundColor({ detail }) {
@@ -54,16 +60,11 @@
     updateProps({ labelPadding: target.value });
   }
 
-  function getLabel(props) {
-    if (props.label && props.label.length) {
-      return props.label;
-    }
-    return props.component && props.component.label;
-  }
-
   $: props = widget.props;
   $: component = props.component;
-  $: label = getLabel(widget.props);
+  $: widgetLabel = widget.props.label;
+  $: componentName = component && component.name;
+  $: componentLabel = component && component.label;
 
   $: dispatch("change", widget);
 </script>
@@ -81,7 +82,7 @@
         class="p-2 rounded"
         items={widgetsList}
         valueKey="name"
-        value={component}
+        value={componentName}
         on:change={onComponentChange}
       />
     </div>
@@ -94,7 +95,11 @@
     <div class="flex flex-wrap space-x-2">
       <div class="flex flex-col">
         <div class="font-medium">Label</div>
-        <InputText value={label} on:input={onLabelChange} />
+        <InputText
+          value={widgetLabel}
+          placeholder={componentLabel}
+          on:input={onLabelChange}
+        />
       </div>
 
       <div class="flex flex-col">
