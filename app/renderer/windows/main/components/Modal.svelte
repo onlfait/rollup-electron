@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
-  import MdClose from 'svelte-icons/md/MdClose.svelte'
-  import Icon from './Icon.svelte';
+  import MdClose from "svelte-icons/md/MdClose.svelte";
+  import Icon from "./Icon.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -14,11 +14,11 @@
   let position = "absolute inset-0 z-50";
   let content = "p-10 flex justify-center overflow-auto";
 
-  let cls = '';
+  let cls = "";
   export { cls as class };
 
-  function close(event) {
-    dispatch('close');
+  function close() {
+    dispatch("close");
   }
 
   onMount(() => {

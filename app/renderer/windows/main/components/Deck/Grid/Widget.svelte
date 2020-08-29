@@ -8,10 +8,10 @@
 
   $: props = widget.props;
   $: component = props.component;
-  $: labelClass = props.labelPosition || 'text-center';
+  $: labelClass = props.labelPosition || "text-center";
   $: labelSize = `font-size: ${props.labelSize||16}px;`;
   $: labelPadding = `padding-left: ${props.labelPadding||8}px;padding-right: ${props.labelPadding||8}px;`;
-  $: label = (props.label || (props.component && props.component.label) || '').trim();
+  $: label = (props.label || (props.component && props.component.label) || "").trim();
   $: bgColor = `background-color: ${props.backgroundColor};`;
   $: bgImage = props.backgroundImage ? `background-image: url("/public/media/images/${props.backgroundImage}");` : "";
 </script>

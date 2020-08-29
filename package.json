@@ -30,6 +30,8 @@
     "electron": "^9.2.0",
     "electron-builder": "^22.8.0",
     "eslint": "^7.6.0",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "prettier-plugin-svelte": "^1.1.1",
     "rollup": "^2.23.1",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-copy": "^3.3.0",

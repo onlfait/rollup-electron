@@ -4,5 +4,5 @@
 </script>
 
 <label {...$$props}>
-  <input type="checkbox" bind:checked={$darkMode}> {_('sentences.darkMode')}
+  <input type="checkbox" bind:checked={$darkMode}> {_("sentences.darkMode")}
 </label>

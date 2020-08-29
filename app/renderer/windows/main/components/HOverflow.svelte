@@ -5,7 +5,7 @@
 	import MdKeyboardArrowLeft from "svelte-icons/md/MdKeyboardArrowLeft.svelte";
 	import MdKeyboardArrowRight from "svelte-icons/md/MdKeyboardArrowRight.svelte";
 
-	import { throttle } from 'throttle-debounce';
+	import { throttle } from "throttle-debounce";
 	import anime from "animejs";
 
 	export let gap = 1;
@@ -29,11 +29,10 @@
 	};
 
 	const scroll = (n) => {
-		scrollTo(element.scrollLeft + n * element.clientWidth);
+	  scrollTo(element.scrollLeft + n * element.clientWidth);
 	};
 
 	const throttleScroll = throttle(500, scroll);
-	const throttleScrollTo = throttle(500, scrollTo);
 
 	export const scrollLeft = () => {
 	  scrollTo(0);
@@ -44,11 +43,11 @@
 	};
 
 	function onWheel(event) {
-		throttleScroll(event.deltaY / 100);
+	  throttleScroll(event.deltaY / 100);
 	}
 
 	onMount(() => {
-		element.addEventListener("wheel", onWheel);
+	  element.addEventListener("wheel", onWheel);
 	});
 
 	afterUpdate(isOverflowing);

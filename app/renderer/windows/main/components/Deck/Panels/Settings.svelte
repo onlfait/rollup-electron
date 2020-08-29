@@ -20,7 +20,7 @@
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
   import MdAddToPhotos from "svelte-icons/md/MdAddToPhotos.svelte";
 
-  let panelName = '';
+  let panelName = "";
   let confirmRemoveModal = false;
 
   function toggleEditMode() {
@@ -142,11 +142,11 @@
 <div class="p-2 flex items-center bg-secondary-dark text-light space-x-2">
 
   <Button icon={MdApps} on:click={adjustGrid}>
-    <span class="hidden md:inline md:ml-2">{_('sentences.adjustGrid')}</span>
+    <span class="hidden md:inline md:ml-2">{_("sentences.adjustGrid")}</span>
   </Button>
 
   <Button icon={MdAddToPhotos} on:click={addGridWidget}>
-    <span class="hidden md:inline md:ml-2">{_('sentences.addGridWidget')}</span>
+    <span class="hidden md:inline md:ml-2">{_("sentences.addGridWidget")}</span>
   </Button>
 
   <InputText
@@ -165,14 +165,14 @@
 {#if confirmRemoveModal}
 <Modal>
   <div class="font-bold p-2">
-    {_('sentences.askForPanelDeletion', { name: panelName })}
+    {_("sentences.askForPanelDeletion", { name: panelName })}
   </div>
   <div class="flex p-2 space-x-2">
     <Button class="bg-primary" on:click={removeCurrentPanel}>
-      {_('words.yes')}
+      {_("words.yes")}
     </Button>
     <Button class="bg-secondary" on:click={closeConfirmRemoveModal}>
-      {_('words.no')}
+      {_("words.no")}
     </Button>
   </div>
 </Modal>

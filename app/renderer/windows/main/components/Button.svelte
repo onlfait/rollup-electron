@@ -1,17 +1,16 @@
 <script>
   import Icon from "./Icon.svelte";
 
-  export let cls = '';
+  export let cls = "";
   export { cls as class };
 
   export let dark = true;
   export let icon = null;
   export let iconSize = null;
   export let iconColor = null;
-  export let hideLabel = null;
   export let textColor = null;
 
-  let _textColor = dark ? 'text-light' : 'text-dark';
+  let _textColor = dark ? "text-light" : "text-dark";
 
   $: if (!textColor) {
     textColor = _textColor;

@@ -67,12 +67,11 @@
   }
 </script>
 
-{#if !$currentGrid}
-{:else if !$currentGrid.length}
+{#if $currentGrid && !$currentGrid.length}
 <div class="p-4">
-  {_('sentences.noWidgetsFound')}
+  {_("sentences.noWidgetsFound")}
 </div>
-{:else}
+{:else if $currentGrid}
 <div class="flex-auto overflow-auto p-1">
   <Grid bind:items={$currentGrid} on:adjust={onGridAdjust} let:item {...grid.defaultOptions}>
     <div class="h-full">
@@ -90,14 +89,14 @@
 {#if confirmRemoveModal}
 <Modal>
   <div class="font-bold p-2">
-    {_('sentences.askForWidgetDeletion', { name: currentWidget.id })}
+    {_("sentences.askForWidgetDeletion", { name: currentWidget.id })}
   </div>
   <div class="flex p-2 space-x-2">
     <Button class="bg-primary" on:click={removeCurrentWidget}>
-      {_('words.yes')}
+      {_("words.yes")}
     </Button>
     <Button class="bg-secondary" on:click={closeConfirmRemoveModal}>
-      {_('words.no')}
+      {_("words.no")}
     </Button>
   </div>
 </Modal>

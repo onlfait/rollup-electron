@@ -1,18 +1,16 @@
 <script>
   let errorsList = app.errors.getAll();
 
-  app.errors.on('errors', errors => {
+  app.errors.on("errors", errors => {
     errorsList = errors;
-    console.log(errors);
   });
 
   function openIssue() {
-    console.log("openIssue");
     app.errors.openIssue();
   }
 
   function restartApp() {
-    app.remote.call('app.relaunchApp');
+    app.remote.call("app.relaunchApp");
   }
 
   function exitApp() {

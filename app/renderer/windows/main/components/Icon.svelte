@@ -5,7 +5,7 @@
   export let size = null;
   export let color = null;
 
-  export let cls = '';
+  export let cls = "";
   export { cls as class };
 
   if (size) {

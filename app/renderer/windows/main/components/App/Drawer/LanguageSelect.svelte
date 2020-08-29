@@ -8,7 +8,7 @@
   let openModal = false;
   let lang = $language;
 
-  let cls = '';
+  let cls = "";
   export { cls as class };
 
   $: {
@@ -18,7 +18,7 @@
   }
 
   function restartApp() {
-    app.remote.call('app.relaunchApp');
+    app.remote.call("app.relaunchApp");
   }
 
   function closeModal() {
@@ -31,14 +31,14 @@
 {#if openModal}
 <Modal>
   <div class="p-2 font-bold">
-    {_('sentences.askForAppRestart')}
+    {_("sentences.askForAppRestart")}
   </div>
   <div class="flex p-2 space-x-2">
     <Button class="bg-primary" on:click={restartApp}>
-      {_('words.yes')}
+      {_("words.yes")}
     </Button>
     <Button class="bg-secondary" on:click={closeModal}>
-      {_('words.no')}
+      {_("words.no")}
     </Button>
   </div>
 </Modal>

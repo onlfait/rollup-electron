@@ -15,7 +15,7 @@
   }
 
   $: color = `bg-${bg} text-${text}`;
-  $: inputRounded = label ? 'rounded-r' : 'rounded';
+  $: inputRounded = label ? "rounded-r" : "rounded";
 </script>
 
 <label class="{color} inline-flex flex-shrink-0 items-center rounded">

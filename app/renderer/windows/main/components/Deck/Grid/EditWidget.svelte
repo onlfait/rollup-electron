@@ -15,10 +15,10 @@
   let widgetsList = [];
 
   const labelPositions = [
-    { label: 'Left', value: 'text-left' },
-    { label: 'Center', value: 'text-center' },
-    { label: 'Right', value: 'text-right' },
-  ]
+    { label: "Left", value: "text-left" },
+    { label: "Center", value: "text-center" },
+    { label: "Right", value: "text-right" },
+  ];
 
   function updateProps(props) {
     widget.props = { ...widget.props, ...props };
@@ -34,7 +34,7 @@
 
   async function onBackgroundImage({ detail }) {
     if (!detail) return;
-    const backgroundImage = await app.remote.call('upload.image', detail.path);
+    const backgroundImage = await app.remote.call("upload.image", detail.path);
     updateProps({ backgroundImage });
   }
 
@@ -65,7 +65,7 @@
   $: component = props.component;
   $: label = getLabel(widget.props);
 
-  $: dispatch('change', widget);
+  $: dispatch("change", widget);
 </script>
 
 <div on:click|stopPropagation class="p-2 flex flex-col space-y-2">

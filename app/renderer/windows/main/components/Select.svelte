@@ -3,25 +3,24 @@
 
   export let items = [];
   export let value = null;
-  export let labelKey = 'label';
-  export let valueKey = 'value';
+  export let labelKey = "label";
+  export let valueKey = "value";
 
-  let cls = '';
+  let cls = "";
   export { cls as class };
 
   const dispatch = createEventDispatcher();
 
-  function change(event) {
+  function change() {
     const ret = isObject ? items.find(item => item[valueKey] === value) : value;
-    console.log(">>>", ret);
-    dispatch('change', ret);
+    dispatch("change", ret);
   }
 
-  $: isObject = items.length ? typeof items[0] !== 'string' : false;
-  $: console.log(value);
+  $: isObject = items.length ? typeof items[0] !== "string" : false;
+  // $: console.log(value);
 </script>
 
-<select class="p-2 text-dark rounded {cls}" bind:value={value} on:change={change}>
+<select class="p-2 text-dark rounded {cls}" bind:value={value} on:blur={change}>
   {#each items as item}
     {#if isObject}
       <option value={item[valueKey]} disabled={!item[valueKey]}>

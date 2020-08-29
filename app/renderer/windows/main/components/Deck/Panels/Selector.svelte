@@ -25,7 +25,7 @@
   }
 
   function createPanelName() {
-    return `${_('sentences.powersGroup')} n°${$panels.length + 1}`;
+    return `${_("sentences.powersGroup")} n°${$panels.length + 1}`;
   }
 
   function createPanel() {
@@ -44,7 +44,7 @@
   }
 
   function isActiveClass(id, panel) {
-    return id === panel.id ? 'bg-green-600' : 'bg-primary-light';
+    return id === panel.id ? "bg-green-600" : "bg-primary-light";
   }
 </script>
 
@@ -58,13 +58,13 @@
     class="bg-primary"
     on:click={toggleEditMode}
     disabled={!$panels.length}
-    textColor={$editMode && 'text-red-600'}
+    textColor={$editMode && "text-red-600"}
   />
 {/if}
 
 {#if !$panels.length}
   <div class="p-2">
-    {_('sentences.noPanelsFound')}
+    {_("sentences.noPanelsFound")}
   </div>
 {:else}
   <HOverflow bind:this={scoller} gap="2">

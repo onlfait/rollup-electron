@@ -5,7 +5,14 @@ module.exports = {
     node: true,
     es6: true
   },
+  plugins: ["svelte3"],
   extends: "eslint:recommended",
+  overrides: [
+    {
+      files: ["**/*.svelte"],
+      processor: "svelte3/svelte3"
+    }
+  ],
   parserOptions: {
     ecmaVersion: 2019,
     sourceType: "module"
