@@ -38,12 +38,18 @@ export const widgetsList = [
     name: null
   },
   {
+    label: " -- OBS --",
+    disabled: true
+  },
+  {
     label: "Scene list",
-    name: "SceneList"
+    name: "SceneList",
+    module: "obs"
   },
   {
     label: "Go to scene",
     name: "SceneSwitch",
+    module: "obs",
     props: {
       scene: null
     }
@@ -51,6 +57,7 @@ export const widgetsList = [
   {
     label: "Toggle scene",
     name: "SceneToggle",
+    module: "obs",
     props: {
       scene1: null,
       scene2: null
@@ -58,24 +65,36 @@ export const widgetsList = [
   },
   {
     label: "Live ON/OFF",
-    name: "LiveToggle"
+    name: "LiveToggle",
+    module: "obs"
   },
   {
     label: "Record ON/OFF",
-    name: "RecordToggle"
+    name: "RecordToggle",
+    module: "obs"
+  },
+  {
+    label: " -- MEDIA --",
+    disabled: true
   },
   {
     label: "Play sound",
     name: "PlaySound",
+    module: "media",
     props: {
-      file: null
+      file: null,
+      volume: 0.8,
+      playNow: false
     }
   },
   {
     label: "Show picture",
     name: "ShowPicture",
+    module: "media",
     props: {
-      file: null
+      file: null,
+      width: 442,
+      duration: 5
     }
   }
 ];

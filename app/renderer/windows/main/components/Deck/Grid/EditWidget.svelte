@@ -7,6 +7,7 @@
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
   import { widgetsList } from "../../../utils/deck";
+  import components from "../../widgets/settings";
   import { createEventDispatcher } from "svelte";
 
   export let widget = null;
@@ -23,8 +24,9 @@
     widget.props = { ...widget.props, ...props };
   }
 
-  function onComponentChange() {
-    updateProps({ component });
+  function onComponentChange({ detail }) {
+    console.log("___>", detail);
+    updateProps({ component: detail });
   }
 
   function onBackgroundColor({ detail }) {
@@ -62,6 +64,7 @@
 
   $: props = widget.props;
   $: component = props.component;
+  $: componentGroup = component && components[component.module];
   $: label = getLabel(widget.props);
 
   $: dispatch('change', widget);
@@ -78,13 +81,17 @@
     <div class="flex items-center">
       <Select
         class="p-2 rounded"
-        valueKey="name"
         items={widgetsList}
-        bind:value={component}
+        valueKey="name"
+        value={component}
         on:change={onComponentChange}
       />
     </div>
   </div>
+
+  {#if componentGroup}
+  <svelte:component this={componentGroup[component.name]} bind:widget />
+  {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">
 
@@ -122,7 +129,6 @@
         <div class="font-medium">Position</div>
         <Select
           class="p-2 rounded"
-          returnType="value"
           items={labelPositions}
           bind:value={props.labelPosition}
         />
@@ -158,7 +164,7 @@
 
     <div class="flex flex-col">
       <div class="font-medium">Class list</div>
-      <InputText class="w-full" bind:value={props.classList} />
+      <InputText bind:value={props.classList} />
     </div>
 
   </div>

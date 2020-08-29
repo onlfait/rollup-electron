@@ -26,12 +26,7 @@
   }
 </script>
 
-<Select
-  class={cls}
-  labelKey={null}
-  items={$languages}
-  bind:value={$language}
-/>
+<Select class={cls} items={$languages} bind:value={$language} />
 
 {#if openModal}
 <Modal>

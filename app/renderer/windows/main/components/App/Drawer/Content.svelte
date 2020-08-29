@@ -16,6 +16,6 @@
     <span class="p-4">Action 2</span>
     <span class="p-4">Action 3</span>
     <DarkModeSwitch class="p-4" />
-    <LanguageSelect class="p-2 text-dark" />
+    <LanguageSelect class="mx-4 p-2 text-dark" />
   </div>
 </div>

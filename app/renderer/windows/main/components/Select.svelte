@@ -1,34 +1,34 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   export let items = [];
   export let value = null;
-  export let valueKey = 'value';
   export let labelKey = 'label';
-  export let returnType = 'object';
-  export let activeClass = 'text-gray-500';
+  export let valueKey = 'value';
 
   let cls = '';
   export { cls as class };
 
-  function isActive(item) {
-    return item === value ? activeClass : '';
+  const dispatch = createEventDispatcher();
+
+  function change(event) {
+    const ret = isObject ? items.find(item => item[valueKey] === value) : value;
+    console.log(">>>", ret);
+    dispatch('change', ret);
   }
 
-  function getType(item) {
-    if (returnType === 'object') {
-      return item;
-    }
-    return item[returnType];
-  }
+  $: isObject = items.length ? typeof items[0] !== 'string' : false;
+  $: console.log(value);
 </script>
 
-<select class="text-dark {cls}" bind:value={value} on:change>
+<select class="p-2 text-dark rounded {cls}" bind:value={value} on:change={change}>
   {#each items as item}
-    {#if valueKey && labelKey}
-    <option value={getType(item)} class={isActive(item[valueKey])}>
-      {item[labelKey]}
-    </option>
+    {#if isObject}
+      <option value={item[valueKey]} disabled={!item[valueKey]}>
+        {item[labelKey]}
+      </option>
     {:else}
-    <option value={item} class={isActive(item)}>{item}</option>
+      <option value={item} class="active:bg-red-500">{item}</option>
     {/if}
   {/each}
 </select>
