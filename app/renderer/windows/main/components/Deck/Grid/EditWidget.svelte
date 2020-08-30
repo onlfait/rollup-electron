@@ -10,7 +10,6 @@
     get as getWidget,
     getList as getWidgetList
   } from "../../../widgets";
-
   import { createEventDispatcher } from "svelte";
 
   export let widget = null;
@@ -93,7 +92,7 @@
   </div>
 
   {#if componentSettings}
-  <svelte:component bind:widget this={componentSettings} />
+  <svelte:component bind:widget {...component.props} this={componentSettings} />
   {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">

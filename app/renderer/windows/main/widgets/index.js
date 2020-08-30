@@ -1,3 +1,5 @@
+import cloneDeep from "clone-deep";
+
 const widgets = [];
 
 export function install(widget) {
@@ -5,7 +7,7 @@ export function install(widget) {
 }
 
 export function getList() {
-  return widgets.map(widget => widget.config);
+  return widgets.map(widget => cloneDeep(widget.config));
 }
 
 export function get({ group, name } = {}) {

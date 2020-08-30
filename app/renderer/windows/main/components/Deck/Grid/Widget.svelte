@@ -41,7 +41,7 @@
     {/if}
 
     {#if componentWidget}
-    <svelte:component bind:widget this={componentWidget} />
+    <svelte:component bind:widget {...component.props} this={componentWidget} />
     {/if}
 
   </div>

@@ -4,5 +4,6 @@ export { default as Widget } from "./Widget.svelte";
 export const config = {
   label: "Toggle scene",
   name: "ToggleScene",
-  group: "OBS"
+  group: "OBS",
+  props: {}
 };
