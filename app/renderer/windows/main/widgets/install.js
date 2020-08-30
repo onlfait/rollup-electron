@@ -1,9 +1,4 @@
 import { install } from "./index";
+import * as widgets from "./all";
 
-import * as OBSSceneList from "../components/Widgets/OBS/SceneList";
-import * as OBSGoToScene from "../components/Widgets/OBS/GoToScene";
-import * as OBSToggleScene from "../components/Widgets/OBS/ToggleScene";
-
-install(OBSSceneList);
-install(OBSGoToScene);
-install(OBSToggleScene);
+Object.values(widgets).forEach(install);
