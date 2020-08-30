@@ -7,12 +7,14 @@
   export let duration;
 
   function showPicture() {
-    app.remote.call("actions.showPicture", { file, width, duration });
+    app.remote.call("actions.push", {
+      name: "showPicture",
+      type: "immediat",
+      props: { file, width, duration }
+    });
   }
 </script>
 
 <WidgetButton {widget} on:click={showPicture}>
-  <div class="p-2 break-all opacity-25">
-    {file}
-  </div>
+  <div slot="disabled">No file selected</div>
 </WidgetButton>

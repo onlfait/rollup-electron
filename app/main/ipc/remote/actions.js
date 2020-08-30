@@ -1,16 +1,15 @@
-const { start } = require("../../overlay");
+const { start: server } = require("../../overlay");
+
+// TODO implement queue !!!
+
+function sendAction(name, props) {
+  server().send({ type: "action", action: { name, props } });
+}
 
 module.exports = {
-  playSound(args) {
-    start().send({
-      type: "action",
-      data: { name: "playSound", args }
-    });
-  },
-  showPicture(args) {
-    start().send({
-      type: "action",
-      data: { name: "showPicture", args }
-    });
+  push(action) {
+    if (action.type === "immediat") {
+      sendAction(action.name, action.props);
+    }
   }
 };

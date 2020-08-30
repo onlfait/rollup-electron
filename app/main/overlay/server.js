@@ -24,5 +24,5 @@ const server = polka()
   });
 
 process.on("message", message => {
-  io.emit(message.type, message.data);
+  io.emit(message.type, message[message.type]);
 });

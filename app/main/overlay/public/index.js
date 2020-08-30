@@ -1,11 +1,10 @@
 const socket = io();
 
 const actions = {
-  playSound({ file, volume = 0.8, startOffset = 0 } = {}) {
+  playSound({ file, volume = 0.8 } = {}) {
     return new Promise((resolve, reject) => {
       const audio = new Audio(`sounds/${file}`);
       audio.volume = volume;
-      audio.currentTime = startOffset;
       audio.onerror = e => reject(e);
       audio.onended = e => resolve(e);
       audio.oncanplay = () => audio.play();
@@ -23,7 +22,7 @@ const actions = {
   }
 };
 
-socket.on("action", ({ name, args }) => {
+socket.on("action", ({ name, props }) => {
   const action = actions[name];
-  action && action(args);
+  action && action(props);
 });

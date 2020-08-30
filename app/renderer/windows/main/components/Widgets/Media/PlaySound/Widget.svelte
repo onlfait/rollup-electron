@@ -6,12 +6,14 @@
   export let volume;
 
   function playSound() {
-    app.remote.call("actions.playSound", { file, volume });
+    app.remote.call("actions.push", {
+      name: "playSound",
+      type: "immediat",
+      props: { file, volume }
+    });
   }
 </script>
 
-<WidgetButton {widget} on:click={playSound}>
-  <div class="p-2 break-all opacity-25">
-    {file}
-  </div>
+<WidgetButton {widget} on:click={playSound} disabled={!file}>
+  <div slot="disabled">No file selected</div>
 </WidgetButton>
