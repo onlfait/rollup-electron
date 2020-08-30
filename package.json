@@ -1,6 +1,6 @@
 {
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "rollup-electron",
   "description": "Rollup & Electron",
   "author": "skarab42 <skarab42@users.noreply.github.com>",
