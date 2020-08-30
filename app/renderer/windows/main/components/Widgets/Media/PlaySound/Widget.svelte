@@ -4,10 +4,9 @@
   export let widget;
   export let file;
   export let volume;
-  export let startOffset;
 
   function playSound() {
-    app.remote.call("actions.playSound", { file, volume, startOffset });
+    app.remote.call("actions.playSound", { file, volume });
   }
 </script>
 
