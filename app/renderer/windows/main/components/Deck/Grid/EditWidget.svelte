@@ -67,6 +67,7 @@
   $: widgetLabel = widget.props.label;
   $: componentName = component && component.name;
   $: componentLabel = component && component.label;
+  $: componentProps = component && component.props;
   $: componentSettings = component && getWidget(component).Settings;
 
   $: dispatch("change", widget);
@@ -92,7 +93,7 @@
   </div>
 
   {#if componentSettings}
-  <svelte:component bind:widget {...component.props} this={componentSettings} />
+  <svelte:component bind:widget bind:props={componentProps} this={componentSettings} />
   {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">
@@ -100,7 +101,7 @@
     <div class="text-lg font-medium text-secondary-dark">Button settings</div>
 
     <div class="flex flex-wrap space-x-2">
-      <div class="flex flex-col">
+      <div class="flex flex-auto flex-col">
         <div class="font-medium">Label</div>
         <InputText
           value={widgetLabel}

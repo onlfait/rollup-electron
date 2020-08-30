@@ -5,5 +5,7 @@ export const config = {
   label: "Go to scene",
   name: "GoToScene",
   group: "OBS",
-  props: {}
+  props: {
+    scene: null
+  }
 };

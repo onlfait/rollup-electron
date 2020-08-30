@@ -5,5 +5,8 @@ export const config = {
   label: "Toggle scene",
   name: "ToggleScene",
   group: "OBS",
-  props: {}
+  props: {
+    scene1: null,
+    scene2: null
+  }
 };

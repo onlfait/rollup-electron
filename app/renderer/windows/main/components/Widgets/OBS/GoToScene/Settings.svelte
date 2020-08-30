@@ -1,7 +1,11 @@
 <script>
-  export let widget = "GoToScene/Settings";
+  import SceneSelect from "../SceneSelect.svelte";
+  import WidgetWrapper from "../WidgetWrapper.svelte";
+
+  export let widget;
+  export let props;
 </script>
 
-<div class="p-2">
-  {widget}
-</div>
+<WidgetWrapper {widget}>
+  <SceneSelect label="Select scene" bind:scene={props.scene} />
+</WidgetWrapper>
