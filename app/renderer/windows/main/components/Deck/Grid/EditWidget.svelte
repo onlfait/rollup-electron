@@ -18,7 +18,9 @@
 
   let widgetsList = [
     { label: "None", name: null },
-    ...getWidgetList()
+    ...getWidgetList().map(widget => {
+      return { ...widget, label: `${widget.group} — ${widget.label}`};
+    })
   ];
 
   const labelPositions = [
