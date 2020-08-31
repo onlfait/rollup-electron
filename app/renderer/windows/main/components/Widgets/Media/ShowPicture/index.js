@@ -11,6 +11,6 @@ export const config = {
   props: {
     file: null,
     width: 442,
-    duration: 5
+    duration: 5000
   }
 };

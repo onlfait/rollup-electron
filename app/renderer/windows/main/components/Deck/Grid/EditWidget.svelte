@@ -23,7 +23,7 @@
     })
   ];
 
-  let actionTypes = ["immediat", "queued"];
+  let actionTypes = ["immediat", "queued", "asap"];
 
   const labelPositions = [
     { label: "Left", value: "text-left" },
