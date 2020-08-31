@@ -10,6 +10,7 @@ export const config = {
   },
   props: {
     file: null,
-    volume: 0.8
+    volume: 0.8,
+    duration: 0
   }
 };

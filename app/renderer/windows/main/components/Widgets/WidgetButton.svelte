@@ -4,21 +4,21 @@
 
   export let widget;
   export let action;
-  export let running = false;
+  export let running = 0;
   export let disabled = false;
 
   let centerClass = "p-2 rounded text-center font-bold opacity-50";
   let classList = "absolute inset-0 flex w-full h-full cursor-pointer items-center justify-center hover:bg-black hover:bg-opacity-25";
 
   function sendAction() {
-    running = true;
+    running++;
     app.remote.call("actions.push", action)
-      .then(({ error, results }) => {
-        console.log("DONE", { error, results });
-        running = false;
+      .then(({ error, response }) => {
+        console.log("DONE", { error, response });
+        running--;
       }).catch(error => {
         console.warn("WARN", error);
-        running = false;
+        running--;
       });
   }
 </script>

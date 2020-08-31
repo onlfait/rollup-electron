@@ -4,11 +4,11 @@
   import { setCurrentScene } from "../../../../stores/obs";
 
   export let widget;
-  export let scene;
+  export let props;
 </script>
 
 <WidgetWrapper {widget}>
-  <WidgetButton {widget} on:click={setCurrentScene.bind(null, scene)}>
-    <div class="font-bold">{scene}</div>
+  <WidgetButton {widget} on:click={setCurrentScene.bind(null, props.scene)}>
+    <div class="font-bold">{props.scene}</div>
   </WidgetButton>
 </WidgetWrapper>

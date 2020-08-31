@@ -5,6 +5,8 @@ const { v4: uuid } = require("uuid");
 const path = require("path");
 
 let server = null;
+let timeoutFactor = 1.5;
+let defaultTimeout = 5000;
 
 const overlayEmitter = new EventEmitter();
 const publicPath = path.resolve(userPath, "public/media");
@@ -20,6 +22,10 @@ function on(...args) {
 
 function once(...args) {
   overlayEmitter.once(...args);
+}
+
+function off(...args) {
+  overlayEmitter.off(...args);
 }
 
 function start() {
@@ -53,14 +59,25 @@ function start() {
   return server;
 }
 
-function send({ data, timeout = 5000 } = {}) {
+function getTimeout(data) {
+  let timeout = data.timeout || defaultTimeout;
+  if (data.props.duration) {
+    timeout = data.props.duration * timeoutFactor;
+  }
+  return parseInt(timeout);
+}
+
+function sendAction(data) {
   return new Promise((resolve, reject) => {
     const id = uuid();
+    const timeout = getTimeout(data);
+    const listener = ({ error, response }) => {
+      error ? reject(error) : resolve(response);
+    };
+    once(id, listener);
     start().send({ id, data });
-    once(id, ({ error, results }) => {
-      error ? reject(error) : resolve(results);
-    });
     setTimeout(() => {
+      off(id, listener);
       reject({ type: "timeout", message: `Action timeout ${timeout} ms` });
     }, timeout);
   });
@@ -73,4 +90,4 @@ function stop() {
   }
 }
 
-module.exports = { start, on, once, send, stop };
+module.exports = { start, on, once, off, sendAction, stop };

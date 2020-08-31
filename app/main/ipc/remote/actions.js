@@ -1,4 +1,4 @@
-const { send } = require("../../overlay");
+const { sendAction } = require("../../overlay");
 
 function log(...args) {
   // eslint-disable-next-line
@@ -8,8 +8,8 @@ function log(...args) {
 module.exports = {
   push(action) {
     log(`[push] ${action.type} | ${action.name}`);
-    return send({ data: action, timeout: action.timeout })
-      .then(results => Promise.resolve({ error: null, results }))
-      .catch(error => Promise.resolve({ error, results: null }));
+    return sendAction(action)
+      .then(response => Promise.resolve({ error: null, response }))
+      .catch(error => Promise.resolve({ error, response: null }));
   }
 };

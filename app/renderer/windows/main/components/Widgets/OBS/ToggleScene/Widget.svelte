@@ -4,11 +4,10 @@
   import { currentScene, setCurrentScene } from "../../../../stores/obs";
 
   export let widget;
-  export let scene1;
-  export let scene2;
+  export let props;
 
-  $: target1 = $currentScene === scene2 ? scene1 : scene2;
-  $: target2 = target1 === scene1 ? scene2 : scene1;
+  $: target1 = $currentScene === props.scene2 ? props.scene1 : props.scene2;
+  $: target2 = target1 === props.scene1 ? props.scene2 : props.scene1;
 </script>
 
 <WidgetWrapper {widget}>

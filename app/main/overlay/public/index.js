@@ -7,10 +7,12 @@ const actions = {
       audio.volume = volume;
       audio.onerror = e => reject(e);
       audio.onended = () => resolve("done");
-      audio.oncanplay = () => audio.play().catch(reject);
+      audio.oncanplay = () => audio.play().catch(({ message }) => {
+        reject({ type: "permission", message });
+      });
     });
   },
-  showPicture({ file, width = 500, duration = 5 }) {
+  showPicture({ file, width = 500, duration = 5000 }) {
     return new Promise(resolve => {
       let img = document.createElement("img");
       img.setAttribute("src", `images/${file}`);
@@ -20,12 +22,18 @@ const actions = {
         img.remove();
         img = null;
         resolve("done");
-      }, 1000 * duration);
+      }, parseInt(duration));
     });
   }
 };
 
-socket.on("action", ({ name, props }, ackFn) => {
-  const action = actions[name];
-  action && action(props).then(ackFn).catch(ackFn);
+socket.on("message", ({ data }, ackFn) => {
+  const action = actions[data.name];
+  action && action(data.props)
+    .then(response => {
+      ackFn({ response, error: null });
+    })
+    .catch(error => {
+      ackFn({ response: null, error });
+    });
 });

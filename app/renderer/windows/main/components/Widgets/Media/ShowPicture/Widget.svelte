@@ -3,17 +3,11 @@
 
   export let widget;
   export let action;
-  export let file;
-  export let width;
-  export let duration;
+  export let props;
 
-  const send = {
-      name: "showPicture",
-      type: action.type,
-      props: { file, width, duration }
-    }
+  const send = { name: "showPicture", type: action.type, props };
 </script>
 
-<WidgetButton {widget} action={send} disabled={!file}>
+<WidgetButton {widget} action={send} disabled={!props.file}>
   <div slot="disabled">No file selected</div>
 </WidgetButton>
