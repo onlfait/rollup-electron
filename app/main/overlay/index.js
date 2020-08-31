@@ -1,19 +1,17 @@
 const { userPath } = require("../config");
 const { fork } = require("child_process");
 const EventEmitter = require("events");
+const { v4: uuid } = require("uuid");
 const path = require("path");
 
 let server = null;
 
+const overlayEmitter = new EventEmitter();
 const publicPath = path.resolve(userPath, "public/media");
-
-class OverlayEmitter extends EventEmitter {}
-
-const overlayEmitter = new OverlayEmitter();
 
 function log(...args) {
   // eslint-disable-next-line
-  console.log("[overlay]", ...args);
+  console.log(...args);
 }
 
 function on(...args) {
@@ -39,7 +37,7 @@ function start() {
   });
 
   server.on("message", message => {
-    log("[message]", message);
+    // log("[message]", message);
     overlayEmitter.emit(message.id, message);
   });
 
@@ -55,8 +53,17 @@ function start() {
   return server;
 }
 
-function send(...args) {
-  start().send(...args);
+function send({ data, timeout = 5000 } = {}) {
+  return new Promise((resolve, reject) => {
+    const id = uuid();
+    start().send({ id, data });
+    once(id, ({ error, results }) => {
+      error ? reject(error) : resolve(results);
+    });
+    setTimeout(() => {
+      reject({ type: "timeout", message: `Action timeout ${timeout} ms` });
+    }, timeout);
+  });
 }
 
 function stop() {

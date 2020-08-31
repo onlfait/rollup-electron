@@ -7,15 +7,13 @@
   export let width;
   export let duration;
 
-  function showPicture() {
-    app.remote.call("actions.push", {
+  const send = {
       name: "showPicture",
       type: action.type,
       props: { file, width, duration }
-    });
-  }
+    }
 </script>
 
-<WidgetButton {widget} on:click={showPicture}>
+<WidgetButton {widget} action={send} disabled={!file}>
   <div slot="disabled">No file selected</div>
 </WidgetButton>

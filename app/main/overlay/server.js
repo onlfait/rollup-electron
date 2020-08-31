@@ -12,6 +12,11 @@ const port = 4242;
 let io = null;
 let sockets = [];
 
+function log(...args) {
+  // eslint-disable-next-line
+  console.log("[server]", ...args);
+}
+
 function getSocketById(id) {
   return sockets.find(socket => socket.id === id);
 }
@@ -33,8 +38,13 @@ function socketEmitPromise(message, socket) {
 }
 
 function sendMessage(message) {
+  if (!sockets.length) {
+    return Promise.reject({ type: "connection", message: "No overlay connected"});
+  }
+
   const promise = socketEmitPromise.bind(null, message);
   const promises = sockets.map(promise);
+
   return Promise.all(promises);
 }
 
@@ -45,15 +55,15 @@ const server = polka()
   .use(sirv(publicPath), { dev: true }) // no cache
   .listen(port, err => {
     if (err) throw err;
+
     io = socket(server.server);
-    // eslint-disable-next-line
-    console.log(`Running on localhost:${port}`);
+    log(`Running on localhost:${port}`);
 
     io.sockets.on("connection", socket => {
-      console.log(`New client connection (id: ${socket.id})`);
+      log(`New client connection (id: ${socket.id})`);
       addSocket(socket);
       socket.on("disconnect", () => {
-        console.log(`Client disconnected (id: ${socket.id})`);
+        log(`Client disconnected (id: ${socket.id})`);
         removeSocketById(socket.id);
       });
     });
@@ -61,8 +71,11 @@ const server = polka()
   });
 
 process.on("message", message => {
-  sendMessage(message).then(results => {
-    console.log("results:", results);
-    process.send(message);
-  });
+  sendMessage(message)
+    .then(results => {
+      process.send({ id: message.id, error: null, results });
+    })
+    .catch(error => {
+      process.send({ id: message.id, error, results: null });
+    });
 });
