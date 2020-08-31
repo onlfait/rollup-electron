@@ -29,7 +29,19 @@ const actions = {
 
 socket.on("message", ({ data }, ackFn) => {
   const action = actions[data.name];
-  action && action(data.props)
+
+  if (!action) {
+    ackFn({
+      response: null,
+      error: {
+        type: "UndefinedAction",
+        message: `Undefined action: ${data.name}`
+      }
+    });
+    return;
+  }
+
+  action(data.props)
     .then(response => {
       ackFn({ response, error: null });
     })
