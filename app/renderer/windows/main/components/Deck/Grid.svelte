@@ -1,23 +1,26 @@
 <script>
   import { _ } from "@/renderer/i18n";
-
+  import { grid } from "../../utils/deck";
   import {
     panels,
-    editMode,
+    currentPanelId,
     currentGrid,
-    currentPanelId
+    editMode
   } from "../../stores/deck";
 
   import Grid from "svelte-grid";
   import Modal from "../Modal.svelte";
   import Button from "../Button.svelte";
-  import { grid } from "../../utils/deck";
   import GridWidget from "./Grid/Widget.svelte";
   import EditWidget from "./Grid/EditWidget.svelte";
 
   let editWidget = null;
   let currentWidget = null;
   let confirmRemoveModal = false;
+
+  function setEditWidget(widget) {
+    editWidget = $editMode && widget;
+  }
 
   function openConfirmRemoveModal(widget) {
     currentWidget = widget;
@@ -34,14 +37,6 @@
 
   function updateCurrentPanel(panel) {
     updatePanel({ ...panel, id: $currentPanelId });
-  }
-
-  function onGridAdjust() {
-    updateCurrentPanel({ widgets: $currentGrid });
-  }
-
-  function setEditWidget(widget) {
-    editWidget = $editMode && widget;
   }
 
   function removeWidget(widget) {
@@ -67,24 +62,30 @@
   }
 </script>
 
-{#if $currentGrid && !$currentGrid.length}
-<div class="p-4">
-  {_("sentences.noWidgetsFound")}
+<div class="relative">
+  {#each $panels as panel}
+
+  {#if !panel.widgets.length}
+  <div class="p-4">
+    {_("sentences.noWidgetsFound")}
+  </div>
+  {:else}
+  <div class="absolute p-1 inset-0 {$currentPanelId !== panel.id ? 'invisible' : ''}">
+    <Grid bind:items={panel.widgets} let:item {...grid.defaultOptions}>
+      <div class="h-full">
+        <GridWidget
+          widget={item}
+          editMode={$editMode}
+          on:edit={setEditWidget.bind(null, item)}
+          on:remove={openConfirmRemoveModal.bind(null, item)}
+        />
+      </div>
+    </Grid>
+  </div>
+  {/if}
+
+  {/each}
 </div>
-{:else if $currentGrid}
-<div class="flex-auto overflow-auto p-1">
-  <Grid bind:items={$currentGrid} on:adjust={onGridAdjust} let:item {...grid.defaultOptions}>
-    <div class="h-full">
-      <GridWidget
-        widget={item}
-        editMode={$editMode}
-        on:edit={setEditWidget.bind(null, item)}
-        on:remove={openConfirmRemoveModal.bind(null, item)}
-      />
-    </div>
-  </Grid>
-</div>
-{/if}
 
 {#if confirmRemoveModal}
 <Modal>
