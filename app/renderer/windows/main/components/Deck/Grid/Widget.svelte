@@ -7,10 +7,16 @@
 
   const dispatch = createEventDispatcher();
 
+  let extraProps = {};
+
   $: props = widget.props;
   $: component = props.component;
   $: componentWidget = component && getWidget(component).Widget;
   $: label = (props.label || (props.component && props.component.label) || "").trim();
+
+  $: if (component && component.action) {
+    extraProps.action = component.action;
+  }
 
   $: labelClass = props.labelPosition || "text-center";
   $: labelSize = `font-size: ${props.labelSize||16}px;`;
@@ -41,7 +47,12 @@
     {/if}
 
     {#if componentWidget}
-    <svelte:component bind:widget {...component.props} this={componentWidget} />
+    <svelte:component
+      bind:widget
+      {...component.props}
+      this={componentWidget}
+      {...extraProps}
+    />
     {/if}
 
   </div>

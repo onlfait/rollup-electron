@@ -23,6 +23,8 @@
     })
   ];
 
+  let actionTypes = ["immediat", "queued"];
+
   const labelPositions = [
     { label: "Left", value: "text-left" },
     { label: "Center", value: "text-center" },
@@ -70,6 +72,7 @@
   $: componentName = component && component.name;
   $: componentLabel = component && component.label;
   $: componentProps = component && component.props;
+  $: componentAction = component && component.action;
   $: componentSettings = component && getWidget(component).Settings;
 
   $: dispatch("change", widget);
@@ -96,6 +99,19 @@
 
   {#if componentSettings}
   <svelte:component bind:widget bind:props={componentProps} this={componentSettings} />
+  {/if}
+
+  {#if componentAction}
+  <div class="flex flex-col">
+    <div class="font-medium">Action type</div>
+    <div class="flex items-center">
+      <Select
+        class="p-2 rounded"
+        items={actionTypes}
+        bind:value={componentAction.type}
+      />
+    </div>
+  </div>
   {/if}
 
   <div class="flex flex-col bg-secondary p-2 space-y-2 rounded">

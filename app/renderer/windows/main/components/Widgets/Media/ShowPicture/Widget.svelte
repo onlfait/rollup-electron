@@ -2,6 +2,7 @@
   import WidgetButton from "../../WidgetButton.svelte";
 
   export let widget;
+  export let action;
   export let file;
   export let width;
   export let duration;
@@ -9,7 +10,7 @@
   function showPicture() {
     app.remote.call("actions.push", {
       name: "showPicture",
-      type: "immediat",
+      type: action.type,
       props: { file, width, duration }
     });
   }

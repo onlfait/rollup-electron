@@ -5,6 +5,9 @@ export const config = {
   label: "Show picture",
   name: "ShowPicture",
   group: "Media",
+  action: {
+    type: "immediat"
+  },
   props: {
     file: null,
     width: 442,

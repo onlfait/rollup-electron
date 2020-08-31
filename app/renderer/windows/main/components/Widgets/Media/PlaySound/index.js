@@ -5,6 +5,9 @@ export const config = {
   label: "Play sound",
   name: "PlaySound",
   group: "Media",
+  action: {
+    type: "immediat"
+  },
   props: {
     file: null,
     volume: 0.8

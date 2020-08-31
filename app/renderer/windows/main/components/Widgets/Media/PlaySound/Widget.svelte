@@ -2,13 +2,14 @@
   import WidgetButton from "../../WidgetButton.svelte";
 
   export let widget;
+  export let action;
   export let file;
   export let volume;
 
   function playSound() {
     app.remote.call("actions.push", {
       name: "playSound",
-      type: "immediat",
+      type: action.type,
       props: { file, volume }
     });
   }
