@@ -43,7 +43,7 @@
       class="flex bg-black text-light opacity-50 {labelClass}"
     >
       <div class="flex items-center w-full h-full break-words overflow-hidden">
-        <div class="flex-auto w-full">
+        <div class="py-2 flex-auto w-full">
           {label}
         </div>
       </div>
