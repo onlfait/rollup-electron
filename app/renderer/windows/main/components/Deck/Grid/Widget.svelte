@@ -18,6 +18,10 @@
     extraProps.action = component.action;
   }
 
+  $: if (component && Object.keys(component.props).length) {
+    extraProps.props = component.props;
+  }
+
   $: labelClass = props.labelPosition || "text-center";
   $: labelSize = `font-size: ${props.labelSize||16}px;`;
   $: labelPadding = `padding-left: ${props.labelPadding||8}px;padding-right: ${props.labelPadding||8}px;`;
@@ -51,7 +55,6 @@
       bind:widget
       {...extraProps}
       this={componentWidget}
-      props={component.props}
     />
     {/if}
 

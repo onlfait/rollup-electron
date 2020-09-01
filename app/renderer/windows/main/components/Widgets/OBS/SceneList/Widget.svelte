@@ -10,7 +10,6 @@
   import WidgetWrapper from "../WidgetWrapper.svelte";
 
   export let widget;
-  export const props = null;
 
   $: $connected && updateSceneList();
 </script>
