@@ -27,25 +27,21 @@ const actions = {
   }
 };
 
-socket.on("message", ({ data }, ackFn) => {
-  const action = actions[data.name];
+socket.on("message", (action, ackFn) => {
+  const actionPromise = actions[action.name];
 
   if (!action) {
     ackFn({
       response: null,
       error: {
         type: "UndefinedAction",
-        message: `Undefined action: ${data.name}`
+        message: `Undefined action: ${action.name}`
       }
     });
     return;
   }
 
-  action(data.props)
-    .then(response => {
-      ackFn({ response, error: null });
-    })
-    .catch(error => {
-      ackFn({ response: null, error });
-    });
+  actionPromise(action.props)
+    .then(response => ackFn({ response, error: null }))
+    .catch(error => ackFn({ response: null, error }));
 });

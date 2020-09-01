@@ -1,7 +1,6 @@
 const { userPath } = require("../config");
 const { fork } = require("child_process");
 const EventEmitter = require("events");
-const { v4: uuid } = require("uuid");
 const path = require("path");
 
 let server = null;
@@ -67,17 +66,16 @@ function getTimeout(data) {
   return parseInt(timeout);
 }
 
-function sendAction(data) {
+function sendAction(action) {
   return new Promise((resolve, reject) => {
-    const id = uuid();
-    const timeout = getTimeout(data);
+    const timeout = getTimeout(action);
     const listener = ({ error, response }) => {
       error ? reject(error) : resolve(response);
     };
-    once(id, listener);
-    start().send({ id, data });
+    once(action.id, listener);
+    start().send(action);
     setTimeout(() => {
-      off(id, listener);
+      off(action.id, listener);
       reject({ type: "timeout", message: `Action timeout ${timeout} ms` });
     }, timeout);
   });
