@@ -47,7 +47,7 @@ function sendMessage(message) {
   const promise = socketEmitPromise.bind(null, message);
   const promises = sockets.map(promise);
 
-  return Promise.all(promises);
+  return Promise.allSettled(promises);
 }
 
 fs.ensureDirSync(publicPath);
