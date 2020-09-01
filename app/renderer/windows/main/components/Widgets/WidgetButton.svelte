@@ -8,7 +8,7 @@
   export let disabled = false;
 
   let centerClass = "p-2 rounded text-center font-bold opacity-50";
-  let classList = "absolute inset-0 flex w-full h-full cursor-pointer items-center justify-center hover:bg-black hover:bg-opacity-25";
+  let classList = "absolute left-0 right-0 bottom-0 flex w-full h-full cursor-pointer items-center justify-center hover:bg-black hover:bg-opacity-25";
 
   function sendAction() {
     running++;
