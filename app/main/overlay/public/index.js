@@ -30,7 +30,7 @@ const actions = {
 socket.on("message", (action, ackFn) => {
   const actionPromise = actions[action.name];
 
-  if (!action) {
+  if (!actionPromise) {
     ackFn({
       error: {
         type: "UndefinedAction",
