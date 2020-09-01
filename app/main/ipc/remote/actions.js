@@ -1,8 +1,14 @@
 const { sendAction } = require("../../overlay");
+const { send: obsSend } = require("../../obs");
 const { v4: uuid } = require("uuid");
 
 const queue = [];
 let running = false;
+
+const sendTo = {
+  overlay: sendToOverlay,
+  obs: sendToOBS
+};
 
 function log(...args) {
   // eslint-disable-next-line
@@ -14,7 +20,7 @@ function logAction(type, action, ...rest) {
   log(`[${type}] ${action.type} | ${action.name} | ${action.id}`, ...rest);
 }
 
-function send(action, resolve) {
+function sendToOverlay(action, resolve) {
   logAction("send", action);
   return sendAction(action)
     .then(response => {
@@ -41,14 +47,21 @@ function processQueue() {
   log(`Processing queue (count: ${queue.length})`);
   const [action, resolve] = queue.shift();
 
-  send(action, resolve).then(() => {
+  sendTo[action.target](action, resolve).then(() => {
     running = false;
     processQueue();
   });
 }
 
+function sendToOBS(action, resolve) {
+  return obsSend(action.name, action.props)
+    .then(response => ({ error: null, response }))
+    .catch(error => ({ error, response: null }))
+    .then(resolve);
+}
+
 function sendImmediat(action) {
-  return new Promise(resolve => send(action, resolve));
+  return new Promise(resolve => sendTo[action.target](action, resolve));
 }
 
 function appendAction(action) {
