@@ -69,7 +69,7 @@ function getTimeout(data) {
 function sendAction(action) {
   return new Promise((resolve, reject) => {
     const timeout = getTimeout(action);
-    const listener = ({ error, response }) => {
+    const listener = ({ error = null, response = null } = {}) => {
       error ? reject(error) : resolve(response);
     };
     once(action.id, listener);

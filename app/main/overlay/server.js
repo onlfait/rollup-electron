@@ -33,7 +33,7 @@ function addSocket(socket) {
 
 function socketEmitPromise(message, socket) {
   return new Promise((resolve, reject) => {
-    socket.emit("message", message, ({ error, response }) => {
+    socket.emit("message", message, ({ error = null, response = null } = {}) => {
       error ? reject(error) : resolve(response);
     });
   });
@@ -74,10 +74,6 @@ const server = polka()
 
 process.on("message", message => {
   sendMessage(message)
-    .then(response => {
-      process.send({ id: message.id, error: null, response });
-    })
-    .catch(error => {
-      process.send({ id: message.id, error, response: null });
-    });
+    .then(response => process.send({ id: message.id, response }))
+    .catch(error => process.send({ id: message.id, error }));
 });

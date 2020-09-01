@@ -32,7 +32,6 @@ socket.on("message", (action, ackFn) => {
 
   if (!action) {
     ackFn({
-      response: null,
       error: {
         type: "UndefinedAction",
         message: `Undefined action: ${action.name}`
@@ -42,6 +41,6 @@ socket.on("message", (action, ackFn) => {
   }
 
   actionPromise(action.props)
-    .then(response => ackFn({ response, error: null }))
-    .catch(error => ackFn({ response: null, error }));
+    .then(response => ackFn({ response }))
+    .catch(error => ackFn({ error }));
 });
