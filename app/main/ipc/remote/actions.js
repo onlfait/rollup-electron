@@ -9,22 +9,23 @@ function log(...args) {
   console.log("[action]", ...args);
 }
 
-function logAction(type, action) {
+function logAction(type, action, ...rest) {
   // eslint-disable-next-line
-  log(`[${type}] ${action.type} | ${action.name} | ${action.id}`);
+  log(`[${type}] ${action.type} | ${action.name} | ${action.id}`, ...rest);
 }
 
-function send(action, resolve, reject) {
+function send(action, resolve) {
   logAction("send", action);
   return sendAction(action)
     .then(response => {
       logAction("response", action);
-      resolve({ error: null, response });
+      return { error: null, response };
     })
     .catch(error => {
-      logAction("error", action);
-      reject({ error, response: null });
-    });
+      logAction("error", action, "|", error.message);
+      return { error, response: null };
+    })
+    .then(resolve);
 }
 
 function processQueue() {
@@ -38,49 +39,48 @@ function processQueue() {
   }
 
   log(`Processing queue (count: ${queue.length})`);
-  const [action, resolve, reject] = queue.shift();
+  const [action, resolve] = queue.shift();
 
-  send(action, resolve, reject).then(() => {
+  send(action, resolve).then(() => {
     running = false;
     processQueue();
   });
 }
 
 function sendImmediat(action) {
-  return new Promise((resolve, reject) => {
-    send(action, resolve, reject);
-  });
+  return new Promise(resolve => send(action, resolve));
 }
 
 function appendAction(action) {
-  return new Promise((resolve, reject) => {
-    queue.push([action, resolve, reject]);
+  return new Promise(resolve => {
+    queue.push([action, resolve]);
     processQueue();
   });
 }
 
 function prependAction(action) {
-  return new Promise((resolve, reject) => {
-    queue.unshift([action, resolve, reject]);
+  return new Promise(resolve => {
+    queue.unshift([action, resolve]);
     processQueue();
   });
 }
 
 module.exports = {
   push(action) {
-    action.id = uuid();
-    logAction("push", action);
+    const uniqueAction = { id: uuid(), ...action };
 
-    if (action.type === "immediat") {
-      return sendImmediat(action);
+    logAction("push", uniqueAction);
+
+    if (uniqueAction.type === "immediat") {
+      return sendImmediat(uniqueAction);
     }
 
-    if (action.type === "queued") {
-      return appendAction(action);
+    if (uniqueAction.type === "queued") {
+      return appendAction(uniqueAction);
     }
 
-    if (action.type === "asap") {
-      return prependAction(action);
+    if (uniqueAction.type === "asap") {
+      return prependAction(uniqueAction);
     }
   }
 };
