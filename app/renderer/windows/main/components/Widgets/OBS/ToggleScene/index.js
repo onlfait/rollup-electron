@@ -5,6 +5,9 @@ export const config = {
   label: "Toggle scene",
   name: "ToggleScene",
   group: "OBS",
+  action: {
+    type: "immediat"
+  },
   props: {
     scene1: null,
     scene2: null

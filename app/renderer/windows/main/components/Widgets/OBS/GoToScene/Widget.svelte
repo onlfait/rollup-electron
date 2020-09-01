@@ -1,14 +1,26 @@
 <script>
-  import WidgetWrapper from "../WidgetWrapper.svelte";
+  import { _ } from "@/renderer/i18n";
+  import { connected } from "../../../../stores/obs";
   import WidgetButton from "../../WidgetButton.svelte";
-  import { setCurrentScene } from "../../../../stores/obs";
 
   export let widget;
+  export let action;
   export let props;
+
+  $: actionPayload = {
+    target: "obs",
+    name: "goToScene",
+    type: action.type,
+    props
+  };
+
+  let offline = _("sentences.obsIsOffline");
+
+  $: disabled = !$connected || !props.scene;
+  $: disabledMessage = !$connected ? offline : "No scene selected";
 </script>
 
-<WidgetWrapper {widget}>
-  <WidgetButton {widget} on:click={setCurrentScene.bind(null, props.scene)}>
-    <div class="font-bold">{props.scene}</div>
-  </WidgetButton>
-</WidgetWrapper>
+<WidgetButton {widget} action={actionPayload} {disabled}>
+  <div slot="disabled">{disabledMessage}</div>
+  <div class="font-bold">{props.scene}</div>
+</WidgetButton>

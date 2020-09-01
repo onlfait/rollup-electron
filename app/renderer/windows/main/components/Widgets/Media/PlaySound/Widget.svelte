@@ -5,9 +5,14 @@
   export let action;
   export let props;
 
-  const send = { name: "playSound", type: action.type, props };
+  $: actionPayload = {
+    target: "overlay",
+    name: "playSound",
+    type: action.type,
+    props
+  };
 </script>
 
-<WidgetButton {widget} action={send} disabled={!props.file}>
+<WidgetButton {widget} action={actionPayload} disabled={!props.file}>
   <div slot="disabled">No file selected</div>
 </WidgetButton>
