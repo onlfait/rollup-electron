@@ -3,13 +3,35 @@
     connected,
     scenesList,
     currentScene,
-    updateSceneList,
-    setCurrentScene
+    updateSceneList
   } from "../../../../stores/obs";
 
   import WidgetWrapper from "../WidgetWrapper.svelte";
 
   export let widget;
+  export let action;
+  export let running = 0;
+
+  function sendAction(action) {
+    running++;
+    app.remote.call("actions.push", action)
+      .then(({ error, response }) => {
+        console.log("DONE", { error, response });
+        running--;
+      }).catch(error => {
+        console.warn("WARN", error);
+        running--;
+      });
+  }
+
+  function setCurrentScene(scene) {
+    sendAction({
+      target: "obs",
+      name: "SetCurrentScene",
+      type: action.type,
+      props: { "scene-name": scene }
+    });
+  }
 
   $: $connected && updateSceneList();
 </script>

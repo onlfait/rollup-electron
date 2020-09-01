@@ -9,9 +9,9 @@
 
   $: actionPayload = {
     target: "obs",
-    name: "toggleScene",
+    name: "SetCurrentScene",
     type: action.type,
-    props
+    props: { "scene-name": target1 }
   };
 
   let offline = _("sentences.obsIsOffline");
