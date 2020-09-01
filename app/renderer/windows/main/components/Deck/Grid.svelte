@@ -62,14 +62,14 @@
   }
 </script>
 
+{#if !$currentGrid || !$currentGrid.length}
+<div class="p-4">
+  {_("sentences.noWidgetsFound")}
+</div>
+{/if}
+
 <div class="relative">
   {#each $panels as panel}
-
-  {#if !panel.widgets.length}
-  <div class="p-4">
-    {_("sentences.noWidgetsFound")}
-  </div>
-  {:else}
   <div class="absolute p-1 inset-0 {$currentPanelId !== panel.id ? 'invisible' : ''}">
     <Grid bind:items={panel.widgets} let:item {...grid.defaultOptions}>
       <div class="h-full">
@@ -82,8 +82,6 @@
       </div>
     </Grid>
   </div>
-  {/if}
-
   {/each}
 </div>
 
