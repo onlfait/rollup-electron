@@ -10,7 +10,11 @@ export const config = {
   },
   props: {
     file: null,
+    top: 0,
+    left: 0,
     width: 442,
+    height: -1,
+    delay: 0,
     duration: 5000
   }
 };

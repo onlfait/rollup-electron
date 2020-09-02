@@ -60,10 +60,9 @@ function start() {
 
 function getTimeout(data) {
   let timeout = data.timeout || defaultTimeout;
-  if (data.props.duration) {
-    timeout = data.props.duration * timeoutFactor;
-  }
-  return parseInt(timeout);
+  let duration = data.props.duration || timeout;
+  let delay = data.props.delay || 0;
+  return (duration + delay) * timeoutFactor;
 }
 
 function sendAction(action) {

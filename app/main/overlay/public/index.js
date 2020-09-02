@@ -12,17 +12,29 @@ const actions = {
       });
     });
   },
-  showPicture({ file, width = 500, duration = 5000 }) {
+  showPicture(props) {
     return new Promise(resolve => {
       let img = document.createElement("img");
-      img.setAttribute("src", `images/${file}`);
-      img.setAttribute("width", width);
+      img.setAttribute("src", `images/${props.file}`);
+      img.style.position = "absolute";
+      img.style.display = "none";
+      img.style.top = `${props.top}px`;
+      img.style.left = `${props.left}px`;
+      props.width > -1 && img.setAttribute("width", props.width);
+      props.height > -1 && img.setAttribute("height", props.height);
       document.body.appendChild(img);
-      setTimeout(() => {
-        img.remove();
-        img = null;
-        resolve("done");
-      }, parseInt(duration));
+
+      const show = () => {
+        img.style.display = "block";
+        setTimeout(() => {
+          img.remove();
+          img = null;
+          resolve("done");
+        }, props.duration);
+      };
+
+      if (props.delay) setTimeout(show, props.delay);
+      else show();
     });
   }
 };

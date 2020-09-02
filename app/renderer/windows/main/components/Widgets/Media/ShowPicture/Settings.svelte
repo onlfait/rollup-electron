@@ -1,6 +1,7 @@
 <script>
   import Button from "../../../Button.svelte";
   import FileInput from "../../../FileInput.svelte";
+  import NumberInput from "../../../NumberInput.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
   export let widget;
@@ -8,6 +9,9 @@
 
   let duration = props.duration / 1000;
   $: props.duration = duration * 1000;
+
+  let delay = props.delay / 1000;
+  $: props.delay = delay * 1000;
 
   function removeFile() {
     props.file = null;
@@ -36,14 +40,37 @@
     </div>
   </div>
 
-  <div class="flex flex-col">
-    <div class="font-medium">Duration in seconds</div>
-    <input
-      type="number"
-      min={0}
+  <div class="flex flex-row space-x-2">
+    <NumberInput
+      bind:value={props.top}
+      label="Top"
+    />
+    <NumberInput
+      bind:value={props.left}
+      label="Left"
+    />
+    <NumberInput
+      bind:value={props.width}
+      label="Width"
+      min={-1}
+    />
+    <NumberInput
+      bind:value={props.height}
+      label="Height"
+      min={-1}
+    />
+  </div>
+
+  <div class="flex flex-row space-x-2">
+    <NumberInput
+      step={0.1}
+      bind:value={delay}
+      label="Delay (sec.)"
+    />
+    <NumberInput
       step={0.1}
       bind:value={duration}
-      class="p-2 flex-auto rounded w-16"
+      label="Duration (sec.)"
     />
   </div>
 
