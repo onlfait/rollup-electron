@@ -1,9 +1,11 @@
+const { send: obsSend, events: obsEvents } = require("../../obs");
 const { sendAction } = require("../../overlay");
-const { send: obsSend } = require("../../obs");
 const { v4: uuid } = require("uuid");
 
 const queue = [];
 let running = false;
+let timeoutFactor = 1.2;
+let defaultTimeout = 5000;
 
 const sendTo = {
   overlay: sendToOverlay,
@@ -34,6 +36,33 @@ function sendToOverlay(action, resolve) {
     .then(resolve);
 }
 
+function sendToOBS(action, resolve) {
+  let listener = null;
+  const timeout = (action.timeout || defaultTimeout) * timeoutFactor;
+
+  if (action.name === "SetCurrentScene") {
+    listener = {
+      name: "TransitionEnd",
+      callback(response) {
+        if (response["to-scene"] === action.props["scene-name"]) {
+          resolve({ error: null, response });
+        }
+      }
+    };
+  }
+
+  listener && obsEvents.once(listener.name, listener.callback);
+
+  setTimeout(() => {
+    const error = { type: "timeout", message: `Action timeout ${timeout} ms` };
+    listener && obsEvents.off(listener.name, listener.callback);
+    resolve({ error, response: null });
+  }, timeout);
+
+  return obsSend(action.name, action.props)
+    .catch(error => resolve({ error, response: null }));
+}
+
 function processQueue() {
   if (running) return;
   running = true;
@@ -51,13 +80,6 @@ function processQueue() {
     running = false;
     processQueue();
   });
-}
-
-function sendToOBS(action, resolve) {
-  return obsSend(action.name, action.props)
-    .then(response => ({ error: null, response }))
-    .catch(error => ({ error, response: null }))
-    .then(resolve);
 }
 
 function sendImmediat(action) {

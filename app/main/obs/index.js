@@ -1,10 +1,13 @@
 const OBSWebSocket = require("obs-websocket-js");
 const { getMainWindow } = require("../app/windows");
+const EventEmitter = require("events");
 
 let obs = null;
 let autoReconnect = true;
 let reconnectionTimeout = 5000;
 let reconnectionTimeoutId = null;
+
+const events = new EventEmitter();
 
 let status = {
   connected: false,
@@ -26,6 +29,7 @@ function reconnect(settings) {
 }
 
 function send(type, ...args) {
+  events.emit(type, ...args);
   getMainWindow().webContents.send(`obs.${type}`, ...args);
 }
 
@@ -107,5 +111,6 @@ module.exports = {
   getStatus,
   connect,
   disconnect,
-  send: obsSend
+  send: obsSend,
+  events
 };

@@ -4,7 +4,7 @@ const EventEmitter = require("events");
 const path = require("path");
 
 let server = null;
-let timeoutFactor = 1.5;
+let timeoutFactor = 1.2;
 let defaultTimeout = 5000;
 
 const overlayEmitter = new EventEmitter();
