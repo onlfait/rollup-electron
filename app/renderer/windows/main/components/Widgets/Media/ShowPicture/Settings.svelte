@@ -4,6 +4,8 @@
   import NumberInput from "../../../NumberInput.svelte";
   import MdDelete from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import AnimeSettings from "../../AnimeSettings.svelte";
+
   export let widget;
   export let props;
 
@@ -26,7 +28,7 @@
 
 <div id="widget-{widget.id}" >
 
-  <div class="flex flex-col pb-1">
+  <div class="flex flex-col mb-1">
     <div class="font-medium">Select picture</div>
     <div class="flex items-center space-x-2">
       <Button class="bg-primary-lighter">Select picture</Button>
@@ -40,7 +42,7 @@
     </div>
   </div>
 
-  <div class="flex flex-row space-x-2 pb-1">
+  <div class="flex flex-row space-x-2 mb-1">
     <NumberInput
       bind:value={props.top}
       label="Top"
@@ -61,7 +63,7 @@
     />
   </div>
 
-  <div class="flex flex-row space-x-2 pb-1">
+  <div class="flex flex-row space-x-2 mb-2">
     <NumberInput
       step={0.1}
       bind:value={delay}
@@ -73,5 +75,7 @@
       label="Duration (sec.)"
     />
   </div>
+
+  <AnimeSettings bind:props />
 
 </div>

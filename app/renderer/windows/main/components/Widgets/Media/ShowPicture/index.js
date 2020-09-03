@@ -16,8 +16,6 @@ export const config = {
     height: -1,
     delay: 0,
     duration: 5000,
-    anime: {
-      translateX: 500
-    }
+    anime: null
   }
 };
