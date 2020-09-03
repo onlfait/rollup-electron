@@ -26,11 +26,24 @@ const actions = {
 
       const show = () => {
         img.style.display = "block";
-        setTimeout(() => {
-          img.remove();
-          img = null;
-          resolve("done");
-        }, props.duration);
+        if (props.anime) {
+          const finished = anime({
+            targets: img,
+            duration: props.duration,
+            ...props.anime
+          }).finished;
+          finished.then(() => {
+            img.remove();
+            img = null;
+            resolve("done");
+          });
+        } else {
+          setTimeout(() => {
+            img.remove();
+            img = null;
+            resolve("done");
+          }, props.duration);
+        }
       };
 
       if (props.delay) setTimeout(show, props.delay);

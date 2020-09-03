@@ -27,6 +27,7 @@ module.exports = {
   },
   globals: {
     app: true,
-    io: true
+    io: true,
+    anime: true
   }
 };
