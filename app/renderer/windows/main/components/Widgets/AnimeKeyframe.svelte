@@ -27,6 +27,8 @@
     "skewX",
     "skewY",
     "perspective",
+    "delay",
+    "duration"
   ];
 
   let currentAttribute = attributesList[0];
@@ -34,7 +36,6 @@
   $: attributes = Object.entries(keyframe);
 
   function addAttribute() {
-    console.log("addAttribute", currentAttribute);
     if (!keyframe[currentAttribute]) {
       keyframe[currentAttribute] = 0;
     }
@@ -44,8 +45,9 @@
     dispatch("remove");
   }
 
-  function removeAttribute() {
-    console.log("removeAttribute...");
+  function removeAttribute(label) {
+    delete keyframe[label];
+    keyframe = keyframe;
   }
 </script>
 
@@ -70,7 +72,7 @@
         {label}
       </div>
       <NumberInput twoLine={false} bind:value={keyframe[label]} />
-      <Button icon={MdDelete} on:click={removeAttribute} class="bg-red-600">
+      <Button icon={MdDelete} on:click={removeAttribute.bind(null, label)} class="bg-red-600">
         Remove
       </Button>
     </div>

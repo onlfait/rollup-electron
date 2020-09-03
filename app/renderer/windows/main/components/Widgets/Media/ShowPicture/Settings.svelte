@@ -9,11 +9,7 @@
   export let widget;
   export let props;
 
-  let duration = props.duration / 1000;
-  $: props.duration = duration * 1000;
-
-  let delay = props.delay / 1000;
-  $: props.delay = delay * 1000;
+  let disabledDuration = false;
 
   function removeFile() {
     props.file = null;
@@ -23,6 +19,10 @@
     if (!detail) return;
     const file = await app.remote.call("upload.image", detail.path);
     props.file = file;
+  }
+
+  function onDuration({ detail }) {
+    disabledDuration = detail > -1;
   }
 </script>
 
@@ -65,17 +65,17 @@
 
   <div class="flex flex-row space-x-2 mb-2">
     <NumberInput
-      step={0.1}
-      bind:value={delay}
+      bind:value={props.delay}
       label="Delay (sec.)"
+      disabled={disabledDuration}
     />
     <NumberInput
-      step={0.1}
-      bind:value={duration}
+      bind:value={props.duration}
       label="Duration (sec.)"
+      disabled={disabledDuration}
     />
   </div>
 
-  <AnimeSettings bind:props />
+  <AnimeSettings bind:props on:duration={onDuration} />
 
 </div>
