@@ -11,7 +11,7 @@
   let element = null;
 
   let colors = "bg-black bg-opacity-75";
-  let position = "absolute inset-0 z-50";
+  let position = "absolute left-0 right-0 bottom-0 z-50";
   let content = "p-10 flex justify-center overflow-auto";
 
   let cls = "";
@@ -26,7 +26,7 @@
   });
 </script>
 
-<div bind:this={element} on:click|stopPropagation class="{position} {content} {colors}">
+<div bind:this={element} on:click|stopPropagation class="{position} {content} {colors}" style="top:32px">
   <div class="relative flex flex-col min-w-full md:min-w-1/2">
     <div class="flex-auto"></div>
     <div class="mb-10 text-dark bg-light rounded {cls}">
