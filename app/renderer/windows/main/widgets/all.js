@@ -4,3 +4,4 @@ export * as OBSToggleScene from "../components/Widgets/OBS/ToggleScene";
 
 export * as MediaPlaySound from "../components/Widgets/Media/PlaySound";
 export * as MediaShowPicture from "../components/Widgets/Media/ShowPicture";
+export * as MediaPlayAnime from "../components/Widgets/Media/PlayAnime";
