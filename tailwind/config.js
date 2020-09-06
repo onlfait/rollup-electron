@@ -81,7 +81,7 @@ module.exports = {
   variants: {
     textColor: mergeDarkVariantes("textColor"),
     borderColor: mergeDarkVariantes("borderColor"),
-    backgroundColor: mergeDarkVariantes("backgroundColor")
+    backgroundColor: ["even", ...mergeDarkVariantes("backgroundColor")]
   },
   plugins: [darkMode()]
 };
