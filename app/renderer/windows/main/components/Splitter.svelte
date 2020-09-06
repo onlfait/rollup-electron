@@ -22,10 +22,13 @@
   }
 
   let dimension = flex === "row" ? "width" : "height";
+  let position = flex === "row" ? "left" : "top";
 
+  let splitterPos = flex === "row" ? "top-0 bottom-0" : "left-0 right-0";
   let splitterCursor = flex === "row" ? "ew-resize" : "ns-resize";
-  let splitterStyle = `${dimension}:${splitterSize}px; cursor:${splitterCursor}`;
-  let splitterClass = "hover:bg-black hover:bg-opacity-25";
+  let splitterClass = `absolute z-10 ${splitterPos}`;
+
+  $: splitterStyle = `${position}:calc(${aSize}% - ${splitterSize/2}px); ${dimension}:${splitterSize}px; cursor:${splitterCursor}`;
 
   function setPos(event) {
     const { top, bottom, left, right } = container.getBoundingClientRect();
@@ -64,7 +67,7 @@
   }
 </script>
 
-<div bind:this={container} class="flex flex-{flex} h-full overflow-auto {cls}">
+<div bind:this={container} class="relative flex flex-{flex} h-full overflow-auto {cls}">
   <div style="{dimension}:{aSize}%">
 		<slot name="a"></slot>
 	</div>
