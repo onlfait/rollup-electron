@@ -28,7 +28,7 @@
   let splitterCursor = flex === "row" ? "ew-resize" : "ns-resize";
   let splitterClass = `absolute z-10 ${splitterPos}`;
 
-  $: splitterStyle = `${position}:calc(${aSize}% - ${splitterSize/2}px); ${dimension}:${splitterSize}px; cursor:${splitterCursor}`;
+  $: splitterStyle = `${position}:calc(${aSize}% - ${splitterSize/2}px); ${dimension}:${splitterSize}px; cursor:${splitterCursor};opacity:0;`;
 
   function setPos(event) {
     const { top, bottom, left, right } = container.getBoundingClientRect();
@@ -65,14 +65,22 @@
       }
     };
   }
+
+  export let aProps = {};
+  export let bProps = {};
 </script>
 
-<div bind:this={container} class="relative flex flex-{flex} h-full overflow-auto {cls}">
-  <div style="{dimension}:{aSize}%">
+<div
+  on:drop
+  on:dragover
+  bind:this={container}
+  class="relative flex flex-{flex} w-full h-full overflow-auto {cls}"
+>
+  <div {...aProps} style="{dimension}:{aSize}%">
 		<slot name="a"></slot>
 	</div>
   <div use:drag={setPos} style={splitterStyle} class={splitterClass}></div>
-  <div style="{dimension}:{bSize}%">
+  <div {...bProps} style="{dimension}:{bSize}%">
 		<slot name="b"></slot>
 	</div>
 	<slot />

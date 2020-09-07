@@ -4,6 +4,7 @@
 
   import Button from "../Button.svelte";
   import Timeline from "./Timeline.svelte";
+  import Splitter from "../Splitter.svelte";
   import MdArrowBack from "svelte-icons/md/MdArrowBack.svelte";
 
   const dispatch = createEventDispatcher();
@@ -21,13 +22,19 @@
 </script>
 
 <div bind:this={element} class="{position} {theme}" style="top:32px">
-  <div class="p-2 flex items-center space-x-2">
-    <Button class="bg-primary" icon={MdArrowBack} on:click={dispatch.bind(null, "close")}>
-      BACK
-    </Button>
-    <div>
-      Timeline length: {timeline.length}
+  <Splitter save="timeline.main" sizes={[75,25]} flex="col" class="relative">
+    <div slot="a">
+      <div class="p-2 flex items-center space-x-2">
+        <Button class="bg-primary" icon={MdArrowBack} on:click={dispatch.bind(null, "close")}>
+          BACK
+        </Button>
+        <div>
+          Timeline length: {timeline.length}
+        </div>
+      </div>
     </div>
-  </div>
-  <Timeline bind:timeline />
+    <div slot="b" class="h-full">
+      <Timeline bind:timeline />
+    </div>
+  </Splitter>
 </div>

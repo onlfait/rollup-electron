@@ -1,14 +1,30 @@
 <script>
+  import TimelineRow from "./TimelineRow.svelte";
+
   export let timeline;
 
-  timeline = [ ...timeline, "pouet"];
+  function addFile(file) {
+    timeline = [ ...timeline, { file, attributes: [] } ];
+  }
+
+  function onDrop(event) {
+    event.preventDefault();
+    [...event.dataTransfer.files].forEach(addFile);
+  }
+
+  function onDragOver(event) {
+    event.preventDefault();
+  }
+
+  $: console.log(timeline);
 </script>
 
-<div class="absolute left-0 right-0 bottom-0 bg-primary">
-  <div class="p-2">
-    layers...
-  </div>
-  <div class="p-2">
-    keyframes...
-  </div>
+<div
+  on:drop={onDrop}
+  on:dragover={onDragOver}
+  class="bg-primary h-full overflow-x-hidden overflow-y-auto"
+>
+{#each timeline as item}
+  <TimelineRow bind:item />
+{/each}
 </div>
