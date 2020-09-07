@@ -29,7 +29,7 @@
           BACK
         </Button>
         <div>
-          Timeline length: {timeline.length}
+          Objects: {timeline.length}
         </div>
       </div>
     </div>
