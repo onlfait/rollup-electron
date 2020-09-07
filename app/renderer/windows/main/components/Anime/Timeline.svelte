@@ -51,6 +51,7 @@
 
   function onWheel(event) {
     scale += event.deltaY / 1000;
+    scale = Math.max(0.1, Math.min(3, scale));
   }
 </script>
 
