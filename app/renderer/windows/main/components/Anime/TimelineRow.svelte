@@ -48,7 +48,7 @@
   }
 </script>
 
-<div class="relative flex flex-col bg-primary-lighter even:bg-primary">
+<div class="relative flex flex-col bg-primary-lighter even:bg-primary divide-y divide-purple-500">
 
   <div class="relative flex items-center">
     <div style="width:{col1Width}%;height:42px;" class="flex items-center bg-black bg-opacity-25">
