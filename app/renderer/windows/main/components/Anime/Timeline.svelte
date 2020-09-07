@@ -1,7 +1,11 @@
 <script>
-  import TimelineRow from "./Timeline/Row.svelte";
+  import pannable from "./pannable.js";
+  import Keyframes from "./Keyframes.svelte";
 
   export let timeline;
+
+  let x = 0;
+  let panning = false;
 
   function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
@@ -31,14 +35,64 @@
   function onDragOver(event) {
     event.preventDefault();
   }
+
+  function onPanStart() {
+    panning = true;
+  }
+
+  function onPanMove({ detail }) {
+    x = Math.min(0, x + detail.dx);
+  }
+
+  function onPanEnd() {
+    panning = false;
+  }
 </script>
 
+<style>
+:global(.timeline-grid) {
+  display: grid;
+  grid-template-columns: 30% auto;
+}
+
+:global(.timeline-grid > div) {
+  border-right: 1px rgba(0,200,242,0.2) solid;
+  border-bottom: 1px rgba(0,200,242,0.2) solid;
+}
+
+:global(.bg-0) {
+  background-color: rgba(0,0,0,0.1);
+}
+
+:global(.bg-1) {
+  background-color: rgba(0,0,0,0.2);
+}
+</style>
+
 <div
-  on:drop={onDrop}
-  on:dragover={onDragOver}
-  class="select-none bg-primary h-full overflow-x-hidden overflow-y-auto"
+  use:pannable
+  on:panstart={onPanStart}
+  on:panmove={onPanMove}
+  on:panend={onPanEnd}
+  class="flex flex-col h-full bg-primary select-none"
 >
-{#each timeline as item}
-  <TimelineRow bind:item />
-{/each}
+
+  <div class="timeline-grid bg-primary-darker">
+    <div class="px-2">Settings...</div>
+    <div class="px-2">Timeline...</div>
+  </div>
+
+  <div
+    on:drop={onDrop}
+    on:dragover={onDragOver}
+    class="flex-auto overflow-x-hidden overflow-y-auto"
+  >
+    <div class="timeline-grid">
+    {#each timeline as item,i}
+      <div class="px-2 truncate bg-{i%2}">{item.file.name}</div>
+      <Keyframes bind:item {i} {x} />
+    {/each}
+    </div>
+  </div>
+
 </div>
