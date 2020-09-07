@@ -5,6 +5,7 @@
   export let timeline;
 
   let x = 0;
+  let scale = 1;
   let panning = false;
 
   function readFileAsDataURL(file) {
@@ -47,6 +48,10 @@
   function onPanEnd() {
     panning = false;
   }
+
+  function onWheel(event) {
+    scale += event.deltaY / 1000;
+  }
 </script>
 
 <style>
@@ -71,6 +76,7 @@
 
 <div
   use:pannable
+  on:wheel={onWheel}
   on:panstart={onPanStart}
   on:panmove={onPanMove}
   on:panend={onPanEnd}
@@ -90,7 +96,7 @@
     <div class="timeline-grid">
     {#each timeline as item,i}
       <div class="px-2 truncate bg-{i%2}">{item.file.name}</div>
-      <Keyframes bind:item {i} {x} />
+      <Keyframes bind:item {i} {x} {scale} />
     {/each}
     </div>
   </div>
