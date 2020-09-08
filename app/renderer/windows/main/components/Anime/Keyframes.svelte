@@ -1,4 +1,9 @@
+<script context="module">
+	let currentKeyframe;
+</script>
+
 <script>
+  import { v4 as uuid } from "uuid";
   import pannable from "./pannable.js";
 
   export let cls = "";
@@ -9,11 +14,11 @@
   export let scale = 1;
 
   let panning = false;
-  let currentKeyframe;
 
   function selectKeyframe(keyframe) {
     console.log("selectKeyframe:", keyframe);
     currentKeyframe = keyframe;
+    anime = anime;
   }
 
   function clampDelay(delay) {
@@ -23,8 +28,9 @@
   function addKeyframe(event) {
     const bbox = event.currentTarget.getBoundingClientRect();
     const delay = clampDelay((event.clientX - bbox.x - x - 6) * scale);
-    anime.keyframes = [...anime.keyframes, { delay }];
-    selectKeyframe(anime.keyframes.length - 1);
+    const keyframe = { id: uuid(), delay };
+    anime.keyframes = [ ...anime.keyframes, keyframe ];
+    selectKeyframe(keyframe);
   }
 
 
@@ -36,11 +42,15 @@
     const delay = currentKeyframe.delay + detail.dx * scale;
     currentKeyframe.delay = clampDelay(delay);
     anime.keyframes = anime.keyframes;
-    // console.log(detail.dx);
   }
 
   function handlePanEnd() {
     panning = false;
+  }
+
+  function keyframeClass(keyframe) {
+    const current = keyframe.id === currentKeyframe.id;
+    return current ? "bg-red-600" : "bg-blue-600";
   }
 </script>
 
@@ -50,7 +60,7 @@
 >
 
   <span class="absolute" style="transform:translateX({x}px)">
-    {#each anime.keyframes as keyframe, i}
+    {#each anime.keyframes as keyframe}
     <span
       class="absolute"
       use:pannable
@@ -60,7 +70,7 @@
       on:mousedown|stopPropagation={selectKeyframe.bind(null, keyframe)}
       style="transform:translate({keyframe.delay / scale}px, 6px)"
     >
-      <div class="w-3 h-3 transform rotate-45 bg-blue-500 bg-opacity-75"></div>
+      <div class="w-3 h-3 transform rotate-45 {keyframeClass(keyframe)} bg-opacity-50"></div>
     </span>
     {/each}
   </span>
