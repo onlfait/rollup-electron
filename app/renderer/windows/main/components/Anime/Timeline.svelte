@@ -1,15 +1,19 @@
 <script>
-  import pannable from "./pannable.js";
+  import pannable from "../pannable.js";
   import Keyframes from "./Keyframes.svelte";
 
   export let timeline;
 
   let x = 0;
   let scale = 1;
-  let panning = false;
+  let zoom = { min: 0.1, max: 10, sensitivity: 50 };
+  let splitter = { x: 200, width: 4, min: 100, max: 500 };
 
-  let currentAnime;
-  let currentKeyframe;
+  $: splitterStyle = `
+    cursor:ew-resize;
+    width:${splitter.width}px;
+    left:calc(${splitter.x}px - ${splitter.width}px);
+  `;
 
   function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
@@ -40,38 +44,29 @@
     event.preventDefault();
   }
 
-  function onPanStart() {
-    panning = true;
-  }
-
-  function onPanMove({ detail }) {
+  function onTimelinePan({ detail }) {
     x = Math.min(0, x + detail.dx);
   }
 
-  function onPanEnd() {
-    panning = false;
+  function onSplitterPan({ detail }) {
+    splitter.x = Math.max(splitter.min, Math.min(splitter.max, detail.x));
   }
 
   function onWheel(event) {
-    scale += event.deltaY / 1000;
-    scale = Math.max(0.1, Math.min(3, scale));
+    const offset = splitter.x + 1;
+    const delta = event.deltaY / 100;
+    let tx = (event.clientX - offset - x) / scale;
+    let newScale = scale + (delta / (zoom.sensitivity / scale));
+    scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
+    x = Math.min(0, -tx * scale + event.clientX - offset);
   }
 
-  function onKeyframe(anime, { detail }) {
-    currentAnime = anime;
-    currentKeyframe = detail;
-  }
-
-  function currentKeyframeUpdate() {
-    console.log(currentKeyframe.delay);
-    timeline = timeline;
-  }
+  $: gridTemplate = `grid-template-columns: ${splitter.x}px auto`;
 </script>
 
 <style>
 .timeline-grid {
   display: grid;
-  grid-template-columns: 30% auto;
 }
 
 .timeline-grid > :global(div) {
@@ -90,16 +85,14 @@
 
 <div
   use:pannable
+  on:panmove={onTimelinePan}
   on:wheel|preventDefault={onWheel}
-  on:panstart={onPanStart}
-  on:panmove={onPanMove}
-  on:panend={onPanEnd}
-  class="flex flex-col h-full bg-primary select-none"
+  class="relative flex flex-col h-full bg-primary select-none"
 >
 
-  <div class="timeline-grid bg-primary-darker">
-    <div class="px-2">Settings...</div>
-    <div class="px-2">Timeline...</div>
+  <div class="timeline-grid bg-primary-darker" style={gridTemplate}>
+    <div class="p-2">Settings...</div>
+    <div class="p-2">Timeline...</div>
   </div>
 
   <div
@@ -107,21 +100,24 @@
     on:dragover={onDragOver}
     class="flex-auto overflow-x-hidden overflow-y-auto"
   >
-    <div class="timeline-grid">
+    <div class="timeline-grid  whitespace-no-wrap" style={gridTemplate}>
     {#each timeline as anime, i}
-      <div class="px-2 truncate bg-{i%2}">{anime.file.name}</div>
-      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} on:keyframe={onKeyframe.bind(null, anime)} />
+      <div class="flex bg-{i%2}">
+        <div class="p-2 flex-auto truncate">{anime.file.name}</div>
+        <div class="py-2 px-4 cursor-pointer hover:bg-blue-500">⁝</div>
+      </div>
+      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} />
     {/each}
     </div>
   </div>
 
-</div>
-
-{#if currentKeyframe}
-<div class="absolute bg-red-600 top-0 right-0">
-  <div class="p-2">
-    {currentKeyframe.id}
-    <input type="number" bind:value={currentKeyframe.delay} on:change={currentKeyframeUpdate}>
+  <div
+    use:pannable
+    on:panmove={onSplitterPan}
+    on:mousedown|stopPropagation
+    style={splitterStyle}
+    class="absolute top-0 bottom-0"
+  >
   </div>
+
 </div>
-{/if}
