@@ -8,6 +8,9 @@
   let scale = 1;
   let panning = false;
 
+  let currentAnime;
+  let currentKeyframe;
+
   function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -53,6 +56,16 @@
     scale += event.deltaY / 1000;
     scale = Math.max(0.1, Math.min(3, scale));
   }
+
+  function onKeyframe(anime, { detail }) {
+    currentAnime = anime;
+    currentKeyframe = detail;
+  }
+
+  function currentKeyframeUpdate() {
+    console.log(currentKeyframe.delay);
+    timeline = timeline;
+  }
 </script>
 
 <style>
@@ -97,9 +110,18 @@
     <div class="timeline-grid">
     {#each timeline as anime, i}
       <div class="px-2 truncate bg-{i%2}">{anime.file.name}</div>
-      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} />
+      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} on:keyframe={onKeyframe.bind(null, anime)} />
     {/each}
     </div>
   </div>
 
 </div>
+
+{#if currentKeyframe}
+<div class="absolute bg-red-600 top-0 right-0">
+  <div class="p-2">
+    {currentKeyframe.id}
+    <input type="number" bind:value={currentKeyframe.delay} on:change={currentKeyframeUpdate}>
+  </div>
+</div>
+{/if}

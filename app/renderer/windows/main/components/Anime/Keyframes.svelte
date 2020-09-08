@@ -6,6 +6,10 @@
   import { v4 as uuid } from "uuid";
   import pannable from "./pannable.js";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
   export let cls = "";
   export { cls as class };
 
@@ -17,6 +21,7 @@
 
   function selectKeyframe(keyframe) {
     console.log("selectKeyframe:", keyframe);
+    dispatch("keyframe", keyframe);
     currentKeyframe = keyframe;
     anime = anime;
   }
