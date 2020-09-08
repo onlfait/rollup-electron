@@ -56,21 +56,21 @@
 </script>
 
 <style>
-:global(.timeline-grid) {
+.timeline-grid {
   display: grid;
   grid-template-columns: 30% auto;
 }
 
-:global(.timeline-grid > div) {
+.timeline-grid > :global(div) {
   border-right: 1px rgba(0,200,242,0.2) solid;
   border-bottom: 1px rgba(0,200,242,0.2) solid;
 }
 
-:global(.bg-0) {
+.timeline-grid :global(.bg-0) {
   background-color: rgba(0,0,0,0.1);
 }
 
-:global(.bg-1) {
+.timeline-grid :global(.bg-1) {
   background-color: rgba(0,0,0,0.2);
 }
 </style>
@@ -95,9 +95,9 @@
     class="flex-auto overflow-x-hidden overflow-y-auto"
   >
     <div class="timeline-grid">
-    {#each timeline as item,i}
+    {#each timeline as item, i}
       <div class="px-2 truncate bg-{i%2}">{item.file.name}</div>
-      <Keyframes bind:item {i} {x} {scale} />
+      <Keyframes class="bg-{i%2}" bind:item {x} {scale} />
     {/each}
     </div>
   </div>

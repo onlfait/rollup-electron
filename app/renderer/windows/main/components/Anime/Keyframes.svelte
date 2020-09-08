@@ -1,9 +1,11 @@
 <script>
   import pannable from "./pannable.js";
 
+  export let cls = "";
+  export { cls as class };
+
   export let item;
   export let x = 0;
-  export let i = 0;
   export let scale = 1;
 
   let panning = false;
@@ -44,7 +46,7 @@
 
 <div
   on:dblclick={addKeyframe}
-  class="relative bg-{i%2} whitespace-no-wrap overflow-hidden"
+  class="relative whitespace-no-wrap overflow-hidden {cls}"
 >
 
   <span class="absolute" style="transform:translateX({x}px)">
