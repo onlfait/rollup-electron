@@ -1,4 +1,6 @@
 <script>
+  import pannable from "./pannable.js";
+
   export let flex = "row";
   export let min = 10;
   export let max = 90;
@@ -9,7 +11,7 @@
   export let cls = "";
   export { cls as class };
 
-  let dragging = false;
+  let panning = false;
   let container = null;
 
   let [aSize, bSize] = sizes;
@@ -30,12 +32,16 @@
 
   $: splitterStyle = `${position}:calc(${aSize}% - ${splitterSize/2}px); ${dimension}:${splitterSize}px; cursor:${splitterCursor};opacity:0;`;
 
-  function setPos(event) {
+  function onPanStart() {
+    panning = true;
+  }
+
+  function onPanMove({ detail }) {
     const { top, bottom, left, right } = container.getBoundingClientRect();
     const w = right - left;
     const h = bottom - top;
-    const x = event.clientX - left;
-    const y = event.clientY - top;
+    const x = detail.x - left;
+    const y = detail.y - top;
     const pos = flex === "row" ? x : y;
     const len = flex === "row" ? w : h;
     aSize = Math.max(min, Math.min(max, pos / len * 100));
@@ -45,29 +51,9 @@
     }
   }
 
-  function drag(node, callback) {
-    const mousedown = event => {
-      if (event.which !== 1) return;
-      event.preventDefault();
-      dragging = true;
-      const onmouseup = () => {
-        dragging = false;
-        window.removeEventListener("mousemove", callback, false);
-        window.removeEventListener("mouseup", onmouseup, false);
-      };
-      window.addEventListener("mousemove", callback, false);
-      window.addEventListener("mouseup", onmouseup, false);
-    };
-    node.addEventListener("mousedown", mousedown, false);
-    return {
-      destroy() {
-        node.removeEventListener("mousedown", onmousedown, false);
-      }
-    };
+  function onPanEnd() {
+    panning = false;
   }
-
-  export let aProps = {};
-  export let bProps = {};
 </script>
 
 <div
@@ -76,11 +62,18 @@
   bind:this={container}
   class="relative flex flex-{flex} w-full h-full overflow-auto {cls}"
 >
-  <div {...aProps} style="{dimension}:{aSize}%">
+  <div style="{dimension}:{aSize}%">
 		<slot name="a"></slot>
 	</div>
-  <div use:drag={setPos} style={splitterStyle} class={splitterClass}></div>
-  <div {...bProps} style="{dimension}:{bSize}%">
+  <div
+    use:pannable
+    on:panstart={onPanStart}
+    on:panmove={onPanMove}
+    on:panend={onPanEnd}
+    style={splitterStyle} class={splitterClass}
+  >
+  </div>
+  <div style="{dimension}:{bSize}%">
 		<slot name="b"></slot>
 	</div>
 	<slot />
