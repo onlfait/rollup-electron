@@ -77,7 +77,7 @@
 
 <div
   use:pannable
-  on:wheel={onWheel}
+  on:wheel|preventDefault={onWheel}
   on:panstart={onPanStart}
   on:panmove={onPanMove}
   on:panend={onPanEnd}
