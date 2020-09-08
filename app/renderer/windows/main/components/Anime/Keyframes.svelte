@@ -4,7 +4,7 @@
   export let cls = "";
   export { cls as class };
 
-  export let item;
+  export let anime;
   export let x = 0;
   export let scale = 1;
 
@@ -23,8 +23,8 @@
   function addKeyframe(event) {
     const bbox = event.currentTarget.getBoundingClientRect();
     const delay = clampDelay((event.clientX - bbox.x - x - 6) * scale);
-    item.keyframes = [...item.keyframes, { delay }];
-    selectKeyframe(item.keyframes.length - 1);
+    anime.keyframes = [...anime.keyframes, { delay }];
+    selectKeyframe(anime.keyframes.length - 1);
   }
 
 
@@ -35,7 +35,7 @@
   function handlePanMove({ detail }) {
     const delay = currentKeyframe.delay + detail.dx * scale;
     currentKeyframe.delay = clampDelay(delay);
-    item.keyframes = item.keyframes;
+    anime.keyframes = anime.keyframes;
     // console.log(detail.dx);
   }
 
@@ -50,7 +50,7 @@
 >
 
   <span class="absolute" style="transform:translateX({x}px)">
-    {#each item.keyframes as keyframe, i}
+    {#each anime.keyframes as keyframe, i}
     <span
       class="absolute"
       use:pannable

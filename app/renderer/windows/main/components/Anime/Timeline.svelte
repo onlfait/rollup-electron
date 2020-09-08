@@ -95,9 +95,9 @@
     class="flex-auto overflow-x-hidden overflow-y-auto"
   >
     <div class="timeline-grid">
-    {#each timeline as item, i}
-      <div class="px-2 truncate bg-{i%2}">{item.file.name}</div>
-      <Keyframes class="bg-{i%2}" bind:item {x} {scale} />
+    {#each timeline as anime, i}
+      <div class="px-2 truncate bg-{i%2}">{anime.file.name}</div>
+      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} />
     {/each}
     </div>
   </div>
