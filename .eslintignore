@@ -1,5 +1,7 @@
 app/package.json
 node_modules/
 dist/
+
+*.min.js
 *_.*
 *_
