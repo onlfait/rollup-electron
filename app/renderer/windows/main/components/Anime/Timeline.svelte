@@ -5,6 +5,16 @@
 
   export let timeline;
 
+  const animeTypes = {
+    "ico": "image",
+    "gif": "image",
+    "png": "image",
+    "jpg": "image",
+    "jpeg": "image",
+    "mp3": "sound",
+    "ogg": "sound"
+  };
+
   let x = 0;
   let scale = 1;
   let zoom = { min: 0.1, max: 10, sensitivity: 50 };
@@ -19,15 +29,6 @@
     left:calc(${splitter.x}px - ${splitter.width}px);
   `;
 
-  function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.addEventListener("error", () => reject(reader.error), false);
-      reader.readAsDataURL(file);
-    });
-  }
-
   function addAnime(props) {
     timeline = [ ...timeline, {
       id: uuid(), ...props, keyframes: []
@@ -35,14 +36,14 @@
   }
 
   function addFile(file) {
-    readFileAsDataURL(file)
-      .then(dataURL => {
-        const type = dataURL.match(/^data:(.+\/.+);/)[1];
-        addAnime({ type, file, dataURL });
-      })
-      .catch(error => {
-        console.warn("WARN >>>", error);
-      });
+    const ext = file.name.split(".").pop().toLowerCase();
+    const type = animeTypes[ext];
+    if (!type) {
+      return console.warn(`WARN >>> Unsupported extension "${ext}"`);
+    }
+    app.remote.call(`upload.${type}`, file.path)
+      .then(filename => addAnime({ type, file: filename }))
+      .catch(error => console.warn("WARN >>>", error));
   }
 
   function onDrop(event) {
@@ -126,7 +127,7 @@
     <div class="timeline-grid  whitespace-no-wrap" style={gridTemplate}>
     {#each timeline as anime, i}
       <div class="flex bg-{i%2}">
-        <div class="p-2 flex-auto truncate">{anime.file.name}</div>
+        <div class="p-2 flex-auto truncate">{anime.file}</div>
         <div class="py-2 px-4 cursor-pointer hover:bg-blue-500">⁝</div>
       </div>
       <Keyframes
@@ -154,9 +155,8 @@
 
 {#if selectedKeyframe}
 <div class="absolute flex flex-col bg-primary top-0 right-0">
-  <div class="p-2">
-    {selectedKeyframe.id}
-  </div>
+  <div class="p-2">{selectedAnime.file}</div>
+  <div class="p-2">{selectedKeyframe.id}</div>
   <div class="p-2 flex">
     <div class="flex-auto">delay</div>
     <div class="text-dark flex-grow-0">
