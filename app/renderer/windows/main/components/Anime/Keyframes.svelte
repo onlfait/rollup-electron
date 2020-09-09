@@ -9,6 +9,7 @@
   export let anime;
   export let x = 0;
   export let scale = 1;
+  export let selected;
 
   export let cls = "";
   export { cls as class };
@@ -55,6 +56,7 @@
       <Keyframe
         {scale}
         {keyframe}
+        selected={selected && selected.id === keyframe.id}
         on:move={onMove}
         on:select={onSelect}
       />

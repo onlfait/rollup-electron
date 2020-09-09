@@ -133,6 +133,7 @@
         {anime}
         {x} {scale}
         class="bg-{i%2}"
+        selected={selectedKeyframe}
         on:select={onUpdateKeyframe}
         on:update={onUpdateKeyframe}
       />
