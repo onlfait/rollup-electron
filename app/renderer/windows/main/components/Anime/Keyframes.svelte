@@ -14,17 +14,15 @@
   export let cls = "";
   export { cls as class };
 
-  addKeyframe({ x: 0 });
-  addKeyframe({ x: 10 });
-  addKeyframe({ x: 25 });
-  addKeyframe({ x: 75 });
-  addKeyframe({ x: 155 });
-  addKeyframe({ x: 255 });
-
   function addKeyframe(props) {
     anime.keyframes = [ ...anime.keyframes, {
       id: uuid(), x: 0, ...props
     }];
+  }
+
+  function addKeyframeAtMousePos(event) {
+    const bbox = event.currentTarget.getBoundingClientRect();
+    addKeyframe({ x: Math.max(0, (event.clientX - bbox.x - x - 10) / scale) });
   }
 
   function updateKeyframe(props) {
@@ -50,7 +48,7 @@
 </script>
 
 <div class="px-2 overflow-hidden {cls}">
-	<div class="relative w-full h-full">
+	<div class="relative w-full h-full" on:dblclick={addKeyframeAtMousePos}>
     <div class="absolute top-0 bottom-0" style="left:{x}px">
       {#each anime.keyframes as keyframe}
       <Keyframe
