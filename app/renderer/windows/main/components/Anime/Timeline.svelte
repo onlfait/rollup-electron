@@ -1,7 +1,11 @@
 <script>
   import { v4 as uuid } from "uuid";
   import pannable from "../pannable.js";
+  import Icon from "../Icon.svelte";
   import Keyframes from "./Keyframes.svelte";
+
+  import MdImage from 'svelte-icons/md/MdImage.svelte'
+  import MdMusicVideo from 'svelte-icons/md/MdMusicVideo.svelte'
 
   export let timeline;
 
@@ -14,6 +18,8 @@
     "mp3": "sound",
     "ogg": "sound"
   };
+
+  icons = { "sound": MdMusicVideo, "image": MdImage };
 
   let x = 0;
   let scale = 1;
@@ -42,7 +48,7 @@
       return console.warn(`WARN >>> Unsupported extension "${ext}"`);
     }
     app.remote.call(`upload.${type}`, file.path)
-      .then(filename => addAnime({ type, file: filename }))
+      .then(filename => addAnime({ type, target: filename }))
       .catch(error => console.warn("WARN >>>", error));
   }
 
@@ -127,7 +133,8 @@
     <div class="timeline-grid  whitespace-no-wrap" style={gridTemplate}>
     {#each timeline as anime, i}
       <div class="flex bg-{i%2}">
-        <div class="p-2 flex-auto truncate">{anime.file}</div>
+        <Icon icon={icons[anime.type]} class="m-2 mr-0 w-4 h-4 flex-shrink-0" />
+        <div class="p-2 flex flex-auto space-x-2 truncate">{anime.target}</div>
         <div class="py-2 px-4 cursor-pointer hover:bg-blue-500">⁝</div>
       </div>
       <Keyframes
@@ -155,7 +162,10 @@
 
 {#if selectedKeyframe}
 <div class="absolute flex flex-col bg-primary top-0 right-0">
-  <div class="p-2">{selectedAnime.file}</div>
+  <div class="p-2 flex space-x-2">
+    <Icon icon={icons[selectedAnime.type]} />
+    <div>{selectedAnime.target}</div>
+  </div>
   <div class="p-2">{selectedKeyframe.id}</div>
   <div class="p-2 flex">
     <div class="flex-auto">delay</div>
