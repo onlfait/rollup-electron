@@ -53,7 +53,7 @@
   }
 
   function onWheel(event) {
-    const offset = splitter.x + 1;
+    const offset = splitter.x + 15;
     const delta = event.deltaY / 100;
     const tx = (event.clientX - offset - x) / scale;
     const newScale = scale + (delta / (zoom.sensitivity / scale));
