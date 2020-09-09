@@ -10,8 +10,12 @@
 
   $: x = keyframe.x * scale;
 
-  function onPanMove({ detail }) {
-    dispatch("move", detail);
+  function onPanMove(event) {
+    dispatch("move", { keyframe, move: event.detail, event });
+  }
+
+  function onMouseDown(event) {
+    dispatch("select", { keyframe, event });
   }
 </script>
 
@@ -20,7 +24,7 @@
   on:dblclick
   use:pannable
   on:panmove={onPanMove}
-  on:mousedown|stopPropagation
+  on:mousedown|stopPropagation={onMouseDown}
   class="absolute top-0 bottom-0 flex items-center"
   style="left:{x}px"
 >

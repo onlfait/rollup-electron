@@ -1,4 +1,5 @@
 <script>
+  import { v4 as uuid } from "uuid";
   import pannable from "../pannable.js";
   import Keyframes from "./Keyframes.svelte";
 
@@ -8,6 +9,9 @@
   let scale = 1;
   let zoom = { min: 0.1, max: 10, sensitivity: 50 };
   let splitter = { x: 200, width: 4, min: 100, max: 500 };
+
+  let selectedAnime;
+  let selectedKeyframe;
 
   $: splitterStyle = `
     cursor:ew-resize;
@@ -24,11 +28,17 @@
     });
   }
 
+  function addAnime(props) {
+    timeline = [ ...timeline, {
+      id: uuid(), ...props, keyframes: []
+    }];
+  }
+
   function addFile(file) {
     readFileAsDataURL(file)
       .then(dataURL => {
         const type = dataURL.match(/^data:(.+\/.+);/)[1];
-        timeline = [ ...timeline, { type, file, dataURL, keyframes: [] } ];
+        addAnime({ type, file, dataURL });
       })
       .catch(error => {
         console.warn("WARN >>>", error);
@@ -60,6 +70,19 @@
     scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
     x = Math.min(0, -tx * scale + event.clientX - offset);
   }
+
+  function onUpdateKeyframe({ detail }) {
+    selectedAnime = detail.anime;
+    selectedKeyframe = detail.keyframe;
+    selectedKeyframeX = (selectedKeyframe.x / 100).toFixed(2);
+  }
+
+  function selectedKeyframeUpdate() {
+    selectedKeyframe.x = selectedKeyframeX * 100;
+    timeline = timeline;
+  }
+
+  let selectedKeyframeX = 0;
 
   $: gridTemplate = `grid-template-columns: ${splitter.x}px auto`;
 </script>
@@ -106,7 +129,13 @@
         <div class="p-2 flex-auto truncate">{anime.file.name}</div>
         <div class="py-2 px-4 cursor-pointer hover:bg-blue-500">⁝</div>
       </div>
-      <Keyframes class="bg-{i%2}" bind:anime {x} {scale} />
+      <Keyframes
+        {anime}
+        {x} {scale}
+        class="bg-{i%2}"
+        on:select={onUpdateKeyframe}
+        on:update={onUpdateKeyframe}
+      />
     {/each}
     </div>
   </div>
@@ -121,3 +150,22 @@
   </div>
 
 </div>
+
+{#if selectedKeyframe}
+<div class="absolute flex flex-col bg-primary top-0 right-0">
+  <div class="p-2">
+    {selectedKeyframe.id}
+  </div>
+  <div class="p-2 flex">
+    <div class="flex-auto">delay</div>
+    <div class="text-dark flex-grow-0">
+      <input
+        type="number"
+        step={0.01}
+        bind:value={selectedKeyframeX}
+        on:input={selectedKeyframeUpdate}
+      />
+    </div>
+  </div>
+</div>
+{/if}

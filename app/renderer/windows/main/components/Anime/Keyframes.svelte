@@ -1,5 +1,10 @@
 <script>
+  import { v4 as uuid } from "uuid";
   import Keyframe from "./Keyframe.svelte";
+
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let anime;
   export let x = 0;
@@ -8,42 +13,50 @@
   export let cls = "";
   export { cls as class };
 
-  anime.keyframes = [
-    { x: 0 },
-    { x: 10 },
-    { x: 25 },
-    { x: 75 },
-    { x: 155 },
-    { x: 255 },
-  ];
+  addKeyframe({ x: 0 });
+  addKeyframe({ x: 10 });
+  addKeyframe({ x: 25 });
+  addKeyframe({ x: 75 });
+  addKeyframe({ x: 155 });
+  addKeyframe({ x: 255 });
 
-  function updateKeyframe(index, props) {
-    anime.keyframes = anime.keyframes.map((keyframe, i) => {
-      return i === index ? { ...keyframe, ...props } : keyframe;
+  function addKeyframe(props) {
+    anime.keyframes = [ ...anime.keyframes, {
+      id: uuid(), x: 0, ...props
+    }];
+  }
+
+  function updateKeyframe(props) {
+    anime.keyframes = anime.keyframes.map(keyframe => {
+      if (props.id === keyframe.id) {
+        keyframe = { ...keyframe, ...props };
+        dispatch("update", { anime, keyframe });
+      }
+      return keyframe;
     });
   }
 
-  function onMove(index, { detail }) {
-    const keyframe = anime.keyframes[index];
-    const x = Math.max(0, keyframe.x + detail.dx);
-    updateKeyframe(index, { x });
+  function onMove({ detail }) {
+    const { keyframe, move } = detail;
+    const x = Math.max(0, keyframe.x + move.dx / scale);
+    updateKeyframe({ ...keyframe, x });
   }
 
-  function onSelect(index) {
-    const keyframe = anime.keyframes[index];
-    console.log("select:", index, keyframe);
+  function onSelect({ detail }) {
+    const { keyframe } = detail;
+    dispatch("select", { anime, keyframe });
   }
 </script>
 
 <div class="px-2 overflow-hidden {cls}">
 	<div class="relative w-full h-full">
     <div class="absolute top-0 bottom-0" style="left:{x}px">
-      {#each anime.keyframes as keyframe, i}
+      {#each anime.keyframes as keyframe}
       <Keyframe
         {scale}
         {keyframe}
-        on:move={onMove.bind(null, i)}
-        on:mousedown={onSelect.bind(null, i)}
+        on:move={onMove}
+        on:select={onSelect}
       />
       {/each}
     </div>
