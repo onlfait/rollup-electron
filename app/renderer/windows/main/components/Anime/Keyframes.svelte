@@ -15,14 +15,16 @@
   export { cls as class };
 
   function addKeyframe(props) {
-    anime.keyframes = [ ...anime.keyframes, {
-      id: uuid(), x: 0, ...props
-    }];
+    const keyframe = { id: uuid(), x: 0, ...props };
+    anime.keyframes = [ ...anime.keyframes, keyframe ];
+    return keyframe;
   }
 
   function addKeyframeAtMousePos(event) {
     const bbox = event.currentTarget.getBoundingClientRect();
-    addKeyframe({ x: Math.max(0, (event.clientX - bbox.x - x - 10) / scale) });
+    const nx = (event.clientX - bbox.x - x - 10) / scale;
+    const keyframe = addKeyframe({ x: Math.max(0, nx) });
+    dispatch("select", { anime, keyframe });
   }
 
   function updateKeyframe(props) {
