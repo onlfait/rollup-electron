@@ -1,5 +1,5 @@
 <script>
-  import pannable from "../pannable.js";
+  import pannable from "../../pannable.js";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -19,7 +19,7 @@
 
   function onDrop(event) {
     event.preventDefault();
-    dispatch('drop', [...event.dataTransfer.files])
+    dispatch("drop", [...event.dataTransfer.files]);
   }
 </script>
 
