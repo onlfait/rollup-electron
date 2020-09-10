@@ -5,6 +5,7 @@
   import Button from "../../Button.svelte";
   import NumberInput from "../../NumberInput.svelte";
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
+  import MdDelete from "svelte-icons/md/MdDelete.svelte";
 
   export let state;
 
@@ -15,13 +16,25 @@
 
   let element;
 
-  let selectedTransformProp = transformProps[0];
+  let propsList = Object.keys(transformProps);
+  let selectedProp = propsList[0];
 
   $: transformKeys = state.selectedKeyframe ? Object.keys(state.selectedKeyframe.props) : [];
 
+  function hasProp(name) {
+    return state.selectedKeyframe.props[name] !== undefined;
+  }
+
   function addTransformProp() {
-    if (state.selectedKeyframe.props[selectedTransformProp] === undefined) {
-      state.selectedKeyframe.props[selectedTransformProp] = 0;
+    if (!hasProp(selectedProp)) {
+      state.selectedKeyframe.props[selectedProp] = 0;
+    }
+  }
+
+  function removeTransformProp(name) {
+    if (hasProp(name)) {
+      delete state.selectedKeyframe.props[name];
+      state.selectedKeyframe.props = state.selectedKeyframe.props;
     }
   }
 
@@ -61,17 +74,20 @@
   {#if state.selectedKeyframe}
 
   <div class="p-2 flex space-x-2">
-    <Select items={transformProps} bind:value={selectedTransformProp} />
+    <Select items={propsList} bind:value={selectedProp} />
     <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
       Add
     </Button>
   </div>
 
   <div class="flex flex-auto flex-col divide-y divide-blue-600 divide-opacity-50 overflow-auto">
-    {#each transformKeys as label}
-    <div class="p-2 flex items-center">
-      <div class="flex-auto">{label}</div>
-      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[label]} />
+    {#each transformKeys as name}
+    <div class="p-2 flex space-x-2 items-center">
+      <div class="flex-auto">{name}</div>
+      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[name]} {...transformProps[name]} />
+      {#if transformProps[name].removable}
+      <Button icon={MdDelete} on:click={removeTransformProp.bind(null, name)} class="bg-red-600" />
+      {/if}
     </div>
     {/each}
   </div>
