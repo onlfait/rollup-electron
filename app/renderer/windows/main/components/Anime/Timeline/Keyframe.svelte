@@ -9,6 +9,7 @@
   let offset = 10;
 
   $: left = keyframe.props.delay / pixelPerMs * state.scale - offset;
+  $: width = (keyframe.props.duration || 0) / pixelPerMs * state.scale - offset;
 </script>
 
 <div
@@ -18,6 +19,11 @@
   class="absolute top-0 bottom-0 flex items-center"
   style="left:{left}px"
 >
+  <div
+    class="absolute h-full bg-black bg-opacity-25"
+    style="margin-left:{offset}px;width:{width}px"
+  >
+  </div>
   <div class="
     w-5 h-5
     transform rotate-45
