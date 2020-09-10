@@ -1,28 +1,91 @@
 <script>
+  import pannable from "../../pannable.js";
+  import { transformProps } from "../utils";
+  import Select from "../../Select.svelte";
+  import Button from "../../Button.svelte";
   import NumberInput from "../../NumberInput.svelte";
+  import MdAdd from "svelte-icons/md/MdAdd.svelte";
 
   export let state;
+
+  let top = 8;
+  let right = 8;
+  let minHeight = 152;
+  let height = minHeight;
+
+  let element;
+
+  let selectedTransformProp = transformProps[0];
+
+  $: transformKeys = state.selectedKeyframe ? Object.keys(state.selectedKeyframe.props) : [];
+
+  function addTransformProp() {
+    if (state.selectedKeyframe.props[selectedTransformProp] === undefined) {
+      state.selectedKeyframe.props[selectedTransformProp] = 0;
+    }
+  }
+
+  function onPanResize({ detail }) {
+    const { top } = element.getBoundingClientRect();
+    const maxHeight = window.innerHeight - top - 8;
+    height = Math.max(minHeight, Math.min(maxHeight, height + detail.dy));
+  }
+
+  function onPanMove({ detail }) {
+    const bbox = element.getBoundingClientRect();
+    const maxTop = window.innerHeight - bbox.height - 40;
+    const maxRight = window.innerWidth - bbox.width - 8;
+    top = Math.max(8, Math.min(maxTop, top + detail.dy));
+    right = Math.max(8, Math.min(maxRight, right - detail.dx));
+  }
 </script>
 
-<div class="absolute z-50 bg-primary" style="top:8px;right:8px;">
+{#if state.selectedKeyframe}
 
-  <div class="p-2 bg-primary-darker">
-    {#if state.selectedKeyframe}
-      Key: {state.selectedKeyframe.id}
-    {:else}
-      No keyframe selected...
-    {/if}
+<div
+  bind:this={element}
+  style="top:{top}px;right:{right}px;height:{height}px;"
+  class="absolute flex flex-col z-50 h-full bg-primary rounded shadow"
+>
+
+  <div
+    use:pannable
+    on:panmove={onPanMove}
+    class="p-2 bg-primary-darker cursor-move select-none rounded-t"
+  >
+      <div class="text-sm opacity-75">
+        {state.selectedKeyframe.id}
+      </div>
   </div>
 
   {#if state.selectedKeyframe}
-  <div class="p-2">
-    <NumberInput
-      step={100}
-      label="Delay"
-      twoLine={false}
-      bind:value={state.selectedKeyframe.props.delay}
-    />
+
+  <div class="p-2 flex space-x-2">
+    <Select items={transformProps} bind:value={selectedTransformProp} />
+    <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
+      Add
+    </Button>
   </div>
+
+  <div class="flex flex-auto flex-col divide-y divide-blue-600 divide-opacity-50 overflow-auto">
+    {#each transformKeys as label}
+    <div class="p-2 flex items-center">
+      <div class="flex-auto">{label}</div>
+      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[label]} />
+    </div>
+    {/each}
+  </div>
+
   {/if}
 
+  <div
+    use:pannable
+    on:panmove={onPanResize}
+    on:mousedown|stopPropagation
+    class="absolute w-full h-1 bottom-0 select-none"
+    style="cursor:ns-resize"
+  ></div>
+
 </div>
+
+{/if}

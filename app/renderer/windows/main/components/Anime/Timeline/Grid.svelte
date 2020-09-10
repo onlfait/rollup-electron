@@ -57,7 +57,7 @@
 <div
   on:drop={onDrop}
   on:dragover|preventDefault
-  class="relative flex flex-col h-full bg-primary select-none"
+  class="relative flex flex-col h-full bg-primary select-none shadow"
 >
 
   <div class="timeline-grid bg-primary-darker grid" style={gridTemplate}>
@@ -65,7 +65,7 @@
     <div class="p-2">Timeline...</div>
   </div>
 
-  <div on:wheel={onWheel} class="flex-auto overflow-x-hidden overflow-y-auto">
+  <div on:wheel|preventDefault={onWheel} class="flex-auto overflow-x-hidden overflow-y-auto">
     <div class="timeline-grid whitespace-no-wrap" style={gridTemplate}>
       <slot />
     </div>

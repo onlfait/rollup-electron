@@ -24,6 +24,25 @@ export const animeIcons = {
   "image": MdImage
 };
 
+export const transformProps = [
+  "duration",
+  "translateX",
+  "translateY",
+  "translateZ",
+  "rotate",
+  "rotateX",
+  "rotateY",
+  "rotateZ",
+  "scale",
+  "scaleX",
+  "scaleY",
+  "scaleZ",
+  "skew",
+  "skewX",
+  "skewY",
+  "perspective"
+];
+
 export function hasSameId(a, b) {
   return a.id && b.id && a.id === b.id;
 }
