@@ -19,6 +19,7 @@
 
   let state = {
     left: 0,
+    scale: 1,
     selectedAnime: null,
     selectedKeyframe: null
   };
@@ -66,14 +67,19 @@
     updateState({ selectedAnime, selectedKeyframe });
   }
 
+  function clampDelay(delay) {
+    return Math.max(0, parseInt(delay));
+  }
+
   function onDoubleClick(anime, { detail }) {
-    const keyframe = addKeyframe(anime, { delay: detail.x * pixelPerMs });
+    const delay = clampDelay(detail.x / state.scale * pixelPerMs);
+    const keyframe = addKeyframe(anime, { delay });
     selectKeyframe(anime, keyframe);
   }
 
   function onKeyframeMove(anime, keyframe, { detail }) {
-    const delay = keyframe.props.delay + detail.dx * pixelPerMs;
-    keyframe.props.delay = Math.max(0, delay);
+    const delay = keyframe.props.delay + detail.dx * pixelPerMs / state.scale;
+    keyframe.props.delay = clampDelay(delay);
     updateState({ selectedKeyframe: keyframe });
     animes = animes;
   }
@@ -89,7 +95,7 @@
 
 <Settings bind:state />
 
-<Grid on:drop={onDrop}>
+<Grid bind:state on:drop={onDrop}>
 {#each animes as anime, i}
   <div class="flex bg-{i%2}">
     <Icon icon={animeIcons[anime.target.type]} class="m-2 mr-0 w-4 h-4 flex-shrink-0" />
@@ -104,6 +110,7 @@
     >
     {#each anime.keyframes as keyframe}
       <Keyframe
+        {state}
         {keyframe}
         selected={hasSameId(keyframe, state.selectedKeyframe)}
         on:panmove={onKeyframeMove.bind(null, anime, keyframe)}

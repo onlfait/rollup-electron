@@ -2,12 +2,13 @@
   import pannable from "../../pannable.js";
   import { pixelPerMs } from "../utils";
 
+  export let state;
   export let keyframe;
   export let selected = false;
 
   let offset = 10;
 
-  $: left = keyframe.props.delay / pixelPerMs - offset;
+  $: left = keyframe.props.delay / pixelPerMs * state.scale - offset;
 </script>
 
 <div
