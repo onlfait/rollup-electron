@@ -1,18 +1,30 @@
 <script>
   import Icon from "../Icon.svelte";
   import Grid from "./Timeline/Grid.svelte";
+  import Keyframe from "./Timeline/Keyframe.svelte";
   import Keyframes from "./Timeline/Keyframes.svelte";
   import {
+    hasSameId,
     animeTypes,
     animeAttrs,
     animeIcons,
     getFileExt,
-    animeFactory
+    animeFactory,
+    keyframeFactory
   } from "./utils";
 
   export let animes;
 
-  const state = { left: 0 };
+  let state = {
+    left: 0,
+    selectedAnime: null,
+    selectedKeyframe: null
+  };
+
+  function updateState(props) {
+    state = { ...state, ...props };
+    console.log("updateState", state);
+  }
 
   function addAnime(target) {
     animes = [ ...animes, animeFactory(target) ];
@@ -38,11 +50,28 @@
   }
 
   function onPanMove({ detail }) {
-    state.left = detail.x;
+    updateState({ left: detail.x });
+  }
+
+  function addKeyframe(anime, x) {
+    const keyframe = keyframeFactory({ x });
+    anime.keyframes = [ ...anime.keyframes, keyframe ];
+    animes = animes;
+    return keyframe;
+  }
+
+  function selectKeyframe(selectedAnime, selectedKeyframe) {
+    updateState({ selectedAnime, selectedKeyframe });
   }
 
   function onDoubleClick(anime, { detail }) {
-    console.log("onDoubleClick:", { anime, detail });
+    const keyframe = addKeyframe(anime, detail.x);
+    selectKeyframe(anime, keyframe);
+  }
+
+  function onKeyframeMove(anime, keyframe, { detail }) {
+    keyframe.x += detail.dx;
+    animes = animes;
   }
 </script>
 
@@ -59,7 +88,14 @@
       on:panmove={onPanMove}
       on:dblclick={onDoubleClick.bind(null, anime)}
     >
-      {anime.id}
+    {#each anime.keyframes as keyframe}
+      <Keyframe
+        {keyframe}
+        selected={hasSameId(keyframe, state.selectedKeyframe)}
+        on:panmove={onKeyframeMove.bind(null, anime, keyframe)}
+        on:mousedown={selectKeyframe.bind(null, anime, keyframe)}
+      />
+    {/each}
     </Keyframes>
   </div>
 {/each}

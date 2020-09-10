@@ -29,3 +29,11 @@ export function getFileExt(file) {
 export function animeFactory(target) {
   return { id: uuid(), target, keyframes: [] };
 }
+
+export function keyframeFactory(props) {
+  return { id: uuid(), x: 0, ...props };
+}
+
+export function hasSameId(a, b) {
+  return a.id && b.id && a.id === b.id;
+}
