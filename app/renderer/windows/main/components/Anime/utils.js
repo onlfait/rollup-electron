@@ -22,6 +22,10 @@ export const animeIcons = {
   "image": MdImage
 };
 
+export function hasSameId(a, b) {
+  return a.id && b.id && a.id === b.id;
+}
+
 export function getFileExt(file) {
   return file.name.split(".").pop();
 }
@@ -31,9 +35,5 @@ export function animeFactory(target) {
 }
 
 export function keyframeFactory(props) {
-  return { id: uuid(), x: 0, ...props };
-}
-
-export function hasSameId(a, b) {
-  return a.id && b.id && a.id === b.id;
+  return { id: uuid(), x: 0, transforms: {}, ...props };
 }

@@ -1,6 +1,7 @@
 <script>
   import Icon from "../Icon.svelte";
   import Grid from "./Timeline/Grid.svelte";
+  import Settings from "./Timeline/Settings.svelte";
   import Keyframe from "./Timeline/Keyframe.svelte";
   import Keyframes from "./Timeline/Keyframes.svelte";
   import {
@@ -23,7 +24,7 @@
 
   function updateState(props) {
     state = { ...state, ...props };
-    console.log("updateState", state);
+    // console.log("updateState", state);
   }
 
   function addAnime(target) {
@@ -70,10 +71,18 @@
   }
 
   function onKeyframeMove(anime, keyframe, { detail }) {
-    keyframe.x += detail.dx;
+    keyframe.x = Math.max(0, keyframe.x + detail.dx);
+    updateState({ selectedKeyframe: keyframe });
     animes = animes;
   }
+
+  function onSettingsUpdate({ detail }) {
+    const { anime } = detail;
+    animes = animes.map(a => hasSameId(a, anime) ? { ...a, ...anime } : a);
+  }
 </script>
+
+<Settings {state} on:update={onSettingsUpdate} />
 
 <Grid on:drop={onDrop}>
 {#each animes as anime, i}

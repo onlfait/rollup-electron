@@ -15,9 +15,11 @@
   <input
     {min}
     {step}
+    on:input
+    on:change
     bind:value
     {...$$props}
     type="number"
-    class="p-2 flex-auto rounded w-20"
+    class="p-2 flex-auto rounded w-20 text-dark"
   />
 </div>
