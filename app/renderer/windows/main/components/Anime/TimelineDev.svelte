@@ -1,9 +1,9 @@
 <script>
-  import TimelineModal from "./TimelineModal.svelte";
+  import TimelineEditor from "./TimelineEditor.svelte";
 
-  let timeline = [];
+  let animes = [];
 
-  // $: console.log("> timeline:", timeline);
+  $: console.log(">>> animes:", animes);
 </script>
 
-<TimelineModal bind:timeline />
+<TimelineEditor bind:animes />

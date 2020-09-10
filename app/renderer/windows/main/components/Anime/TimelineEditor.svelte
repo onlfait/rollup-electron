@@ -7,7 +7,7 @@
   import Splitter from "../Splitter.svelte";
   import MdArrowBack from "svelte-icons/md/MdArrowBack.svelte";
 
-  export let timeline;
+  export let animes;
 
   let element;
 
@@ -19,20 +19,24 @@
   onMount(() => {
     document.body.append(element);
   });
+
+  function close() {
+    dispatch("close");
+  }
 </script>
 
 <div bind:this={element} class="{position} {theme}" style="top:32px">
   <Splitter save="timeline.main" sizes={[75,25]} flex="col" class="relative">
     <div slot="a" class="p-2 flex items-center space-x-2">
-        <Button class="bg-primary" icon={MdArrowBack} on:click={dispatch.bind(null, "close")}>
+        <Button class="bg-primary" icon={MdArrowBack} on:click={close}>
           BACK
         </Button>
         <div>
-          Objects: {timeline.length}
+          Objects: {animes.length}
         </div>
     </div>
     <div slot="b" class="h-full">
-      <Timeline bind:timeline />
+      <Timeline bind:animes />
     </div>
   </Splitter>
 </div>
