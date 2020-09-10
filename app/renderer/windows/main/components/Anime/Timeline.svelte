@@ -10,6 +10,7 @@
     animeAttrs,
     animeIcons,
     getFileExt,
+    pixelPerMs,
     animeFactory,
     keyframeFactory
   } from "./utils";
@@ -54,8 +55,8 @@
     updateState({ left: detail.x });
   }
 
-  function addKeyframe(anime, x) {
-    const keyframe = keyframeFactory({ x });
+  function addKeyframe(anime, props) {
+    const keyframe = keyframeFactory(props);
     anime.keyframes = [ ...anime.keyframes, keyframe ];
     animes = animes;
     return keyframe;
@@ -66,23 +67,27 @@
   }
 
   function onDoubleClick(anime, { detail }) {
-    const keyframe = addKeyframe(anime, detail.x);
+    const keyframe = addKeyframe(anime, { delay: detail.x * pixelPerMs });
     selectKeyframe(anime, keyframe);
   }
 
   function onKeyframeMove(anime, keyframe, { detail }) {
-    keyframe.x = Math.max(0, keyframe.x + detail.dx);
+    const delay = keyframe.props.delay + detail.dx * pixelPerMs;
+    keyframe.props.delay = Math.max(0, delay);
     updateState({ selectedKeyframe: keyframe });
     animes = animes;
   }
 
-  function onSettingsUpdate({ detail }) {
-    const { anime } = detail;
+  function updateAnime(anime) {
     animes = animes.map(a => hasSameId(a, anime) ? { ...a, ...anime } : a);
+  }
+
+  $: if (state.selectedAnime) {
+    updateAnime(state.selectedAnime);
   }
 </script>
 
-<Settings {state} on:update={onSettingsUpdate} />
+<Settings bind:state />
 
 <Grid on:drop={onDrop}>
 {#each animes as anime, i}

@@ -1,10 +1,13 @@
 <script>
   import pannable from "../../pannable.js";
-  
+  import { pixelPerMs } from "../utils";
+
   export let keyframe;
   export let selected = false;
 
   let offset = 10;
+
+  $: left = keyframe.props.delay / pixelPerMs - offset;
 </script>
 
 <div
@@ -12,7 +15,7 @@
   on:panmove
   on:mousedown|stopPropagation
   class="absolute top-0 bottom-0 flex items-center"
-  style="left:{keyframe.x - offset}px"
+  style="left:{left}px"
 >
   <div class="
     w-5 h-5

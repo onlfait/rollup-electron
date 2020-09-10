@@ -1,39 +1,26 @@
 <script>
   import NumberInput from "../../NumberInput.svelte";
-  import { createEventDispatcher } from "svelte";
-
-  const dispatch = createEventDispatcher();
 
   export let state;
-
-  $: anime = state.selectedAnime;
-  $: keyframe = state.selectedKeyframe;
-  $: delay = keyframe ? keyframe.x / 100 : 0;
-
-  function onDelayUpdate(event) {
-    keyframe.x = event.target.value * 100;
-    dispatch("update", { anime, keyframe });
-  }
 </script>
 
 <div class="absolute z-50 bg-primary" style="top:8px;right:8px;">
 
   <div class="p-2 bg-primary-darker">
-    {#if keyframe}
-      Key: {keyframe.id}
+    {#if state.selectedKeyframe}
+      Key: {state.selectedKeyframe.id}
     {:else}
       No keyframe selected...
     {/if}
   </div>
 
-  {#if keyframe}
+  {#if state.selectedKeyframe}
   <div class="p-2">
     <NumberInput
-      step={0.01}
+      step={100}
       label="Delay"
       twoLine={false}
-      value={delay}
-      on:input={onDelayUpdate}
+      bind:value={state.selectedKeyframe.props.delay}
     />
   </div>
   {/if}

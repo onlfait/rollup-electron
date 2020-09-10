@@ -2,6 +2,8 @@ import { v4 as uuid } from "uuid";
 import MdImage from "svelte-icons/md/MdImage.svelte";
 import MdMusicVideo from "svelte-icons/md/MdMusicVideo.svelte";
 
+export const pixelPerMs = 10;
+
 export const animeTypes = {
   "ico": "image",
   "gif": "image",
@@ -35,5 +37,5 @@ export function animeFactory(target) {
 }
 
 export function keyframeFactory(props) {
-  return { id: uuid(), x: 0, transforms: {}, ...props };
+  return { id: uuid(), props: { delay: 0, ...props } };
 }
