@@ -1,8 +1,6 @@
 <script>
-  export let label = null;
   export let value;
-  export let min = 0;
-  export let step = 1;
+  export let label = null;
   export let twoLine = true;
 
   let cls = twoLine ? "flex-col" : "flex-row space-x-2 items-center";
@@ -13,8 +11,6 @@
   <div class="font-medium">{label}</div>
   {/if}
   <input
-    {min}
-    {step}
     on:input
     on:change
     bind:value
