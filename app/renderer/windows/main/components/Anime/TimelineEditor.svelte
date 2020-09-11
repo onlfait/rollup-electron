@@ -5,6 +5,7 @@
   import Button from "../Button.svelte";
   import Timeline from "./Timeline.svelte";
   import Splitter from "../Splitter.svelte";
+  import Settings from "./Timeline/Settings.svelte";
   import MdPlayArrow from "svelte-icons/md/MdPlayArrow.svelte";
   import MdArrowBack from "svelte-icons/md/MdArrowBack.svelte";
 
@@ -15,6 +16,13 @@
   let element;
 
   const dispatch = createEventDispatcher();
+
+  let state = {
+    left: 0,
+    scale: 1,
+    selectedAnime: null,
+    selectedKeyframe: null
+  };
 
   let position = "absolute z-20 left-0 right-0 bottom-0";
   let theme = "bg-light text-dark dark:bg-dark dark:text-light";
@@ -27,36 +35,17 @@
     dispatch("close");
   }
 
-  function createImageTarget(target) {
-    const $e = document.createElement("img");
-    const { top, left, width, height } = target.attrs;
-    $e.style.top = top;
-    $e.style.left = left;
-    $e.style.zIndex = 40;
-    $e.style.display = "none";
-    $e.style.position = "absolute";
-    width > 0 && $e.setAttribute("width", width);
-    height > 0 && $e.setAttribute("height", height);
-    $e.setAttribute("src", `/public/media/images/${target.file}`);
-    return $e;
-  }
-
   function play() {
-    console.log("Play anime...");
     const timeline = animejs.timeline();
     animes.forEach(anime => {
       if (anime.target.type === "image") {
-        const targets = createImageTarget(anime.target);
+        const targets = `#anime-${anime.id}`;
         const keyframes = anime.keyframes.map(keyframe => keyframe.props);
-        timeline.add({ targets, keyframes,
-          begin() {
-            targets.style.display = "block";
-          },
-          complete() {
-            targets.remove();
-          }
+        // timeline.add({ targets, keyframes }, 0);
+        keyframes.forEach(keyframe => {
+          const { delay, ...props } = keyframe;
+          timeline.add({ targets, ...props }, delay);
         });
-        document.body.append(targets);
       }
     });
     timeline.play();
@@ -65,7 +54,20 @@
 
 <div bind:this={element} class="{position} {theme}" style="top:32px">
   <Splitter save="timeline.main" sizes={[75,25]} flex="col" class="relative">
-    <div slot="a" class="p-2 flex items-center space-x-2">
+    <div slot="a" class="flex">
+      <div class="absolute inset-0 overflow-hidden">
+      {#each animes as anime}
+        {#if anime.target.type === "image"}
+        <img
+          class="absolute"
+          id="anime-{anime.id}"
+          {...anime.target.attrs}
+          src="/public/media/images/{anime.target.file}" alt={anime.id}
+        />
+        {/if}
+      {/each}
+      </div>
+      <div class="absolute p-2 flex items-center space-x-2">
         <Button class="bg-primary" icon={MdArrowBack} on:click={close}>
           Back
         </Button>
@@ -77,9 +79,12 @@
         <div>
           Objects: {animes.length}
         </div>
+      </div>
     </div>
-    <div slot="b" class="h-full">
-      <Timeline bind:animes />
+    <div slot="b" class="relative h-full">
+      <Timeline bind:animes bind:state />
     </div>
   </Splitter>
+
+  <Settings bind:state />
 </div>

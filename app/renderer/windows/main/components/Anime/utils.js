@@ -30,7 +30,6 @@ export const soundProps = {
 };
 
 export const transformProps = {
-  "duration": { min: 0, step: 100, removable: true },
   "translateX": { step: 10, removable: true },
   "translateY": { step: 10, removable: true },
   "translateZ": { step: 10, removable: true },
@@ -47,6 +46,7 @@ export const transformProps = {
   "skewY": { step: 1, removable: true },
   "perspective": { step: 1, removable: true },
   "delay": { min: 0, step: 100, removable: false },
+  "duration": { min: 0, step: 100, removable: false },
 };
 
 export function hasSameId(a, b) {
@@ -62,5 +62,5 @@ export function animeFactory(target) {
 }
 
 export function keyframeFactory(props) {
-  return { id: uuid(), props: { delay: 0, ...props } };
+  return { id: uuid(), props: { delay: 0, duration: 1000, ...props } };
 }

@@ -1,7 +1,6 @@
 <script>
   import Icon from "../Icon.svelte";
   import Grid from "./Timeline/Grid.svelte";
-  import Settings from "./Timeline/Settings.svelte";
   import Keyframe from "./Timeline/Keyframe.svelte";
   import Keyframes from "./Timeline/Keyframes.svelte";
   import {
@@ -16,17 +15,10 @@
   } from "./utils";
 
   export let animes;
-
-  let state = {
-    left: 0,
-    scale: 1,
-    selectedAnime: null,
-    selectedKeyframe: null
-  };
+  export let state;
 
   function updateState(props) {
     state = { ...state, ...props };
-    // console.log("updateState", state);
   }
 
   function addAnime(target) {
@@ -95,8 +87,6 @@
     updateAnime(state.selectedAnime);
   }
 </script>
-
-<Settings bind:state />
 
 <Grid bind:state on:drop={onDrop}>
 {#each animes as anime, i}
