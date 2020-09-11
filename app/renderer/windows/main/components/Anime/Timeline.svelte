@@ -42,10 +42,13 @@
       return console.warn(`WARN >>> Unsupported extension "${ext}"`);
     }
 
-    const label = file.name;
-    const attrs = { ...animeAttrs[type] };
-
-    addAnime({ type, label, file, attrs });
+    app.remote.call(`upload.${type}`, file.path)
+      .then(filename => {
+        const label = filename;
+        const attrs = { ...animeAttrs[type] };
+        addAnime({ type, label, file: filename, attrs });
+      })
+      .catch(error => console.warn("WARN >>>", error));
   }
 
   function onDrop({ detail }) {
