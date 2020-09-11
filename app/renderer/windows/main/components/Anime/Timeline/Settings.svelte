@@ -18,15 +18,19 @@
   let props;
 
   let element;
+  let attrsKeys;
 
-  $: if (state.selectedAnime) {
+  $: if (state.selectedKeyframe) {
     const type = state.selectedAnime.target.type;
     transformKeys = Object.keys(state.selectedKeyframe.props);
     props = type === "sound" ? soundProps : transformProps;
     propsList = Object.keys(props);
+    attrsKeys = Object.keys(state.selectedAnime.target.attrs);
   }
 
   $: selectedProp = selectedProp || propsList[0];
+
+  let divide = "divide-y divide-blue-600 divide-opacity-50";
 
   function hasProp(name) {
     return state.selectedKeyframe.props[name] !== undefined;
@@ -58,6 +62,18 @@
     top = Math.max(8, Math.min(maxTop, top + detail.dy));
     right = Math.max(8, Math.min(maxRight, right - detail.dx));
   }
+
+  function removeKeyframe() {
+    let index = null;
+    state.selectedAnime.keyframes = state.selectedAnime.keyframes.filter((key, i) => {
+      if (key.id === state.selectedKeyframe.id) {
+        index = i;
+        return false;
+      }
+      return true;
+    });
+    state.selectedKeyframe = state.selectedAnime.keyframes[index-1];
+  }
 </script>
 
 {#if state.selectedKeyframe}
@@ -71,43 +87,57 @@
   <div
     use:pannable
     on:panmove={onPanMove}
-    class="p-2 bg-primary-darker cursor-move select-none rounded-t"
+    class="flex p-2 bg-primary-darker cursor-move select-none rounded-t"
   >
       <div class="text-sm opacity-75">
         {state.selectedKeyframe.id}
       </div>
+      <Button icon={MdDelete} on:click={removeKeyframe} class="bg-red-600" />
   </div>
 
-  {#if state.selectedKeyframe}
+  <div class="overflow-auto">
 
-  <div class="p-2 flex space-x-2">
-    <Select items={propsList} bind:value={selectedProp} />
-    <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
-      Add
-    </Button>
-  </div>
-
-  <div class="flex flex-auto flex-col divide-y divide-blue-600 divide-opacity-50 overflow-auto">
-    {#each transformKeys as name}
-    <div class="p-2 flex space-x-2 items-center">
-      <div class="flex-auto">{name}</div>
-      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[name]} {...props[name]} />
-      {#if props[name].removable}
-      <Button icon={MdDelete} on:click={removeTransformProp.bind(null, name)} class="bg-red-600" />
-      {/if}
+    <div class="flex flex-col {divide}">
+      {#each attrsKeys as name}
+      <div class="p-2 flex space-x-2 items-center">
+        <div class="flex-auto">{name}</div>
+        <NumberInput twoLine={false} bind:value={state.selectedAnime.target.attrs[name]} />
+      </div>
+      {/each}
     </div>
-    {/each}
+
+    {#if state.selectedKeyframe}
+
+    <div class="p-2 flex space-x-2">
+      <Select items={propsList} bind:value={selectedProp} />
+      <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
+        Add
+      </Button>
+    </div>
+
+    <div class="flex flex-auto flex-col {divide}">
+      {#each transformKeys as name}
+      <div class="p-2 flex space-x-2 items-center">
+        <div class="flex-auto">{name}</div>
+        <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[name]} {...props[name]} />
+        {#if props[name].removable}
+        <Button icon={MdDelete} on:click={removeTransformProp.bind(null, name)} class="bg-red-600" />
+        {/if}
+      </div>
+      {/each}
+    </div>
+
+    {/if}
+
+    <div
+      use:pannable
+      on:panmove={onPanResize}
+      on:mousedown|stopPropagation
+      class="absolute w-full h-1 bottom-0 select-none"
+      style="cursor:ns-resize"
+    ></div>
+
   </div>
-
-  {/if}
-
-  <div
-    use:pannable
-    on:panmove={onPanResize}
-    on:mousedown|stopPropagation
-    class="absolute w-full h-1 bottom-0 select-none"
-    style="cursor:ns-resize"
-  ></div>
 
 </div>
 

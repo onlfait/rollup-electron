@@ -50,6 +50,14 @@
     });
     timeline.play();
   }
+
+  function getStyle(attrs) {
+    let ret = "";
+    Object.entries(attrs).forEach(([key, value]) => {
+      ret += `${key}:${value}px;`;
+    });
+    return ret;
+  }
 </script>
 
 <div bind:this={element} class="{position} {theme}" style="top:32px">
@@ -61,7 +69,7 @@
         <img
           class="absolute"
           id="anime-{anime.id}"
-          {...anime.target.attrs}
+          style={getStyle(anime.target.attrs)}
           src="/public/media/images/{anime.target.file}" alt={anime.id}
         />
         {/if}
