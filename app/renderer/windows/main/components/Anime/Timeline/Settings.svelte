@@ -1,11 +1,11 @@
 <script>
   import pannable from "../../pannable.js";
-  import { transformProps } from "../utils";
   import Select from "../../Select.svelte";
   import Button from "../../Button.svelte";
   import NumberInput from "../../NumberInput.svelte";
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
   import MdDelete from "svelte-icons/md/MdDelete.svelte";
+  import { transformProps, soundProps } from "../utils";
 
   export let state;
 
@@ -13,13 +13,20 @@
   let right = 8;
   let minHeight = 152;
   let height = minHeight;
+  let transformKeys = [];
+  let propsList = [];
+  let props;
 
   let element;
 
-  let propsList = Object.keys(transformProps);
-  let selectedProp = propsList[0];
+  $: if (state.selectedAnime) {
+    const type = state.selectedAnime.target.type;
+    transformKeys = Object.keys(state.selectedKeyframe.props);
+    props = type === "sound" ? soundProps : transformProps;
+    propsList = Object.keys(props);
+  }
 
-  $: transformKeys = state.selectedKeyframe ? Object.keys(state.selectedKeyframe.props) : [];
+  $: selectedProp = selectedProp || propsList[0];
 
   function hasProp(name) {
     return state.selectedKeyframe.props[name] !== undefined;
@@ -84,8 +91,8 @@
     {#each transformKeys as name}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{name}</div>
-      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[name]} {...transformProps[name]} />
-      {#if transformProps[name].removable}
+      <NumberInput twoLine={false} bind:value={state.selectedKeyframe.props[name]} {...props[name]} />
+      {#if props[name].removable}
       <Button icon={MdDelete} on:click={removeTransformProp.bind(null, name)} class="bg-red-600" />
       {/if}
     </div>

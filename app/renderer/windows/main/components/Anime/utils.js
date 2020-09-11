@@ -14,14 +14,19 @@ export const animeTypes = {
   "ogg": "sound"
 };
 
+export const animeIcons = {
+  "sound": MdMusicVideo,
+  "image": MdImage
+};
+
 export const animeAttrs = {
   "image": { top: 0, left: 0, width: 400, height: -1 },
   "sound": { volume: 0.8 }
 };
 
-export const animeIcons = {
-  "sound": MdMusicVideo,
-  "image": MdImage
+export const soundProps = {
+  "volume": { min: 0, step: 1, removable: true },
+  "delay": { min: 0, step: 100, removable: false },
 };
 
 export const transformProps = {
