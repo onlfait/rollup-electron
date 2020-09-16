@@ -25,6 +25,15 @@
     animes = [ ...animes, animeFactory(target) ];
   }
 
+  function getImageSize(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve({ width: img.width, height: img.height });
+      img.onerror = reject;
+      img.src = `/public/media/images/${src}`;
+    });
+  }
+
   function addAnimeFromFile(file) {
     const ext = getFileExt(file);
     const type = animeTypes[ext];
@@ -35,10 +44,11 @@
     }
 
     app.remote.call(`upload.${type}`, file.path)
-      .then(filename => {
+      .then(async filename => {
         const label = filename;
         const attrs = { ...animeAttrs[type] };
-        addAnime({ type, label, file: filename, attrs });
+        const { width, height } = await getImageSize(filename);
+        addAnime({ type, label, file: filename, attrs: { ...attrs, width, height } });
       })
       .catch(error => console.warn("WARN >>>", error));
   }
