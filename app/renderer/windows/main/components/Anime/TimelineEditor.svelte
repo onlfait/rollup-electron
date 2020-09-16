@@ -10,10 +10,12 @@
   import MdArrowBack from "svelte-icons/md/MdArrowBack.svelte";
 
   import animejs from "animejs/lib/anime.es.js";
+  import { throttle } from "throttle-debounce";
 
   export let animes;
 
   let element;
+  let timeline;
 
   const dispatch = createEventDispatcher();
 
@@ -35,8 +37,17 @@
     dispatch("close");
   }
 
-  function play() {
-    const timeline = animejs.timeline();
+  let slider;
+  let duration = 0;
+
+  function makeAnime() {
+    timeline = animejs.timeline({
+      autoplay: false,
+      update() {
+        console.log(timeline.duration/100*timeline.progress);
+        slider.value = timeline.duration/100*timeline.progress;
+      }
+    });
     animes.forEach(anime => {
       if (anime.target.type === "image") {
         const targets = `#anime-${anime.id}`;
@@ -44,20 +55,35 @@
         // timeline.add({ targets, keyframes }, 0);
         keyframes.forEach(keyframe => {
           const { delay, ...props } = keyframe;
-          timeline.add({ targets, ...props }, delay);
+          timeline.add({ targets,...anime.target.attrs, ...props }, delay);
         });
       }
     });
-    timeline.play();
+    duration = timeline.duration;
+    console.log({duration});
   }
 
-  function getStyle(attrs) {
-    let ret = "";
-    Object.entries(attrs).forEach(([key, value]) => {
-      ret += `${key}:${value}px;`;
-    });
-    return ret;
+  const makeAnimeThrottle = throttle(500, makeAnime);
+
+  function play() {
+    // makeAnime();
+    // timeline.seek(0);
+    timeline.restart();
   }
+
+  // function getStyle(attrs) {
+  //   let ret = "";
+  //   Object.entries(attrs).forEach(([key, value]) => {
+  //     ret += `${key}:${value}px;`;
+  //   });
+  //   return ret + "transform: translate(0,0,0) rotate(0);";
+  // }
+
+  function onSeek(event) {
+    timeline.seek(event.target.value);
+  }
+
+  $: if (animes) makeAnimeThrottle();
 </script>
 
 <div bind:this={element} class="{position} {theme}" style="top:32px">
@@ -69,7 +95,6 @@
         <img
           class="absolute"
           id="anime-{anime.id}"
-          style={getStyle(anime.target.attrs)}
           src="/public/media/images/{anime.target.file}" alt={anime.id}
         />
         {/if}
@@ -83,6 +108,7 @@
         <Button class="bg-green-600" icon={MdPlayArrow} on:click={play}>
           Play
         </Button>
+        <input bind:this={slider} type="range" value={0} min={0} max={duration} on:input={onSeek} />
         {/if}
         <div>
           Objects: {animes.length}
