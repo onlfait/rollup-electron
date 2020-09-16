@@ -44,7 +44,6 @@
     timeline = animejs.timeline({
       autoplay: false,
       update() {
-        console.log(timeline.duration/100*timeline.progress);
         slider.value = timeline.duration/100*timeline.progress;
       }
     });
@@ -52,7 +51,6 @@
       if (anime.target.type === "image") {
         const targets = `#anime-${anime.id}`;
         const keyframes = anime.keyframes.map(keyframe => keyframe.props);
-        // timeline.add({ targets, keyframes }, 0);
         keyframes.forEach(keyframe => {
           const { delay, ...props } = keyframe;
           timeline.add({ targets,...anime.target.attrs, ...props }, delay);
@@ -60,7 +58,6 @@
       }
     });
     duration = timeline.duration;
-    console.log({duration});
   }
 
   const makeAnimeThrottle = throttle(500, makeAnime);
@@ -71,13 +68,13 @@
     timeline.restart();
   }
 
-  // function getStyle(attrs) {
-  //   let ret = "";
-  //   Object.entries(attrs).forEach(([key, value]) => {
-  //     ret += `${key}:${value}px;`;
-  //   });
-  //   return ret + "transform: translate(0,0,0) rotate(0);";
-  // }
+  function getStyle(attrs) {
+    let ret = "";
+    Object.entries(attrs).forEach(([key, value]) => {
+      ret += `${key}:${value}px;`;
+    });
+    return ret + "transform: translate(0,0,0) rotate(0);";
+  }
 
   function onSeek(event) {
     timeline.seek(event.target.value);
@@ -95,6 +92,7 @@
         <img
           class="absolute"
           id="anime-{anime.id}"
+          style={getStyle(anime.target.attrs)}
           src="/public/media/images/{anime.target.file}" alt={anime.id}
         />
         {/if}
