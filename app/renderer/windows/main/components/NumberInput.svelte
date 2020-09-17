@@ -1,5 +1,6 @@
 <script>
   export let value;
+  export let pad = 'p-2';
   export let label = null;
   export let twoLine = true;
 
@@ -16,6 +17,6 @@
     bind:value
     {...$$props}
     type="number"
-    class="p-2 flex-auto rounded w-20 text-dark"
+    class="{pad} flex-auto rounded w-20 text-dark"
   />
 </div>

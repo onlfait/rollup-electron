@@ -16,7 +16,7 @@ const animeTypes = {
 };
 
 const animeAttrs = {
-  "image": { top: 0, left: 0, width: 400, height: 400 },
+  "image": { top: 0, left: 0, width: 400, height: 400, "z-index": 1 },
   "sound": { volume: 0.8 }
 };
 

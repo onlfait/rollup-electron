@@ -5,10 +5,12 @@
   import Timeline from "./Timeline.svelte";
   import TimelineModal from "./TimelineModal.svelte";
   import TimelineViewer from "./TimelineViewer.svelte";
+  import TimelineFileEdit from "./TimelineFileEdit.svelte";
 
   export let animes;
 
   let files = [];
+  let file;
 
   const dispatch = createEventDispatcher();
 
@@ -18,6 +20,7 @@
 
   function addAnimeFromFile(file) {
     createAnimeFile(file).then(animeFile => {
+      animeFile.attrs["z-index"] += files.length;
       files = [...files, animeFile];
     }).catch(error => {
       console.warn(error); // TODO notify user
@@ -33,7 +36,15 @@
   }
 
   function onSelectFile({ detail }) {
-    console.log("onSelectFile:", detail);
+    file = detail;
+  }
+
+  function updateFile(file) {
+    files = files.map(f => f.id === file.id ? { ...f, ...file } : f);
+  }
+
+  function onUpdateFile({ detail }) {
+    updateFile(detail);
   }
 </script>
 
@@ -43,9 +54,8 @@
   <div slot="topbar">
     Topbar...
   </div>
-  <div class="h-full overflow-hidden">
   <TimelineViewer {files} />
-  </div>
+  <TimelineFileEdit {file} on:update={onUpdateFile} />
   <div slot="timeline" class="h-full">
     <Timeline {files}
       on:state={onState}

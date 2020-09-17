@@ -41,7 +41,7 @@
     <slot name="topbar" />
   </div>
   <Splitter save="timeline.main" sizes={[75,25]} flex="col" class="relative">
-    <div slot="a" class="relative flex">
+    <div slot="a" class="relative flex h-full overflow-hidden">
       <slot />
     </div>
     <div slot="b" class="relative h-full">

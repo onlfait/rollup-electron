@@ -4,7 +4,11 @@
   function getStyle(attrs) {
     let ret = "";
     Object.entries(attrs).forEach(([key, value]) => {
-      ret += `${key}:${value}px;`;
+      if (key === "z-index") {
+        ret += `${key}:${value};`;
+      } else {
+        ret += `${key}:${value}px;`;
+      }
     });
     return ret; // + "transform: translate(0,0,0) rotate(0);";
   }

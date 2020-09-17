@@ -13,6 +13,6 @@
   }
 </script>
 
-<span class="flex inline-block w-{w} h-{h} {color} {cls}">
+<span on:click class="flex inline-block w-{w} h-{h} {color} {cls}">
   <svelte:component this={icon} />
 </span>
