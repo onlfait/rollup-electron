@@ -48,6 +48,7 @@
   "dependencies": {
     "animejs": "^3.2.0",
     "clone-deep": "^4.0.1",
+    "deepmerge": "^4.2.2",
     "dot-prop": "^5.2.0",
     "electron-context-menu": "^2.3.0",
     "electron-store": "^6.0.0",

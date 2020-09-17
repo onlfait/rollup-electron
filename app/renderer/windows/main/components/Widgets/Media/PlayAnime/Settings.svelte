@@ -1,6 +1,6 @@
 <script>
   import Button from "../../../Button.svelte";
-  import AnimeTimeline from "../../../Anime/Timeline.svelte";
+  // import AnimeTimeline from "../../../Anime/Timeline.svelte";
 
   export let widget;
   export let props;
@@ -18,5 +18,5 @@
 </div>
 
 {#if opened}
-<AnimeTimeline bind:timeline={props.timeline} on:close={close} />
+<!-- <AnimeTimeline bind:timeline={props.timeline} on:close={close} /> -->
 {/if}
