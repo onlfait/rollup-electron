@@ -11,7 +11,7 @@
   let element;
 
   let style = "top:32px";
-  let position = "absolute z-10 left-0 right-0 bottom-0";
+  let position = "flex flex-col absolute z-10 left-0 right-0 bottom-0";
   let theme = "bg-light text-dark dark:bg-dark dark:text-light";
 
   onMount(() => {
@@ -33,7 +33,7 @@
   class="{position} {theme}"
   {style}
   on:drop={onDrop}
-  on:dragover|preventDefault >
+  on:dragover|preventDefault>
   <div class="flex p-2 space-x-2 items-center bg-primary bg-opacity-50">
     <Button class="bg-primary" icon={MdArrowBack} on:click={close}>
       Back
