@@ -2,6 +2,9 @@ import cloneDeep from "clone-deep";
 import mergeDeep from "deepmerge";
 import { v4 as uuid } from "uuid";
 
+import MdImage from "svelte-icons/md/MdImage.svelte";
+import MdMusicVideo from "svelte-icons/md/MdMusicVideo.svelte";
+
 const animeTypes = {
   "ico": "image",
   "gif": "image",
@@ -17,12 +20,21 @@ const animeAttrs = {
   "sound": { volume: 0.8 }
 };
 
+export const animeIcons = {
+  "sound": MdMusicVideo,
+  "image": MdImage
+};
+
 export function getFileExt(file) {
   return file.name.split(".").pop();
 }
 
 export function getAnimeType(file) {
   return animeTypes[getFileExt(file)];
+}
+
+export function getAnimeIcon(type) {
+  return animeIcons[type];
 }
 
 export async function getAnimeAttrs(type, filename = null) {

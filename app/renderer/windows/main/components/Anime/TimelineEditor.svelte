@@ -12,7 +12,7 @@
 
   const dispatch = createEventDispatcher();
 
-  function close() {
+  function onClose() {
     dispatch("close");
   }
 
@@ -27,9 +27,19 @@
   function onFiles({ detail }) {
     detail.forEach(addAnimeFromFile);
   }
+
+  function onState({ detail }) {
+    console.log("onState:", detail);
+  }
+
+  function onSelectFile({ detail }) {
+    console.log("onSelectFile:", detail);
+  }
 </script>
 
-<TimelineModal on:close={close} on:files={onFiles}>
+<TimelineModal
+  on:close={onClose}
+  on:files={onFiles}>
   <div slot="topbar">
     Topbar...
   </div>
@@ -37,6 +47,8 @@
   <TimelineViewer {files} />
   </div>
   <div slot="timeline" class="h-full">
-    <Timeline {files} />
+    <Timeline {files}
+      on:state={onState}
+      on:selectFile={onSelectFile} />
   </div>
 </TimelineModal>
