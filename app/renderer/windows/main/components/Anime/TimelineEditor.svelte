@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { createAnimeFile } from "./utils";
+  import { createAnimeFile, createKeyframe, pixelPerMs } from "./utils";
 
   import Timeline from "./Timeline.svelte";
   import TimelineModal from "./TimelineModal.svelte";
@@ -10,6 +10,7 @@
   export let animes;
 
   let state = { left: 0, scale: 1 };
+  let keyframes = {};
   let files = [];
   let file;
 
@@ -23,6 +24,7 @@
     createAnimeFile(file).then(animeFile => {
       animeFile.attrs["z-index"] += files.length;
       files = [...files, animeFile];
+      keyframes[animeFile.id] = [];
     }).catch(error => {
       console.warn(error); // TODO notify user
     });
@@ -47,6 +49,17 @@
   function onUpdateFile({ detail }) {
     updateFile(detail);
   }
+
+  function clampDelay(delay) {
+    return Math.max(0, parseInt(delay));
+  }
+
+  function onAddKeyframe({ detail }) {
+    const { file, offsets } = detail;
+    const delay = clampDelay(offsets.x / state.scale * pixelPerMs);
+    const keyframe = createKeyframe(delay, {});
+    keyframes[file.id] = [...keyframes[file.id], keyframe];
+  }
 </script>
 
 <TimelineModal
@@ -61,7 +74,10 @@
     <Timeline
       {state}
       {files}
+      {keyframes}
       on:state={onState}
-      on:selectFile={onSelectFile} />
+      on:selectFile={onSelectFile}
+      on:addKeyframe={onAddKeyframe}
+    />
   </div>
 </TimelineModal>

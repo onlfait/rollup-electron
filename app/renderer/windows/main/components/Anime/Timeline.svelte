@@ -3,9 +3,11 @@
   import { getAnimeIcon } from "./utils";
 
   import Icon from "../Icon.svelte";
+  import Keyframe from "./Keyframe.svelte";
   import Keyframes from "./Keyframes.svelte";
   import TimelineGrid from "./TimelineGrid.svelte";
 
+  export let keyframes = {};
   export let files = [];
   export let state;
 
@@ -35,14 +37,14 @@
     <div class="p-2 flex-auto truncate">{file.name}</div>
     <div class="py-2 px-4 cursor-pointer hover:bg-blue-500">⁝</div>
   </div>
-  <div class="px-2 overflow-hidden bg-{i%2}">
+  <div class="px-2 overflow-hidden bg-{i%2}" on:click={selectFile.bind(null, file)}>
     <Keyframes
       left={state.left}
       on:panmove={onPanMove}
       on:dblclick={addKeyframe.bind(null, file)}
     >
-    {#each file.keyframes as keyframe}
-      {keyframe}
+    {#each keyframes[file.id] as keyframe}
+      <Keyframe {state} {keyframe} />
     {/each}
     </Keyframes>
   </div>
