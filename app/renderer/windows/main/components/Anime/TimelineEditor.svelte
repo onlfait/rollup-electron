@@ -12,7 +12,9 @@
   let state = { left: 0, scale: 1 };
   let keyframes = {};
   let files = [];
-  let file;
+
+  let currentFile;
+  let currentKeyframe;
 
   const dispatch = createEventDispatcher();
 
@@ -39,7 +41,7 @@
   }
 
   function onSelectFile({ detail }) {
-    file = detail;
+    currentFile = detail;
   }
 
   function updateFile(file) {
@@ -54,11 +56,20 @@
     return Math.max(0, parseInt(delay));
   }
 
+  function selectKeyframe(keyframe) {
+    currentKeyframe = keyframe;
+  }
+
   function onAddKeyframe({ detail }) {
     const { file, offsets } = detail;
     const delay = clampDelay(offsets.x / state.scale * pixelPerMs);
     const keyframe = createKeyframe(delay, {});
     keyframes[file.id] = [...keyframes[file.id], keyframe];
+    selectKeyframe(keyframe);
+  }
+
+  function onSelectKeyframe({ detail }) {
+    selectKeyframe(detail);
   }
 </script>
 
@@ -69,15 +80,18 @@
     Topbar...
   </div>
   <TimelineViewer {files} />
-  <TimelineFileEdit {file} on:update={onUpdateFile} />
+  <TimelineFileEdit file={currentFile} on:update={onUpdateFile} />
   <div slot="timeline" class="h-full">
     <Timeline
       {state}
       {files}
       {keyframes}
+      {currentFile}
+      {currentKeyframe}
       on:state={onState}
       on:selectFile={onSelectFile}
       on:addKeyframe={onAddKeyframe}
+      on:selectKeyframe={onSelectKeyframe}
     />
   </div>
 </TimelineModal>

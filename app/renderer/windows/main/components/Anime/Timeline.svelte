@@ -11,6 +11,9 @@
   export let files = [];
   export let state;
 
+  export let currentFile;
+  export let currentKeyframe;
+
   const dispatch = createEventDispatcher();
 
   function onState({ detail }) {
@@ -28,6 +31,10 @@
   function addKeyframe(file, { detail }) {
     dispatch("addKeyframe", { file, offsets: detail });
   }
+
+  function selectKeyframe(keyframe) {
+    dispatch("selectKeyframe", keyframe);
+  }
 </script>
 
 <TimelineGrid {state} on:state={onState}>
@@ -44,7 +51,12 @@
       on:dblclick={addKeyframe.bind(null, file)}
     >
     {#each keyframes[file.id] as keyframe}
-      <Keyframe {state} {keyframe} />
+      <Keyframe
+        {state}
+        {keyframe}
+        selected={keyframe.id === currentKeyframe.id}
+        on:mousedown={selectKeyframe.bind(null, keyframe)}
+      />
     {/each}
     </Keyframes>
   </div>
