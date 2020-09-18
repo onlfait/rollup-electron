@@ -9,6 +9,7 @@
 
   export let animes;
 
+  let state = { left: 0, scale: 1 };
   let files = [];
   let file;
 
@@ -32,7 +33,7 @@
   }
 
   function onState({ detail }) {
-    console.log("onState:", detail);
+    state = detail;
   }
 
   function onSelectFile({ detail }) {
@@ -57,7 +58,9 @@
   <TimelineViewer {files} />
   <TimelineFileEdit {file} on:update={onUpdateFile} />
   <div slot="timeline" class="h-full">
-    <Timeline {files}
+    <Timeline
+      {state}
+      {files}
       on:state={onState}
       on:selectFile={onSelectFile} />
   </div>

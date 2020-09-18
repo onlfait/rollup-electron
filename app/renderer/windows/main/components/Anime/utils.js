@@ -66,7 +66,7 @@ export function createAnimeFile(file) {
     app.remote.call(`upload.${type}`, file.path)
       .then(async filename => {
         const attrs = await getAnimeAttrs(type, filename);
-        resolve({ id: uuid(), type, name: filename, attrs });
+        resolve({ id: uuid(), type, name: filename, attrs, keyframes: [] });
       })
       .catch(reject);
   });
