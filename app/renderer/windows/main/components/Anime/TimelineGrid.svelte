@@ -30,9 +30,9 @@
     const delta = event.deltaY / 100;
     const tx = (event.clientX - offset - state.left) / state.scale;
     const newScale = state.scale + (delta / (zoom.sensitivity / state.scale));
-    state.scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
-    state.left = Math.min(0, -tx * state.scale + event.clientX - offset);
-    dispatch("state", state);
+    const scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
+    const left = Math.min(0, -tx * state.scale + event.clientX - offset);
+    dispatch("state", { left, scale });
   }
 </script>
 
