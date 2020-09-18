@@ -2,7 +2,7 @@
   import pannable from "../pannable.js";
   import { createEventDispatcher } from "svelte";
 
-  export let state = { left: 0, scale: 1 };
+  export let state;
 
   const dispatch = createEventDispatcher();
 
@@ -31,7 +31,7 @@
     const tx = (event.clientX - offset - state.left) / state.scale;
     const newScale = state.scale + (delta / (zoom.sensitivity / state.scale));
     const scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
-    const left = Math.min(0, -tx * state.scale + event.clientX - offset);
+    const left = Math.min(0, -tx * scale + event.clientX - offset);
     dispatch("state", { left, scale });
   }
 </script>
