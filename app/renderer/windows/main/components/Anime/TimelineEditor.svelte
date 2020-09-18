@@ -27,6 +27,7 @@
       animeFile.attrs["z-index"] += files.length;
       files = [...files, animeFile];
       keyframes[animeFile.id] = [];
+      currentFile = animeFile;
     }).catch(error => {
       console.warn(error); // TODO notify user
     });
@@ -40,8 +41,21 @@
     state = detail;
   }
 
+  function selectFile(file, keyframe = null) {
+    if (!currentFile || currentFile.id !== file.id) {
+      currentFile = file;
+    }
+    currentKeyframe = keyframe;
+  }
+
+  function selectKeyframe(file, keyframe) {
+    if (!currentKeyframe || currentKeyframe.id !== keyframe.id) {
+      selectFile(file, keyframe);
+    }
+  }
+
   function onSelectFile({ detail }) {
-    currentFile = detail;
+    selectFile(detail);
   }
 
   function updateFile(file) {
@@ -56,20 +70,17 @@
     return Math.max(0, parseInt(delay));
   }
 
-  function selectKeyframe(keyframe) {
-    currentKeyframe = keyframe;
-  }
-
   function onAddKeyframe({ detail }) {
     const { file, offsets } = detail;
     const delay = clampDelay(offsets.x / state.scale * pixelPerMs);
     const keyframe = createKeyframe(delay, {});
     keyframes[file.id] = [...keyframes[file.id], keyframe];
-    selectKeyframe(keyframe);
+    selectKeyframe(file, keyframe);
   }
 
   function onSelectKeyframe({ detail }) {
-    selectKeyframe(detail);
+    const { file, keyframe } = detail;
+    selectKeyframe(file, keyframe);
   }
 </script>
 
@@ -80,13 +91,16 @@
     Topbar...
   </div>
   <TimelineViewer {files} />
-  <TimelineFileEdit file={currentFile} on:update={onUpdateFile} />
+  <TimelineFileEdit
+    {currentFile}
+    {currentKeyframe}
+    on:update={onUpdateFile}
+  />
   <div slot="timeline" class="h-full">
     <Timeline
       {state}
       {files}
       {keyframes}
-      {currentFile}
       {currentKeyframe}
       on:state={onState}
       on:selectFile={onSelectFile}

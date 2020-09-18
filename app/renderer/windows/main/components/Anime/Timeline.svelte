@@ -11,7 +11,6 @@
   export let files = [];
   export let state;
 
-  export let currentFile;
   export let currentKeyframe;
 
   const dispatch = createEventDispatcher();
@@ -32,8 +31,8 @@
     dispatch("addKeyframe", { file, offsets: detail });
   }
 
-  function selectKeyframe(keyframe) {
-    dispatch("selectKeyframe", keyframe);
+  function selectKeyframe({ file, keyframe }) {
+    dispatch("selectKeyframe", { file, keyframe });
   }
 </script>
 
@@ -54,8 +53,8 @@
       <Keyframe
         {state}
         {keyframe}
-        selected={keyframe.id === currentKeyframe.id}
-        on:mousedown={selectKeyframe.bind(null, keyframe)}
+        selected={currentKeyframe && keyframe.id === currentKeyframe.id}
+        on:click={selectKeyframe.bind(null, {file, keyframe})}
       />
     {/each}
     </Keyframes>

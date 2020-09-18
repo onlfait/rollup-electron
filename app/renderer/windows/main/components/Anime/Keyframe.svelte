@@ -15,6 +15,7 @@
 <div
   use:pannable
   on:panmove
+  on:click|stopPropagation
   on:mousedown|stopPropagation
   class="absolute top-0 bottom-0 flex items-center"
   style="left:{left}px"

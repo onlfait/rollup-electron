@@ -2,17 +2,19 @@
   import { createEventDispatcher } from "svelte";
   import Icon from "../Icon.svelte";
   import NumberInput from "../NumberInput.svelte";
-  import MdExpandMore from 'svelte-icons/md/MdExpandMore.svelte'
-  import MdExpandLess from 'svelte-icons/md/MdExpandLess.svelte'
+  import MdExpandMore from "svelte-icons/md/MdExpandMore.svelte";
+  import MdExpandLess from "svelte-icons/md/MdExpandLess.svelte";
 
-  export let file;
+  export let currentFile;
+  export let currentKeyframe;
 
   const dispatch = createEventDispatcher();
 
   let showAttrs = true;
+  let showProps = true;
   let divide = "divide-y divide-blue-600 divide-opacity-50";
 
-  $: attrs = file && Object.keys(file.attrs);
+  $: attrs = currentFile && Object.keys(currentFile.attrs);
 
   function onChange(file) {
     dispatch("update", file);
@@ -21,18 +23,24 @@
   function toggleAttrs() {
     showAttrs = !showAttrs;
   }
+
+  function toggleProps() {
+    showProps = !showProps;
+  }
 </script>
 
-{#if file}
+{#if currentFile}
 <div
   style="min-width:150px;max-width:250px;"
   class="absolute top-0 right-0 bottom-0 bg-primary-lighter overflow-auto"
 >
-  <div class="p-2 truncate bg-primary">{file.name}</div>
+  <div class="p-2 truncate bg-primary">{currentFile.name}</div>
+
   <div class="p-2 truncate bg-primary-light flex cursor-pointer" on:click={toggleAttrs}>
     <Icon icon={showAttrs ? MdExpandLess : MdExpandMore} />
     Attributes
   </div>
+
   {#if showAttrs}
   <div class="{divide}">
     {#each attrs as name}
@@ -41,11 +49,25 @@
       <NumberInput
         pad="px-2"
         twoLine={false}
-        bind:value={file.attrs[name]}
-        on:change={onChange.bind(null, file)} />
+        bind:value={currentFile.attrs[name]}
+        on:change={onChange.bind(null, currentFile)} />
     </div>
     {/each}
   </div>
   {/if}
+
+  {#if currentKeyframe}
+  <div class="p-2 truncate bg-primary-light flex cursor-pointer" on:click={toggleProps}>
+    <Icon icon={showProps ? MdExpandLess : MdExpandMore} />
+    Keyframe
+  </div>
+
+  {#if showProps}
+  <div class="{divide}">
+    ...
+  </div>
+  {/if}
+  {/if}
+
 </div>
 {/if}
