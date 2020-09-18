@@ -82,6 +82,24 @@
     const { file, keyframe } = detail;
     selectKeyframe(file, keyframe);
   }
+
+  function updateKeyframe(keyframe) {
+    const id = currentFile.id;
+    keyframes[id] = keyframes[id].map(k => {
+      return k.id === keyframe.id ? { ...k, ...keyframe } : k;
+    });
+    keyframes = keyframes;
+  }
+
+  function onUpdateKeyframe({ detail }) {
+    updateKeyframe(detail);
+  }
+
+  function onKeyframeMove({ detail }) {
+    const { keyframe, x } = detail;
+    keyframe.delay = clampDelay(keyframe.delay + x * pixelPerMs / state.scale);
+    updateKeyframe(currentKeyframe = keyframe);
+  }
 </script>
 
 <TimelineModal
@@ -94,7 +112,8 @@
   <TimelineFileEdit
     {currentFile}
     {currentKeyframe}
-    on:update={onUpdateFile}
+    on:updateFile={onUpdateFile}
+    on:updateKeyframe={onUpdateKeyframe}
   />
   <div slot="timeline" class="h-full">
     <Timeline
@@ -105,6 +124,7 @@
       on:state={onState}
       on:selectFile={onSelectFile}
       on:addKeyframe={onAddKeyframe}
+      on:keyframeMove={onKeyframeMove}
       on:selectKeyframe={onSelectKeyframe}
     />
   </div>

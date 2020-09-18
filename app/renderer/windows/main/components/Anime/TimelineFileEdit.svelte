@@ -16,8 +16,12 @@
 
   $: attrs = currentFile && Object.keys(currentFile.attrs);
 
-  function onChange(file) {
-    dispatch("update", file);
+  function onAttrsChange(file) {
+    dispatch("updateFile", file);
+  }
+
+  function onKeyframeChange(keyframe) {
+    dispatch("updateKeyframe", keyframe);
   }
 
   function toggleAttrs() {
@@ -50,7 +54,7 @@
         pad="px-2"
         twoLine={false}
         bind:value={currentFile.attrs[name]}
-        on:change={onChange.bind(null, currentFile)} />
+        on:change={onAttrsChange.bind(null, currentFile)} />
     </div>
     {/each}
   </div>
@@ -64,9 +68,25 @@
 
   {#if showProps}
   <div class="{divide}">
-    ...
+    <div class="p-2 flex space-x-2 items-center">
+      <div class="flex-auto">delay</div>
+      <NumberInput
+        pad="px-2"
+        twoLine={false}
+        bind:value={currentKeyframe.delay}
+        on:change={onKeyframeChange.bind(null, currentKeyframe)} />
+    </div>
+    <div class="p-2 flex space-x-2 items-center">
+      <div class="flex-auto">duration</div>
+      <NumberInput
+        pad="px-2"
+        twoLine={false}
+        bind:value={currentKeyframe.props.duration}
+        on:change={onKeyframeChange.bind(null, currentKeyframe)} />
+    </div>
   </div>
   {/if}
+
   {/if}
 
 </div>

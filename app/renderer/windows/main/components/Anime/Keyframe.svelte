@@ -13,10 +13,6 @@
 </script>
 
 <div
-  use:pannable
-  on:panmove
-  on:click|stopPropagation
-  on:mousedown|stopPropagation
   class="absolute top-0 bottom-0 flex items-center"
   style="left:{left}px"
 >
@@ -25,7 +21,13 @@
     style="margin-left:{offset}px;width:{width}px"
   >
   </div>
-  <div class="
+  <div
+  use:pannable
+  on:panmove
+  on:click|stopPropagation
+  on:mousedown|stopPropagation
+
+  class="
     w-5 h-5
     transform rotate-45
     bg-opacity-50

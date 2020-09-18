@@ -7,11 +7,10 @@
   import Keyframes from "./Keyframes.svelte";
   import TimelineGrid from "./TimelineGrid.svelte";
 
+  export let currentKeyframe;
   export let keyframes = {};
   export let files = [];
   export let state;
-
-  export let currentKeyframe;
 
   const dispatch = createEventDispatcher();
 
@@ -34,6 +33,10 @@
   function selectKeyframe({ file, keyframe }) {
     dispatch("selectKeyframe", { file, keyframe });
   }
+
+  function onKeyframePanMove({ file, keyframe }, { detail }) {
+    dispatch("keyframeMove", { file, keyframe, x: detail.dx });
+  }
 </script>
 
 <TimelineGrid {state} on:state={onState}>
@@ -53,8 +56,9 @@
       <Keyframe
         {state}
         {keyframe}
+        on:panmove={onKeyframePanMove.bind(null, {file, keyframe})}
         selected={currentKeyframe && keyframe.id === currentKeyframe.id}
-        on:click={selectKeyframe.bind(null, {file, keyframe})}
+        on:mousedown={selectKeyframe.bind(null, {file, keyframe})}
       />
     {/each}
     </Keyframes>
