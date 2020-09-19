@@ -93,6 +93,7 @@
 
   function onUpdateKeyframe({ detail }) {
     updateKeyframe(detail);
+    console.log("process anime...");
   }
 
   function onKeyframeMove({ detail }) {

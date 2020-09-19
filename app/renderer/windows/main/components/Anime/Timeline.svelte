@@ -7,6 +7,9 @@
   import Keyframes from "./Keyframes.svelte";
   import TimelineGrid from "./TimelineGrid.svelte";
 
+  import MdPause from "svelte-icons/md/MdPause.svelte";
+  import MdPlayArrow from "svelte-icons/md/MdPlayArrow.svelte";
+
   export let currentKeyframe;
   export let keyframes = {};
   export let files = [];
@@ -37,9 +40,28 @@
   function onKeyframePanMove({ file, keyframe }, { detail }) {
     dispatch("keyframeMove", { file, keyframe, x: detail.dx });
   }
+
+  function playAnime() {
+    console.log("playAnime...");
+  }
+
+  function pauseAnime() {
+    console.log("pauseAnime...");
+  }
 </script>
 
 <TimelineGrid {state} on:state={onState}>
+  <div slot="settings" class="p-2 flex space-x-2">
+    <Icon
+      icon={MdPlayArrow}
+      on:click={playAnime}
+      class="w-4 h-4 flex-shrink-0 cursor-pointer" />
+    <Icon
+      icon={MdPause}
+      on:click={pauseAnime}
+      class="w-4 h-4 flex-shrink-0 cursor-pointer" />
+  </div>
+  <div slot="timeline" class="p-2">Timeline...</div>
 {#each files as file, i}
   <div class="flex bg-{i%2}" on:click={selectFile.bind(null, file)}>
     <Icon icon={getAnimeIcon(file.type)} class="m-2 mr-0 w-4 h-4 flex-shrink-0" />

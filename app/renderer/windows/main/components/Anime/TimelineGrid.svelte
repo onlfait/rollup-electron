@@ -62,8 +62,12 @@
 >
 
   <div class="timeline-grid bg-primary-darker grid" style={gridTemplate}>
-    <div class="p-2">Settings...</div>
-    <div class="p-2">Timeline...</div>
+    <slot name="settings">
+      <div class="p-2">Settings...</div>
+    </slot>
+    <slot name="timeline">
+      <div class="p-2">Timeline...</div>
+    </slot>
   </div>
 
   <div on:wheel|preventDefault={onWheel} class="flex-auto overflow-x-hidden overflow-y-auto">
