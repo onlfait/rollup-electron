@@ -42,11 +42,11 @@
   }
 
   function playAnime() {
-    console.log("playAnime...");
+    dispatch("playAnime");
   }
 
   function pauseAnime() {
-    console.log("pauseAnime...");
+    dispatch("pauseAnime");
   }
 </script>
 

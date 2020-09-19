@@ -91,15 +91,23 @@
     keyframes = keyframes;
   }
 
+  function onKeyframeMove({ detail }) {
+    const { keyframe, x } = detail;
+    keyframe.delay = clampDelay(keyframe.delay + x * pixelPerMs / state.scale);
+    updateKeyframe(currentKeyframe = keyframe);
+  }
+
   function onUpdateKeyframe({ detail }) {
     updateKeyframe(detail);
     console.log("process anime...");
   }
 
-  function onKeyframeMove({ detail }) {
-    const { keyframe, x } = detail;
-    keyframe.delay = clampDelay(keyframe.delay + x * pixelPerMs / state.scale);
-    updateKeyframe(currentKeyframe = keyframe);
+  function onPlayAnime() {
+    console.log("playAnime...");
+  }
+
+  function onPauseAnime() {
+    console.log("pauseAnime...");
   }
 </script>
 
@@ -123,6 +131,8 @@
       {keyframes}
       {currentKeyframe}
       on:state={onState}
+      on:playAnime={onPlayAnime}
+      on:pauseAnime={onPauseAnime}
       on:selectFile={onSelectFile}
       on:addKeyframe={onAddKeyframe}
       on:keyframeMove={onKeyframeMove}
