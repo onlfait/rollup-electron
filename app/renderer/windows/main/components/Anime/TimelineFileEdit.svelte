@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { getInputProps } from "./utils";
+  import { getInputProps, getAnimeIcon } from "./utils";
 
   import Icon from "../Icon.svelte";
   import Select from "../Select.svelte";
@@ -68,11 +68,16 @@
   style="min-width:150px;max-width:250px;"
   class="absolute top-0 right-0 bottom-0 bg-primary-lighter overflow-auto"
 >
-  <div class="p-2 truncate bg-primary">{currentFile.name}</div>
+  <div class="flex items-center space-x-2 p-2 bg-primary">
+    <Icon icon={getAnimeIcon(currentFile.type)} class="w-4 h-4 flex-shrink-0" />
+    <div class="truncate">
+      {currentFile.name}
+    </div>
+  </div>
 
-  <div class="p-2 truncate bg-primary-light flex cursor-pointer" on:click={toggleAttrs}>
+  <div class="p-2 truncate bg-primary-light flex space-x-2 cursor-pointer" on:click={toggleAttrs}>
     <Icon icon={showAttrs ? MdExpandLess : MdExpandMore} />
-    Attributes
+    <div>Attributes</div>
   </div>
 
   {#if showAttrs}
@@ -91,9 +96,9 @@
   {/if}
 
   {#if currentKeyframe}
-  <div class="p-2 truncate bg-primary-light flex cursor-pointer" on:click={toggleProps}>
+  <div class="p-2 truncate bg-primary-light flex space-x-2 cursor-pointer" on:click={toggleProps}>
     <Icon icon={showProps ? MdExpandLess : MdExpandMore} />
-    Keyframe
+    <div>Keyframe</div>
   </div>
 
   {#if showProps}
