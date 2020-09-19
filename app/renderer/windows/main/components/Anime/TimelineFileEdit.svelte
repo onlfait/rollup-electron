@@ -3,7 +3,12 @@
   import { getInputProps } from "./utils";
 
   import Icon from "../Icon.svelte";
+  import Select from "../Select.svelte";
+  import Button from "../Button.svelte";
   import NumberInput from "../NumberInput.svelte";
+
+  import MdAdd from "svelte-icons/md/MdAdd.svelte";
+  // import MdDelete from "svelte-icons/md/MdDelete.svelte";
   import MdExpandMore from "svelte-icons/md/MdExpandMore.svelte";
   import MdExpandLess from "svelte-icons/md/MdExpandLess.svelte";
 
@@ -16,9 +21,19 @@
   let showProps = true;
   let divide = "divide-y divide-blue-600 divide-opacity-50";
 
+  let inputPropsKeys;
+  let selectedProp;
+
   $: attrs = currentFile && Object.keys(currentFile.attrs);
   $: inputProps = currentFile && getInputProps(currentFile.type);
   $: props = currentKeyframe && Object.keys(currentKeyframe.props);
+
+  $: if (props) {
+    inputPropsKeys = Object.keys(inputProps).filter(prop => {
+      return !props.includes(prop);
+    });
+    selectedProp = selectedProp || inputPropsKeys[0];
+  }
 
   function onAttrsChange(file) {
     dispatch("updateFile", file);
@@ -34,6 +49,17 @@
 
   function toggleProps() {
     showProps = !showProps;
+  }
+
+  function hasProp(name) {
+    return currentKeyframe.props[name] !== undefined;
+  }
+
+  function addTransformProp() {
+    if (selectedProp && !hasProp(selectedProp)) {
+      currentKeyframe.props[selectedProp] = 0;
+      selectedProp = inputPropsKeys[1];
+    }
   }
 </script>
 
@@ -72,6 +98,16 @@
 
   {#if showProps}
   <div class="{divide}">
+
+    {#if inputPropsKeys.length}
+    <div class="p-2 flex space-x-2">
+      <Select items={inputPropsKeys} bind:value={selectedProp} />
+      <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
+        Add
+      </Button>
+    </div>
+    {/if}
+
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">delay</div>
       <NumberInput
