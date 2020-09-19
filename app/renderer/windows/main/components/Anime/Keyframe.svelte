@@ -9,7 +9,7 @@
   let offset = 10; // ???
 
   $: left = keyframe.delay / pixelPerMs * state.scale - offset;
-  $: width = keyframe.props.duration / pixelPerMs * state.scale - offset;
+  $: width = keyframe.props.duration / pixelPerMs * state.scale;
 </script>
 
 <div
