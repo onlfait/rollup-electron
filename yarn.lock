@@ -2659,10 +2659,10 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
-prettier-plugin-svelte@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-svelte/-/prettier-plugin-svelte-1.1.1.tgz#610f5a0e2b59d1a9b7bbf7625560ed7609d078f9"
-  integrity sha512-Us0mEQh/Gl4FdHbdkBgY24a3zydQXzbRRdaiFTLzKR4bHmRDiqadoBFM+XJYVv1u5rySGtYQt0wU9ZxLh85c/Q==
+prettier-plugin-svelte@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-svelte/-/prettier-plugin-svelte-1.2.1.tgz#2af472cb7ebf7f8254a132e44cce18ed3bf2ef6f"
+  integrity sha512-oULQ6cmqAVA3PmtgagM3139UXJHbLOLQjzGOKkH/pRQbT9vXcWQtbWXEO1fAePWQis5TiDgm2p/PIKh5w1fd/A==
 
 pretty-hrtime@^1.0.3:
   version "1.0.3"
