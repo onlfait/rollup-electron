@@ -4,6 +4,7 @@
   export let cls = "";
   export { cls as class };
 
+  export let pad = "p-2";
   export let dark = true;
   export let icon = null;
   export let iconSize = null;
@@ -18,7 +19,7 @@
 </script>
 
 <button
-  class="flex items-center space-x-1 p-2 uppercase rounded {textColor} {cls}"
+  class="flex items-center space-x-1 {pad} uppercase rounded {textColor} {cls}"
   {...$$restProps}
   on:click
 >

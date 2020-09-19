@@ -106,8 +106,8 @@
 
     {#if inputPropsKeys.length}
     <div class="p-2 flex space-x-2">
-      <Select items={inputPropsKeys} bind:value={selectedProp} />
-      <Button icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
+      <Select pad="px-2" items={inputPropsKeys} bind:value={selectedProp} />
+      <Button pad="px-2" icon={MdAdd} on:click={addTransformProp} class="bg-green-600">
         Add
       </Button>
     </div>
