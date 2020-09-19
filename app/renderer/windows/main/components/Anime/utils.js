@@ -102,5 +102,5 @@ export function createAnimeFile(file) {
 }
 
 export function createKeyframe(delay, props) {
-  return { id: uuid(), delay, props: { duration: 0, ...props } };
+  return { id: uuid(), delay, props: { duration: 1000, ...props } };
 }

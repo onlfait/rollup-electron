@@ -7,12 +7,15 @@
   import TimelineViewer from "./TimelineViewer.svelte";
   import TimelineFileEdit from "./TimelineFileEdit.svelte";
 
+  import animejs from "animejs/lib/anime.es.js";
+
   export let animes;
 
   let state = { left: 0, scale: 1 };
   let keyframes = {};
   let files = [];
 
+  let anime;
   let currentFile;
   let currentKeyframe;
 
@@ -64,6 +67,7 @@
 
   function onUpdateFile({ detail }) {
     updateFile(detail);
+    makeAnime();
   }
 
   function clampDelay(delay) {
@@ -76,6 +80,7 @@
     const keyframe = createKeyframe(delay, {});
     keyframes[file.id] = [...keyframes[file.id], keyframe];
     selectKeyframe(file, keyframe);
+    makeAnime();
   }
 
   function onSelectKeyframe({ detail }) {
@@ -89,6 +94,7 @@
       return k.id === keyframe.id ? { ...k, ...keyframe } : k;
     });
     keyframes = keyframes;
+    makeAnime();
   }
 
   function onKeyframeMove({ detail }) {
@@ -99,15 +105,38 @@
 
   function onUpdateKeyframe({ detail }) {
     updateKeyframe(detail);
-    console.log("process anime...");
   }
 
   function onPlayAnime() {
-    console.log("playAnime...");
+    anime && anime.restart();
   }
 
   function onPauseAnime() {
-    console.log("pauseAnime...");
+    anime && anime.pause();
+  }
+
+  function makeAnime() {
+    console.log("makeAnime...");
+
+    anime = animejs.timeline({
+      autoplay: false,
+      // update() {
+      //   slider.value = timeline.duration/100*timeline.progress;
+      // }
+    });
+
+    files.forEach(file => {
+      if (file.type === "image") {
+        const targets = `#file-${file.id}`;
+        document.querySelector(targets).style.transform = null;
+        keyframes[file.id].forEach(({ delay, props }) => {
+          anime.add({ targets, ...props }, delay);
+        });
+      }
+    });
+
+    // duration = timeline.duration;
+    console.log("duration:", anime.duration);
   }
 </script>
 
