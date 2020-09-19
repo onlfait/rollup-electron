@@ -1,5 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { getInputProps } from "./utils";
+
   import Icon from "../Icon.svelte";
   import NumberInput from "../NumberInput.svelte";
   import MdExpandMore from "svelte-icons/md/MdExpandMore.svelte";
@@ -15,6 +17,8 @@
   let divide = "divide-y divide-blue-600 divide-opacity-50";
 
   $: attrs = currentFile && Object.keys(currentFile.attrs);
+  $: inputProps = currentFile && getInputProps(currentFile.type);
+  $: props = currentKeyframe && Object.keys(currentKeyframe.props);
 
   function onAttrsChange(file) {
     dispatch("updateFile", file);
@@ -71,19 +75,25 @@
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">delay</div>
       <NumberInput
+        min={0}
+        step={100}
         pad="px-2"
         twoLine={false}
         bind:value={currentKeyframe.delay}
         on:change={onKeyframeChange.bind(null, currentKeyframe)} />
     </div>
+    {#each props as name}
     <div class="p-2 flex space-x-2 items-center">
-      <div class="flex-auto">duration</div>
+      <div class="flex-auto">{name}</div>
       <NumberInput
         pad="px-2"
         twoLine={false}
-        bind:value={currentKeyframe.props.duration}
-        on:change={onKeyframeChange.bind(null, currentKeyframe)} />
+        {...inputProps[name]}
+        bind:value={currentKeyframe.props[name]}
+        on:change={onKeyframeChange.bind(null, currentKeyframe)}
+      />
     </div>
+    {/each}
   </div>
   {/if}
 

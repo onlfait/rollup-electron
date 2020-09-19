@@ -27,6 +27,33 @@ export const animeIcons = {
   "image": MdImage
 };
 
+export const soundProps = {
+  "volume": { min: 0, step: 1, removable: true },
+};
+
+export const transformProps = {
+  "duration": { min: 0, step: 100, removable: false },
+  "translateX": { step: 10, removable: true },
+  "translateY": { step: 10, removable: true },
+  "translateZ": { step: 10, removable: true },
+  "rotate": { step: 5, removable: true },
+  "rotateX": { step: 5, removable: true },
+  "rotateY": { step: 5, removable: true },
+  "rotateZ": { step: 5, removable: true },
+  "scale": { step: 0.1, removable: true },
+  "scaleX": { step: 0.1, removable: true },
+  "scaleY": { step: 0.1, removable: true },
+  "scaleZ": { step: 0.1, removable: true },
+  "skew": { step: 1, removable: true },
+  "skewX": { step: 1, removable: true },
+  "skewY": { step: 1, removable: true },
+  "perspective": { step: 1, removable: true },
+};
+
+export function getInputProps(type) {
+  return type === "sound" ? soundProps : transformProps;
+}
+
 export function getFileExt(file) {
   return file.name.split(".").pop();
 }
