@@ -123,6 +123,10 @@
   }
 
   function onPlayAnime() {
+    anime && anime.play();
+  }
+
+  function onRestartAnime() {
     anime && anime.restart();
   }
 
@@ -196,6 +200,7 @@
       on:panMove={onPaneMove}
       on:seekAnime={onSeekAnime}
       on:playAnime={onPlayAnime}
+      on:restartAnime={onRestartAnime}
       on:pauseAnime={onPauseAnime}
       on:selectFile={onSelectFile}
       on:addKeyframe={onAddKeyframe}

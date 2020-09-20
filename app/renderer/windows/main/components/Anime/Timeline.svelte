@@ -9,6 +9,7 @@
   import TimelineCursor from "./TimelineCursor.svelte";
 
   import MdPause from "svelte-icons/md/MdPause.svelte";
+  import MdReplay from 'svelte-icons/md/MdReplay.svelte';
   import MdPlayArrow from "svelte-icons/md/MdPlayArrow.svelte";
 
   export let currentKeyframe;
@@ -47,6 +48,10 @@
     dispatch("playAnime");
   }
 
+  function restartAnime() {
+    dispatch("restartAnime");
+  }
+
   function pauseAnime() {
     dispatch("pauseAnime");
   }
@@ -61,6 +66,10 @@
 
 <TimelineGrid {state} on:state={onState}>
   <div slot="settings" class="p-2 flex space-x-2">
+    <Icon
+      icon={MdReplay}
+      on:click={restartAnime}
+      class="w-4 h-4 flex-shrink-0 cursor-pointer" />
     <Icon
       icon={MdPlayArrow}
       on:click={playAnime}
