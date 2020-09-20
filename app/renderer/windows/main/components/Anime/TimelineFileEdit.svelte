@@ -66,6 +66,12 @@
       selectedProp = inputPropsKeys[1];
     }
   }
+
+  function deleteKeyframeProp(name) {
+    delete currentKeyframe.props[name];
+    currentKeyframe = currentKeyframe;
+    dispatch("updateKeyframe", currentKeyframe);
+  }
 </script>
 
 {#if currentFile}
@@ -139,6 +145,13 @@
         bind:value={currentKeyframe.props[name]}
         on:change={onKeyframeChange.bind(null, currentKeyframe)}
       />
+      {#if inputProps[name].removable}
+      <Icon
+        icon={MdDelete}
+        class="hover:text-red-500"
+        on:click={deleteKeyframeProp.bind(null, name)}
+        />
+      {/if}
     </div>
     {/each}
   </div>
