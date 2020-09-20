@@ -12,6 +12,7 @@
   export let animes;
 
   let state = { left: 0, scale: 1, seek: 0 };
+  let position = 0;
   let keyframes = {};
   let files = [];
 
@@ -115,14 +116,27 @@
     anime && anime.pause();
   }
 
+  function seekAnime(position) {
+    anime && anime.seek(position);
+  }
+
+  function onSeekAnime({ detail }) {
+    position = (detail - state.left) * pixelPerMs / state.scale;
+    seekAnime(position);
+  }
+
   function makeAnime() {
-    console.log("makeAnime...");
+    // TODO throttle makeAnime, lock UI and notify user
+    // console.log("makeAnime...");
 
     anime = animejs.timeline({
       autoplay: false,
-      // update() {
-      //   slider.value = timeline.duration/100*timeline.progress;
-      // }
+      update() {
+        let seek = anime.duration / 100 * anime.progress;
+        seek = (seek / pixelPerMs * state.scale) + state.left;
+        state = { ...state, seek };
+        // console.log({seek});
+      }
     });
 
     files.forEach(file => {
@@ -135,8 +149,7 @@
       }
     });
 
-    // duration = timeline.duration;
-    console.log("duration:", anime.duration);
+    setTimeout(() => seekAnime(position), 500);
   }
 </script>
 
@@ -160,6 +173,7 @@
       {keyframes}
       {currentKeyframe}
       on:state={onState}
+      on:seekAnime={onSeekAnime}
       on:playAnime={onPlayAnime}
       on:pauseAnime={onPauseAnime}
       on:selectFile={onSelectFile}

@@ -12,6 +12,7 @@
   function onCursorPan({ detail }) {
     const seek = Math.max(0, state.seek + detail.dx);
     dispatch("state", { ...state, seek });
+    dispatch("seek", seek);
   }
 </script>
 

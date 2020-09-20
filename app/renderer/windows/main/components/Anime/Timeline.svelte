@@ -50,6 +50,10 @@
     dispatch("pauseAnime");
   }
 
+  function onSeek({ detail }) {
+    dispatch("seekAnime", detail);
+  }
+
   $: cursorClass = "absolute top-0 bottom-0 bg-red-600";
   $: cursorStyle = `width:2px;left:${state.seek}px;`;
 </script>
@@ -68,7 +72,7 @@
   <div slot="timeline" class="relative flex">
     <div class="p-2">Timeline...</div>
     <div class="absolute inset-0 overflow-x-hidden">
-      <TimelineCursor {state} on:state={onState} />
+      <TimelineCursor {state} on:seek={onSeek} on:state={onState} />
     </div>
   </div>
 {#each files as file, i}

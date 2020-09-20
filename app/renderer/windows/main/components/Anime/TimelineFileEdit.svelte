@@ -66,7 +66,7 @@
 {#if currentFile}
 <div
   style="min-width:150px;max-width:250px;"
-  class="absolute top-0 right-0 bottom-0 bg-primary-lighter overflow-auto"
+  class="absolute z-50 top-0 right-0 bottom-0 bg-primary-lighter overflow-auto"
 >
   <div class="flex items-center space-x-2 p-2 bg-primary">
     <Icon icon={getAnimeIcon(currentFile.type)} class="w-4 h-4 flex-shrink-0" />
