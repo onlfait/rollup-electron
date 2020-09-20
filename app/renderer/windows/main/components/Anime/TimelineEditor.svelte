@@ -98,6 +98,16 @@
     makeAnime();
   }
 
+  function deleteKeyframe(keyframe) {
+    const id = currentFile.id;
+    keyframes[id] = keyframes[id].filter(k => k.id !== keyframe.id);
+    keyframes = keyframes;
+    if (currentKeyframe.id === keyframe.id) {
+      currentKeyframe = null;
+    }
+    makeAnime();
+  }
+
   function onKeyframeMove({ detail }) {
     const { keyframe, x } = detail;
     keyframe.delay = clampDelay(keyframe.delay + x * pixelPerMs / state.scale);
@@ -106,6 +116,10 @@
 
   function onUpdateKeyframe({ detail }) {
     updateKeyframe(detail);
+  }
+
+  function onDeleteKeyframe({ detail }) {
+    deleteKeyframe(detail);
   }
 
   function onPlayAnime() {
@@ -170,6 +184,7 @@
     {currentKeyframe}
     on:updateFile={onUpdateFile}
     on:updateKeyframe={onUpdateKeyframe}
+    on:deleteKeyframe={onDeleteKeyframe}
   />
   <div slot="timeline" class="h-full">
     <Timeline

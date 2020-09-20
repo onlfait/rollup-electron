@@ -8,7 +8,7 @@
   import NumberInput from "../NumberInput.svelte";
 
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
-  // import MdDelete from "svelte-icons/md/MdDelete.svelte";
+  import MdDelete from "svelte-icons/md/MdDelete.svelte";
   import MdExpandMore from "svelte-icons/md/MdExpandMore.svelte";
   import MdExpandLess from "svelte-icons/md/MdExpandLess.svelte";
 
@@ -41,6 +41,11 @@
 
   function onKeyframeChange(keyframe) {
     dispatch("updateKeyframe", keyframe);
+  }
+
+  function deleteKeyframe(event) {
+    event.stopPropagation();
+    dispatch("deleteKeyframe", currentKeyframe);
   }
 
   function toggleAttrs() {
@@ -98,7 +103,8 @@
   {#if currentKeyframe}
   <div class="p-2 truncate bg-primary-light flex space-x-2 cursor-pointer" on:click={toggleProps}>
     <Icon icon={showProps ? MdExpandLess : MdExpandMore} />
-    <div>Keyframe</div>
+    <div class="flex-auto">Keyframe</div>
+    <Icon icon={MdDelete} class="hover:text-red-500" on:click={deleteKeyframe} />
   </div>
 
   {#if showProps}
