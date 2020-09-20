@@ -125,17 +125,22 @@
     seekAnime(position);
   }
 
+  function onPaneMove({ detail }) {
+    if (!detail.x) return; // TODO fix one pixel offset bug
+    const diff = detail.dx * pixelPerMs / state.scale;
+    position = position - diff;
+    seekAnime(position);
+  }
+
   function makeAnime() {
     // TODO throttle makeAnime, lock UI and notify user
-    // console.log("makeAnime...");
 
     anime = animejs.timeline({
       autoplay: false,
       update() {
-        let seek = anime.duration / 100 * anime.progress;
-        seek = (seek / pixelPerMs * state.scale) + state.left;
+        position = anime.duration / 100 * anime.progress;
+        let seek = (position / pixelPerMs * state.scale) + state.left;
         state = { ...state, seek };
-        // console.log({seek});
       }
     });
 
@@ -173,6 +178,7 @@
       {keyframes}
       {currentKeyframe}
       on:state={onState}
+      on:panMove={onPaneMove}
       on:seekAnime={onSeekAnime}
       on:playAnime={onPlayAnime}
       on:pauseAnime={onPauseAnime}

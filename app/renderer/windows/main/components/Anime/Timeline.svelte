@@ -28,6 +28,7 @@
 
   function onPanMove({ detail }) {
     dispatch("state", { ...state, left: detail.x });
+    dispatch("panMove", detail);
   }
 
   function addKeyframe(file, { detail }) {
