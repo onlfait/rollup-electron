@@ -32,7 +32,7 @@
     inputPropsKeys = Object.keys(inputProps).filter(prop => {
       return !props.includes(prop);
     });
-    selectedProp = selectedProp || inputPropsKeys[0];
+    selectedProp = inputPropsKeys[0];
   }
 
   function onAttrsChange(file) {
