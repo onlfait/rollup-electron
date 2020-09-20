@@ -6,6 +6,7 @@
   import Keyframe from "./Keyframe.svelte";
   import Keyframes from "./Keyframes.svelte";
   import TimelineGrid from "./TimelineGrid.svelte";
+  import TimelineCursor from "./TimelineCursor.svelte";
 
   import MdPause from "svelte-icons/md/MdPause.svelte";
   import MdPlayArrow from "svelte-icons/md/MdPlayArrow.svelte";
@@ -48,6 +49,9 @@
   function pauseAnime() {
     dispatch("pauseAnime");
   }
+
+  $: cursorClass = "absolute top-0 bottom-0 bg-red-600";
+  $: cursorStyle = `width:2px;left:${state.seek}px;`;
 </script>
 
 <TimelineGrid {state} on:state={onState}>
@@ -61,7 +65,12 @@
       on:click={pauseAnime}
       class="w-4 h-4 flex-shrink-0 cursor-pointer" />
   </div>
-  <div slot="timeline" class="p-2">Timeline...</div>
+  <div slot="timeline" class="relative flex">
+    <div class="p-2">Timeline...</div>
+    <div class="absolute inset-0 overflow-x-hidden">
+      <TimelineCursor {state} on:state={onState} />
+    </div>
+  </div>
 {#each files as file, i}
   <div class="flex bg-{i%2}" on:click={selectFile.bind(null, file)}>
     <Icon icon={getAnimeIcon(file.type)} class="m-2 mr-0 w-4 h-4 flex-shrink-0" />

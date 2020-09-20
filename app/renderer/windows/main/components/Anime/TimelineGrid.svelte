@@ -26,13 +26,13 @@
   }
 
   function onWheel(event) {
-    const offset = splitter.x + 15;
+    const offset = splitter.x + 10;
     const delta = event.deltaY / 100;
     const tx = (event.clientX - offset - state.left) / state.scale;
     const newScale = state.scale + (delta / (zoom.sensitivity / state.scale));
     const scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
     const left = Math.min(0, -tx * scale + event.clientX - offset);
-    dispatch("state", { left, scale });
+    dispatch("state", { ...state, left, scale });
   }
 </script>
 

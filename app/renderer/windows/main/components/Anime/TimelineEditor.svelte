@@ -11,7 +11,7 @@
 
   export let animes;
 
-  let state = { left: 0, scale: 1 };
+  let state = { left: 0, scale: 1, seek: 0 };
   let keyframes = {};
   let files = [];
 
