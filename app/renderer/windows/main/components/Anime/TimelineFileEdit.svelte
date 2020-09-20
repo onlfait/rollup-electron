@@ -138,13 +138,6 @@
     {#each props as name}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{name}</div>
-      <NumberInput
-        pad="px-2"
-        twoLine={false}
-        {...inputProps[name]}
-        bind:value={currentKeyframe.props[name]}
-        on:change={onKeyframeChange.bind(null, currentKeyframe)}
-      />
       {#if inputProps[name].removable}
       <Icon
         icon={MdDelete}
@@ -152,6 +145,13 @@
         on:click={deleteKeyframeProp.bind(null, name)}
         />
       {/if}
+      <NumberInput
+        pad="px-2"
+        twoLine={false}
+        {...inputProps[name]}
+        bind:value={currentKeyframe.props[name]}
+        on:change={onKeyframeChange.bind(null, currentKeyframe)}
+      />
     </div>
     {/each}
   </div>
