@@ -124,6 +124,9 @@
 
   function onPlayAnime() {
     anime && anime.play();
+    anime && anime.pause();
+    seekAnime(position);
+    anime && anime.play();
   }
 
   function onRestartAnime() {
