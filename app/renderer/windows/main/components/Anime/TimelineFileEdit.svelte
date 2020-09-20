@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { getInputProps, getAnimeIcon } from "./utils";
+  import { getInputProps, getAnimeIcon, animeProps } from "./utils";
 
   import Icon from "../Icon.svelte";
   import Select from "../Select.svelte";
@@ -21,18 +21,24 @@
   let showProps = true;
   let divide = "divide-y divide-blue-600 divide-opacity-50";
 
-  let inputPropsKeys;
-  let selectedProp;
+  let attrs;
+  let props;
+  let inputProps;
+  let selectedProp = null;
+  let inputPropsKeys = [];
 
-  $: attrs = currentFile && Object.keys(currentFile.attrs);
-  $: inputProps = currentFile && getInputProps(currentFile.type);
-  $: props = currentKeyframe && Object.keys(currentKeyframe.props);
+  $: if (currentFile) {
+    selectedProp = null;
+    attrs = Object.keys(currentFile.attrs);
+    inputProps = getInputProps(currentFile.type);
+  }
 
-  $: if (props) {
+  $: if (currentKeyframe) {
+    props = Object.keys(currentKeyframe.props);
     inputPropsKeys = Object.keys(inputProps).filter(prop => {
       return !props.includes(prop);
     });
-    selectedProp = inputPropsKeys[0];
+    selectedProp = selectedProp || inputPropsKeys[0];
   }
 
   function onAttrsChange(file) {
@@ -99,6 +105,7 @@
       <NumberInput
         pad="px-2"
         twoLine={false}
+        {...animeProps[name]}
         bind:value={currentFile.attrs[name]}
         on:change={onAttrsChange.bind(null, currentFile)} />
     </div>
@@ -138,12 +145,14 @@
     {#each props as name}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{name}</div>
-      {#if inputProps[name].removable}
+      {#if inputProps[name] && inputProps[name].removable}
       <Icon
         icon={MdDelete}
         class="hover:text-red-500"
         on:click={deleteKeyframeProp.bind(null, name)}
         />
+      {:else}
+       --{name}--
       {/if}
       <NumberInput
         pad="px-2"

@@ -2,7 +2,7 @@
   export let files = [];
 
   function getStyle(attrs) {
-    let ret = "";
+    let ret = "max-width:none;";
     Object.entries(attrs).forEach(([key, value]) => {
       if (key === "z-index") {
         ret += `${key}:${value};`;
@@ -10,7 +10,7 @@
         ret += `${key}:${value}px;`;
       }
     });
-    return ret; // + "transform: translate(0,0,0) rotate(0);";
+    return ret;
   }
 </script>
 

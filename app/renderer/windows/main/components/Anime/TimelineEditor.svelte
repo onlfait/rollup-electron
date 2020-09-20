@@ -28,9 +28,12 @@
 
   function addAnimeFromFile(file) {
     createAnimeFile(file).then(animeFile => {
-      animeFile.attrs["z-index"] += files.length;
+      if (animeFile.attrs["z-index"]) {
+        animeFile.attrs["z-index"] += files.length;
+      }
       files = [...files, animeFile];
       keyframes[animeFile.id] = [];
+      currentKeyframe = null;
       currentFile = animeFile;
     }).catch(error => {
       console.warn(error); // TODO notify user

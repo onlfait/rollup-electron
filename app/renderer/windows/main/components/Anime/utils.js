@@ -22,13 +22,23 @@ export const animeAttrs = {
   "sound": { volume: 0.8 }
 };
 
+export const animeProps = {
+  "top": { step: 10, removable: false },
+  "left": { step: 10, removable: false },
+  "width": { min: 0, step: 10, removable: false },
+  "height": { min: 0, step: 10, removable: false },
+  "volume": { min: 0, step: 0.1, removable: false },
+  "z-index": { min: 0, step: 1, removable: false },
+};
+
 export const animeIcons = {
   "sound": MdMusicVideo,
   "image": MdImage
 };
 
 export const soundProps = {
-  "volume": { min: 0, step: 1, removable: true },
+  "duration": { min: 0, step: 100, removable: false },
+  "volume": { min: 0, step: 0.1, removable: true },
 };
 
 export const transformProps = {
