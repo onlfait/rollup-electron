@@ -7,8 +7,8 @@ const config = {
   scheme: "app",
   privileges: {
     secure: true,
-    standard: true
-  }
+    standard: true,
+  },
 };
 
 const rendererPath = isDev
@@ -25,7 +25,9 @@ const mimeTypes = {
   ".jpg": { mimeType: "image/jpeg", charset: "utf-8" },
   ".jpeg": { mimeType: "image/jpeg", charset: "utf-8" },
   ".mp3": { mimeType: "audio/mpeg", charset: "utf-8" },
-  ".ogg": { mimeType: "audio/ogg", charset: "utf-8" }
+  ".ogg": { mimeType: "audio/ogg", charset: "utf-8" },
+  ".mp4": { mimeType: "video/mpeg", charset: "utf-8" },
+  ".ogv": { mimeType: "video/ogv", charset: "utf-8" },
 };
 
 function error(message) {
