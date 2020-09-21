@@ -29,6 +29,7 @@ export const animeProps = {
   "height": { min: 0, step: 10, removable: false },
   "volume": { min: 0, step: 0.1, removable: false },
   "z-index": { min: 0, step: 1, removable: false },
+  "duration": { removable: false, disabled: true },
 };
 
 export const animeIcons = {
@@ -39,6 +40,7 @@ export const animeIcons = {
 export const soundProps = {
   "duration": { min: 0, step: 100, removable: false },
   "volume": { min: 0, step: 0.1, removable: true },
+  "easing": { type: "text" },
 };
 
 export const transformProps = {
@@ -87,9 +89,18 @@ export async function getAnimeAttrs(type, filename = null) {
 export function getImageSize(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve({ width: img.width, height: img.height });
     img.onerror = reject;
+    img.onload = () => resolve({ width: img.width, height: img.height });
     img.src = `/public/media/images/${src}`;
+  });
+}
+
+export function getSoundDuration(src) {
+  return new Promise((resolve, reject) => {
+    const audio = new Audio();
+    audio.onerror = reject;
+    audio.onloadedmetadata = () => resolve(audio.duration);
+    audio.src = `/public/media/sounds/${src}`;
   });
 }
 
@@ -105,6 +116,9 @@ export function createAnimeFile(file) {
     app.remote.call(`upload.${type}`, file.path)
       .then(async filename => {
         const attrs = await getAnimeAttrs(type, filename);
+        if (type === "sound") {
+          attrs.duration = await getSoundDuration(file.name) * 1000;
+        }
         resolve({ id: uuid(), type, name: filename, attrs, keyframes: [] });
       })
       .catch(reject);
@@ -112,5 +126,13 @@ export function createAnimeFile(file) {
 }
 
 export function createKeyframe(delay, props) {
-  return { id: uuid(), delay, props: { duration: 1000, ...props } };
+  return {
+    id: uuid(),
+    delay,
+    props: {
+      duration: 1000,
+      easing: "linear",
+      ...props
+    }
+  };
 }

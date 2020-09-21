@@ -5,6 +5,7 @@
   import Icon from "../Icon.svelte";
   import Select from "../Select.svelte";
   import Button from "../Button.svelte";
+  import InputText from "../NumberInput.svelte";
   import NumberInput from "../NumberInput.svelte";
 
   import MdAdd from "svelte-icons/md/MdAdd.svelte";
@@ -145,15 +146,22 @@
     {#each props as name}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{name}</div>
-      {#if inputProps[name] && inputProps[name].removable}
+      {#if inputProps[name].removable}
       <Icon
         icon={MdDelete}
         class="hover:text-red-500"
         on:click={deleteKeyframeProp.bind(null, name)}
         />
-      {:else}
-       --{name}--
       {/if}
+      {#if inputProps[name].type && inputProps[name].type === 'text'}
+      caca
+      <InputText
+        pad="px-2"
+        {...inputProps[name]}
+        bind:value={currentKeyframe.props[name]}
+        on:change={onKeyframeChange.bind(null, currentKeyframe)}
+      />
+      {:else}
       <NumberInput
         pad="px-2"
         twoLine={false}
@@ -161,6 +169,9 @@
         bind:value={currentKeyframe.props[name]}
         on:change={onKeyframeChange.bind(null, currentKeyframe)}
       />
+      {/if}
+
+
     </div>
     {/each}
   </div>

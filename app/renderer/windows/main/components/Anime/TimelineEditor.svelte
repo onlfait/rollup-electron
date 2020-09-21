@@ -80,8 +80,9 @@
 
   function onAddKeyframe({ detail }) {
     const { file, offsets } = detail;
+    const duration = file.attrs.duration || 1000;
     const delay = clampDelay(offsets.x / state.scale * pixelPerMs);
-    const keyframe = createKeyframe(delay, {});
+    const keyframe = createKeyframe(delay, { duration });
     keyframes[file.id] = [...keyframes[file.id], keyframe];
     selectKeyframe(file, keyframe);
     makeAnime();
@@ -170,10 +171,24 @@
 
     files.forEach(file => {
       if (file.type === "image") {
-        const targets = `#file-${file.id}`;
+        const targets = `#image-${file.id}`;
         document.querySelector(targets).style.transform = null;
         keyframes[file.id].forEach(({ delay, props }) => {
           anime.add({ targets, ...props }, delay);
+        });
+      } else if (file.type === "sound") {
+        const targets = `#sound-${file.id}`;
+        const $target = document.querySelector(targets);
+        keyframes[file.id].forEach(({ delay, props }) => {
+          anime.add({ targets, ...props,
+            begin() {
+              $target.play();
+            },
+            complete() {
+              $target.pause();
+              $target.currentTime = 0;
+            },
+          }, delay);
         });
       }
     });

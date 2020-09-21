@@ -27,6 +27,7 @@
     on:change
     on:keypress={onKeypress}
     {placeholder}
+    type="text"
     class="p-2 flex w-full text-dark {inputRounded}"
   />
 </label>
