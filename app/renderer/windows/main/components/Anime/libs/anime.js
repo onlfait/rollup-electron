@@ -36,3 +36,7 @@ export function createAnimeFromFile(file) {
       .catch(reject);
   });
 }
+
+export function isSameAnime(a1, a2) {
+  return a1 && a2 && a1.id === a2.id;
+}
