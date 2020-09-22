@@ -1,10 +1,18 @@
 <script>
   import Layout from "./Editor/Layout.svelte";
   import Timeline from "./Editor/Timeline.svelte";
+  import Settings from "./Editor/Settings.svelte";
 
   import { createAnimeFromFile } from "./libs/anime";
 
   let animes = [];
+  let currentAnime = null;
+
+  let timeline = {
+    state: { left: 0, scale: 1 },
+    zoom: { min: 0.1, max: 10, sensitivity: 50 },
+    splitter: { x: 200, width: 4, min: 100, max: 500 }
+  };
 
   function onDropFiles({ detail: files }) {
     files.forEach(file => {
@@ -19,16 +27,22 @@
   }
 
   $: console.log("animes:", animes);
+  $: console.log("timeline:", timeline);
+  $: console.log("currentAnime:", currentAnime);
 </script>
 
 <Layout on:dropFiles={onDropFiles}>
+
   <div slot="leftPane">
     left pane...
   </div>
-  <div slot="rightPane" class="bg-primary-dark h-full shadow">
-    right pane...
+
+  <div slot="rightPane" class="bg-primary-darker h-full shadow">
+    <Settings bind:animes bind:currentAnime />
   </div>
+
   <div slot="bottomPane" class="bg-primary-darker h-full shadow">
-    <Timeline />
+    <Timeline bind:timeline bind:animes bind:currentAnime />
   </div>
+
 </Layout>
