@@ -1,6 +1,7 @@
 <script>
+  import Icon from "../../Icon.svelte";
   import Grid from "./Timeline/Grid.svelte";
-  import { isSameAnime } from "../libs/anime";
+  import { isSameAnime, getAnimeIcon } from "../libs/anime";
 
   export let animes;
   export let timeline;
@@ -32,8 +33,9 @@
     Timeline...
   </div>
   {#each animes as anime}
-    <div class="p-2 truncate {selectedClass(currentAnime, anime)}" on:click={selectAnime.bind(null, anime)}>
-      {anime.filename}
+    <div class="p-2 flex space-x-2 {selectedClass(currentAnime, anime)}" on:click={selectAnime.bind(null, anime)}>
+      <Icon icon={getAnimeIcon(anime.type)} class="w-4 h-4 flex-shrink-0" />
+      <div class="truncate">{anime.filename}</div>
     </div>
     <div class="p-2 truncate {selectedClass(currentAnime, anime)}" on:click={selectAnime.bind(null, anime)}>
       {anime.id}

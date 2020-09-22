@@ -49,7 +49,7 @@
 }
 </style>
 
-<div class="flex flex-col h-full select-none">
+<div class="flex flex-col h-full">
   <div class="timeline-grid whitespace-no-wrap bg-primary-dark grid" style={gridTemplate}>
     <slot name="header"></slot>
   </div>

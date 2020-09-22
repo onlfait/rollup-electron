@@ -18,7 +18,7 @@
   {style}
   on:drop={onDrop}
   on:dragover|preventDefault
-  class="{position} {theme}">
+  class="{position} {theme} select-none">
   <Splitter flex="col" sizes={[75,25]} save="editor.main.col">
     <div slot="a" class="h-full">
       <Splitter flex="row" sizes={[75,25]} save="editor.main.row">

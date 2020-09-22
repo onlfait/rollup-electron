@@ -1,9 +1,14 @@
 import { v4 as uuid } from "uuid";
 import animeTypes from "./animeTypes";
+import animeIcons from "./animeIcons";
 import animeFactories from "./animeFactories";
 
 function getFileExt(file) {
   return file.name.split(".").pop();
+}
+
+export function getAnimeIcon(type) {
+  return animeIcons[type];
 }
 
 function getAnimeTypeFromFile(file) {
