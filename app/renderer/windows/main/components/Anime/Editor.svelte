@@ -19,6 +19,7 @@
       createAnimeFromFile(file)
         .then(anime => {
           animes = [...animes, anime];
+          if (!currentAnime) currentAnime = anime;
         })
         .catch(error => {
           console.warn("createAnimeFromFile:", error.message);
