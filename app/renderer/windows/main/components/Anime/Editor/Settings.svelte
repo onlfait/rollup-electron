@@ -15,7 +15,8 @@
   $: attributes = currentAnime && Object.keys(currentAnime.attributes);
 
   function getAttributesProps(label) {
-    return getAnimeAttributes(label, { value: currentAnime.attributes[label] });
+    const { props } = getAnimeAttributes(label);
+    return { ...props, value: currentAnime.attributes[label] };
   }
 
   function onAttributeChange(label, { currentTarget }) {
@@ -24,9 +25,9 @@
       currentTarget.value = currentAnime.attributes[label];
       return;
     }
-    const props = getAnimeAttributes(label);
-    if (typeof props.filter === "function") {
-      value = props.filter(value);
+    const { filter } = getAnimeAttributes(label);
+    if (typeof filter === "function") {
+      value = filter(value);
     }
     currentAnime.attributes[label] = value;
     animes = animes;

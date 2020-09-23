@@ -1,16 +1,24 @@
 <script>
+  import { getAnimeAttributes } from "../libs/anime";
+
   export let animes;
 
-  function getStyle(attributes) {
+  function getStyle({ attributes }) {
     let style = ["max-width:none"];
-    Object.entries(attributes).forEach(([key, value]) => {
-      if (key === "z-index") {
-        style.push(`${key}:${value}`);
-      } else {
-        style.push(`${key}:${value}px`);
-      }
+    Object.entries(attributes).forEach(([label, value]) => {
+      const { unit, isProp } = getAnimeAttributes(label);
+      if (!isProp) style.push(`${label}:${value}${unit || "" }`);
     });
     return style.join(";");
+  }
+
+  function getProps({ attributes }) {
+    let props = {};
+    Object.entries(attributes).forEach(([label, value]) => {
+      const { unit, isProp } = getAnimeAttributes(label);
+      if (isProp) props[label] = `${value}${unit || "" }`;
+    });
+    return props;
   }
 
   async function getText(anime) {
@@ -24,25 +32,33 @@
   <img
     class="absolute"
     id="anime-{anime.id}"
-    style={getStyle(anime.attributes)}
+    {...getProps(anime)}
+    style={getStyle(anime)}
     src="/public/media/images/{anime.filename}" alt={anime.id}
   />
   {:else if anime.type === "video"}
   <video
     class="absolute"
     id="anime-{anime.id}"
-    style={getStyle(anime.attributes)}
+    {...getProps(anime)}
+    style={getStyle(anime)}
     src="/public/media/videos/{anime.filename}">
+    <track kind="captions" />
   </video>
   {:else if anime.type === "sound"}
   <audio
     class="hidden"
     id="anime-{anime.id}"
+    {...getProps(anime)}
     src="/public/media/sounds/{anime.filename}">
+    <track kind="captions" />
   </audio>
   {:else if anime.type === "text"}
   {#await getText(anime) then text}
-  <div class="absolute" style={getStyle(anime.attributes)}>
+  <div
+    class="absolute"
+    {...getProps(anime)}
+    style={getStyle(anime)}>
     {text}
   </div>
   {/await}

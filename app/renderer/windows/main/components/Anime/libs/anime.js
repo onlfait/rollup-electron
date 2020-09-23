@@ -16,8 +16,8 @@ function getAnimeTypeFromFile(file) {
   return animeTypes[getFileExt(file)];
 }
 
-export function getAnimeAttributes(label, attributes = {}) {
-  return { ...animeAttributes[label], ...attributes };
+export function getAnimeAttributes(label) {
+  return { ...animeAttributes[label] };
 }
 
 async function createAnime(type, filename) {
