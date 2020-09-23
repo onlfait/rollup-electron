@@ -4,11 +4,11 @@
 
   export let currentAnime;
 
-  let infoEntries = [];
-  let attrsKeys = [];
+  let info = [];
+  let attributes = [];
 
-  $: infoEntries = currentAnime && Object.entries(currentAnime.info);
-  $: attrsKeys = currentAnime && Object.keys(currentAnime.attributes);
+  $: info = currentAnime && Object.entries(currentAnime.info);
+  $: attributes = currentAnime && Object.keys(currentAnime.attributes);
 </script>
 
 {#if currentAnime}
@@ -16,16 +16,16 @@
     <AnimeIcon type={currentAnime.type} />
     <div class="truncate">{currentAnime.filename}</div>
   </div>
-  <Panel title="Info" visible={infoEntries.length}>
-    {#each infoEntries as [key, value]}
+  <Panel title="Info" visible={info.length}>
+    {#each info as [key, value]}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{key}</div>
       <div>{value}</div>
     </div>
     {/each}
   </Panel>
-  <Panel title="Attributes" visible={attrsKeys.length}>
-    {#each attrsKeys as key}
+  <Panel title="Attributes" visible={attributes.length}>
+    {#each attributes as key}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{key}</div>
     </div>
