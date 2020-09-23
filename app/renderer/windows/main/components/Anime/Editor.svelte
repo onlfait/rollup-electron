@@ -39,7 +39,7 @@
   </div>
 
   <div slot="rightPane" class="bg-primary-darker h-full shadow overflow-auto">
-    <Settings bind:currentAnime />
+    <Settings bind:animes bind:currentAnime />
   </div>
 
   <div slot="bottomPane" class="bg-primary-darker h-full shadow">

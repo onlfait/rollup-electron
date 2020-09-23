@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 import animeTypes from "./animeTypes";
 import animeIcons from "./animeIcons";
 import animeFactories from "./animeFactories";
+import animeAttributes from "./animeAttributes";
 
 function getFileExt(file) {
   return file.name.split(".").pop();
@@ -13,6 +14,10 @@ export function getAnimeIcon(type) {
 
 function getAnimeTypeFromFile(file) {
   return animeTypes[getFileExt(file)];
+}
+
+export function getAnimeAttributes(label, attributes = {}) {
+  return { ...animeAttributes[label], ...attributes };
 }
 
 async function createAnime(type, filename) {

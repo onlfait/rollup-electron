@@ -3,6 +3,9 @@
   import Panel from "./Settings/Panel.svelte";
   import Input from "./Settings/Input.svelte";
 
+  import { getAnimeAttributes } from "../libs/anime";
+
+  export let animes;
   export let currentAnime;
 
   let info = [];
@@ -12,11 +15,21 @@
   $: attributes = currentAnime && Object.keys(currentAnime.attributes);
 
   function getAttributesProps(label) {
-    return { type: "text", value: currentAnime.attributes[label] };
+    return getAnimeAttributes(label, { value: currentAnime.attributes[label] });
   }
 
   function onAttributeChange(label, { currentTarget }) {
-    console.log("onAttributeChange:", label, currentTarget.value);
+    let value = currentTarget.value.trim();
+    if (!value.length) {
+      currentTarget.value = currentAnime.attributes[label];
+      return;
+    }
+    const props = getAnimeAttributes(label);
+    if (typeof props.filter === "function") {
+      value = props.filter(value);
+    }
+    currentAnime.attributes[label] = value;
+    animes = animes;
   }
 </script>
 
