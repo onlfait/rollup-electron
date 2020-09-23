@@ -8,6 +8,7 @@ const config = {
   privileges: {
     secure: true,
     standard: true,
+    supportFetchAPI: true,
   },
 };
 
