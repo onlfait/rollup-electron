@@ -37,7 +37,7 @@
     left pane...
   </div>
 
-  <div slot="rightPane" class="bg-primary-darker h-full shadow">
+  <div slot="rightPane" class="bg-primary-darker h-full shadow overflow-auto">
     <Settings bind:currentAnime />
   </div>
 
