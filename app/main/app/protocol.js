@@ -16,6 +16,7 @@ const rendererPath = isDev
   : path.resolve(appPath, "renderer");
 
 const mimeTypes = {
+  ".txt": { mimeType: "text/plain", charset: "utf-8" },
   ".js": { mimeType: "text/javascript", charset: "utf-8" },
   ".html": { mimeType: "text/html", charset: "utf-8" },
   ".css": { mimeType: "text/css", charset: "utf-8" },
