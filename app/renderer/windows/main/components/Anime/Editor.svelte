@@ -2,6 +2,7 @@
   import Layout from "./Editor/Layout.svelte";
   import Timeline from "./Editor/Timeline.svelte";
   import Settings from "./Editor/Settings.svelte";
+  import Viewer from "./Editor/Viewer.svelte";
 
   import { createAnimeFromFile } from "./libs/anime";
 
@@ -34,8 +35,8 @@
 
 <Layout on:dropFiles={onDropFiles}>
 
-  <div slot="leftPane">
-    left pane...
+  <div slot="leftPane" class="relative h-full overflow-hidden">
+    <Viewer {animes} />
   </div>
 
   <div slot="rightPane" class="bg-primary-darker h-full shadow overflow-auto">

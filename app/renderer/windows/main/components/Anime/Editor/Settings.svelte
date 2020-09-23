@@ -38,7 +38,7 @@
     <AnimeIcon type={currentAnime.type} />
     <div class="truncate">{currentAnime.filename}</div>
   </div>
-  <Panel title="Info" visible={info.length}>
+  <Panel title="Info" visible={info.length} expended={false}>
     {#each info as [label, value]}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{label}</div>

@@ -10,10 +10,19 @@ export default {
   },
 
   async video(filename) {
-    const { duration } = await utils.getVideo(filename);
+    const { videoWidth, videoHeight, duration } = await utils.getVideo(
+      filename
+    );
     return {
       info: { duration: Math.round(duration * 1000) },
-      attributes: { volume: 0.8 },
+      attributes: {
+        top: 0,
+        left: 0,
+        width: videoWidth,
+        height: videoHeight,
+        volume: 0.8,
+        "z-index": 1,
+      },
     };
   },
 
@@ -21,11 +30,21 @@ export default {
     const { width, height } = await utils.getImage(filename);
     return {
       info: { width, height },
-      attributes: { top: 0, left: 0, width, height },
+      attributes: { top: 0, left: 0, width, height, "z-index": 1 },
     };
   },
 
   async text() {
-    return { attributes: { fontSize: 42, fontWeight: 400 } };
+    return {
+      attributes: {
+        top: 0,
+        left: 0,
+        width: 400,
+        height: 250,
+        "font-size": 42,
+        "font-weight": 400,
+        "z-index": 1,
+      },
+    };
   },
 };
