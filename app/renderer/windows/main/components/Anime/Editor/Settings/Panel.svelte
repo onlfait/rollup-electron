@@ -16,9 +16,10 @@
 </script>
 
 {#if visible}
-<div class="p-2 bg-primary flex space-x-2 cursor-pointer" on:click={toggle}>
-  <Icon icon={expended ? MdExpandLess : MdExpandMore} />
-  <div class="truncate">{ title }</div>
+<div class="flex items-center space-x-2 bg-primary cursor-pointer" on:click={toggle}>
+  <Icon icon={expended ? MdExpandLess : MdExpandMore} class="ml-2 flex-shrink-0" />
+  <div class="p-2 truncate flex-1">{ title }</div>
+  <slot name="title" />
 </div>
 
 {#if expended}

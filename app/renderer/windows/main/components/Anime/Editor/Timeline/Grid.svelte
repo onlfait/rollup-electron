@@ -1,12 +1,9 @@
 <script>
   import pannable from "../../../pannable.js";
-  import { createEventDispatcher } from "svelte";
 
-  export let state = { left: 0, scale: 1 };
-  export let zoom = { min: 0.1, max: 10, sensitivity: 50 };
-  export let splitter = { x: 200, width: 4, min: 100, max: 500 };
+  export let timeline;
 
-  const dispatch = createEventDispatcher();
+  $: splitter = timeline.splitter;
 
   $: gridTemplate = `grid-template-columns: ${splitter.x}px auto`;
   $: splitterStyle = `
@@ -17,16 +14,7 @@
 
   function onSplitterPan({ detail }) {
     splitter.x = Math.max(splitter.min, Math.min(splitter.max, detail.x));
-    dispatch("resize", splitter);
-  }
-
-  function onWheel(event) {
-    const delta = event.deltaY / 100;
-    const tx = (event.clientX - splitter.x - state.left) / state.scale;
-    const newScale = state.scale + (delta / (zoom.sensitivity / state.scale));
-    state.scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
-    state.left = Math.min(0, -tx * state.scale + event.clientX - splitter.x);
-    dispatch("state", state);
+    timeline = timeline;
   }
 </script>
 
@@ -53,7 +41,7 @@
   <div class="timeline-grid whitespace-no-wrap bg-primary-dark grid" style={gridTemplate}>
     <slot name="header"></slot>
   </div>
-  <div on:wheel|preventDefault={onWheel} class="flex-auto overflow-x-hidden overflow-y-auto">
+  <div class="flex-auto overflow-x-hidden overflow-y-auto">
     <div class="timeline-grid whitespace-no-wrap" style={gridTemplate}>
       <slot />
     </div>

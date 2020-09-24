@@ -1,12 +1,16 @@
 <script>
+  import Icon from "../../Icon.svelte";
   import AnimeIcon from "./AnimeIcon.svelte";
   import Panel from "./Settings/Panel.svelte";
   import Input from "./Settings/Input.svelte";
 
-  import { getAnimeAttributes } from "../libs/anime";
+  import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
+
+  import { getAnimeAttributes, isSameKeyframe } from "../libs/anime";
 
   export let animes;
-  export let currentAnime;
+  export let currentAnime = null;
+  export let currentKeyframe = null;
 
   let info = [];
   let attributes = [];
@@ -32,6 +36,13 @@
     currentAnime.attributes[label] = value;
     animes = animes;
   }
+
+  function deleteKeyframe() {
+    currentAnime.keyframes = currentAnime.keyframes.filter(keyframe => {
+      return !isSameKeyframe(currentKeyframe, keyframe);
+    });
+    animes = animes;
+  }
 </script>
 
 {#if currentAnime}
@@ -55,6 +66,13 @@
       on:change={onAttributeChange.bind(null, label)} />
     {/each}
   </Panel>
+  {#if currentKeyframe}
+  <Panel title="Keyframe">
+    <div slot="title" class="p-2 cursor-pointer hover:bg-red-600" on:click|stopPropagation={deleteKeyframe}>
+      <Icon icon={MdDeleteForever} />
+    </div>
+  </Panel>
+  {/if}
 {:else}
   <div class="p-2 truncate bg-primary-dark">
     No files added/selected...

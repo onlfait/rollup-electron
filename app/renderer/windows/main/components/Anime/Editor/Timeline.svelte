@@ -2,24 +2,21 @@
   import Icon from "../../Icon.svelte";
   import Grid from "./Timeline/Grid.svelte";
   import AnimeIcon from "./AnimeIcon.svelte";
-  import { isSameAnime } from "../libs/anime";
+  import Keyframe from "./Timeline/Keyframe.svelte";
+  import Keyframes from "./Timeline/Keyframes.svelte";
 
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
 
+  import { isSameAnime, isSameKeyframe, createKeyframe, pixelPerMs } from "../libs/anime";
+
   export let animes;
   export let timeline;
-  export let currentAnime;
-
-  function onState({ detail: state }) {
-    timeline = { ...timeline, state };
-  }
-
-  function onResize({ detail: splitter }) {
-    timeline = { ...timeline, splitter };
-  }
+  export let currentAnime = null;
+  export let currentKeyframe = null;
 
   function selectAnime(anime) {
     if (isSameAnime(currentAnime, anime)) return;
+    currentKeyframe = null;
     currentAnime = anime;
   }
 
@@ -33,9 +30,31 @@
     }
     animes = animes.filter(a => !isSameAnime(a, anime));
   }
+
+  function selectKeyframe(keyframe, event) {
+    if (isSameKeyframe(currentKeyframe, keyframe)) return;
+    if (event) {
+      currentAnime = animes.find(anime => {
+        return anime.keyframes.find(k => isSameKeyframe(k, keyframe));
+      });
+    }
+    currentKeyframe = keyframe;
+  }
+
+  function addKeyframe({ detail }) {
+    const keyframe = createKeyframe({ delay: detail.offset * pixelPerMs });
+    currentAnime.keyframes = [ ...currentAnime.keyframes, keyframe ];
+    selectKeyframe(keyframe);
+    animes = animes;
+  }
+
+  function moveKeyframe(keyframe, { detail }) {
+    keyframe.delay += detail.offset * pixelPerMs;
+    animes = animes;
+  }
 </script>
 
-<Grid {...timeline} on:resize={onResize} on:state={onState}>
+<Grid bind:timeline>
   <div slot="header" class="p-2 truncate">
     Play / Pause / Replay
   </div>
@@ -43,15 +62,30 @@
     Timeline...
   </div>
   {#each animes as anime}
-    <div class="flex pl-2 items-center space-x-2 {selectedClass(currentAnime, anime)}" on:click={selectAnime.bind(null, anime)}>
+    <div
+      on:mousedown={selectAnime.bind(null, anime)}
+      class="flex pl-2 items-center space-x-2 {selectedClass(currentAnime, anime)}"
+    >
       <AnimeIcon type={anime.type} />
       <div class="p-2 truncate flex-1">{anime.filename}</div>
       <div class="p-2 cursor-pointer hover:bg-red-600" on:click|stopPropagation={deleteAnime.bind(null, anime)}>
         <Icon icon={MdDeleteForever} />
       </div>
     </div>
-    <div class="p-2 truncate {selectedClass(currentAnime, anime)}" on:click={selectAnime.bind(null, anime)}>
-      {anime.id}
+    <div
+      on:mousedown={selectAnime.bind(null, anime)}
+      class="overflow-hidden {selectedClass(currentAnime, anime)}"
+    >
+      <Keyframes bind:timeline on:add={addKeyframe}>
+        {#each anime.keyframes as keyframe}
+        <Keyframe
+          {timeline}
+          {keyframe}
+          on:move={moveKeyframe.bind(null, keyframe)}
+          on:mousedown={selectKeyframe.bind(null, keyframe)}
+          selected={isSameKeyframe(currentKeyframe, keyframe)} />
+        {/each}
+      </Keyframes>
     </div>
   {/each}
 </Grid>

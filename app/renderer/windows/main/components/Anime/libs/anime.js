@@ -4,6 +4,8 @@ import animeIcons from "./animeIcons";
 import animeFactories from "./animeFactories";
 import animeAttributes from "./animeAttributes";
 
+export const pixelPerMs = 10;
+
 function getFileExt(file) {
   return file.name.split(".").pop();
 }
@@ -47,6 +49,26 @@ export function createAnimeFromFile(file) {
   });
 }
 
-export function isSameAnime(a1, a2) {
+export function hasSameId(a1, a2) {
   return a1 && a2 && a1.id === a2.id;
+}
+
+export function isSameAnime(a1, a2) {
+  return hasSameId(a1, a2);
+}
+
+export function isSameKeyframe(a1, a2) {
+  return hasSameId(a1, a2);
+}
+
+export function createKeyframe({ delay = 0, props = {} } = {}) {
+  return {
+    id: uuid(),
+    delay,
+    props: {
+      duration: 1000,
+      easing: "linear",
+      ...props,
+    },
+  };
 }

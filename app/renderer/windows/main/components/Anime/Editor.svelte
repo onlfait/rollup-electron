@@ -7,7 +7,8 @@
   import { createAnimeFromFile } from "./libs/anime";
 
   let animes = [];
-  let currentAnime = null;
+  let currentAnime;
+  let currentKeyframe;
 
   let timeline = {
     state: { left: 0, scale: 1 },
@@ -40,11 +41,11 @@
   </div>
 
   <div slot="rightPane" class="bg-primary-darker h-full shadow overflow-auto">
-    <Settings bind:animes bind:currentAnime />
+    <Settings bind:animes bind:currentAnime bind:currentKeyframe />
   </div>
 
   <div slot="bottomPane" class="bg-primary-darker h-full shadow">
-    <Timeline bind:timeline bind:animes bind:currentAnime />
+    <Timeline bind:timeline bind:animes bind:currentAnime bind:currentKeyframe />
   </div>
 
 </Layout>
