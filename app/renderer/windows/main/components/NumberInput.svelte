@@ -1,6 +1,6 @@
 <script>
   export let value;
-  export let pad = 'p-2';
+  export let pad = "p-2";
   export let label = null;
   export let twoLine = true;
 
