@@ -1,9 +1,9 @@
 import { v4 as uuid } from "uuid";
-import animeTypes from "./animeTypes";
-import animeIcons from "./animeIcons";
-import animeFactories from "./animeFactories";
-import animeAttributes from "./animeAttributes";
-import animeTransformations from "./animeTransformations";
+import animeTypes from "./anime/types";
+import animeIcons from "./anime/icons";
+import animeFactories from "./anime/factories";
+import animeAttributes from "./anime/attributes";
+import animeTransformations from "./anime/transformations";
 
 export const pixelPerMs = 10;
 
