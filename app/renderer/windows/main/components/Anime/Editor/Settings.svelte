@@ -57,8 +57,8 @@
     return { ...props, value: target[label] };
   }
 
-  function onTransformationsChange(label, { currentTarget }) {
-    let value = currentTarget.value.trim();
+  function onTransformationsChange(label, { currentTarget = null, value = null } = {}) {
+    value = value || currentTarget.value.trim();
     const target = getPropsTarget(label);
     if (!value.length) {
       currentTarget.value = target[label];
@@ -70,6 +70,10 @@
     }
     target[label] = value;
     animes = animes;
+  }
+
+  function onTransformationsSelect(label, { detail }) {
+    onTransformationsChange(label, { value: detail });
   }
 
   function isTransformationRemovable(label) {
@@ -124,8 +128,10 @@
         <div class="flex items-center w-1/2">
           <Select
             pad="px-2"
+            class="min-w-full"
             bind:value={currentKeyframe.props[label]}
-            items={getTransformationsValues(label)} />
+            items={getTransformationsValues(label)}
+            on:change={onTransformationsSelect.bind(null, label)}/>
         </div>
       </div>
       {:else}
