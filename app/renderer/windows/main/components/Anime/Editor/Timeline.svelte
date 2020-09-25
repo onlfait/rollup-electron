@@ -73,7 +73,10 @@
     >
       <AnimeIcon type={anime.type} />
       <div class="p-2 truncate flex-1">{anime.filename}</div>
-      <div class="p-2 cursor-pointer hover:bg-red-600" on:click|stopPropagation={deleteAnime.bind(null, anime)}>
+      <div
+        on:mousedown|stopPropagation
+        class="p-2 cursor-pointer hover:bg-red-600"
+        on:click|stopPropagation={deleteAnime.bind(null, anime)}>
         <Icon icon={MdDeleteForever} />
       </div>
     </div>
