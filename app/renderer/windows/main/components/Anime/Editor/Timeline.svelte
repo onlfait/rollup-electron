@@ -41,15 +41,19 @@
     currentKeyframe = keyframe;
   }
 
+  function getRealDelay(delay) {
+    return Math.round(delay * pixelPerMs);
+  }
+
   function addKeyframe({ detail }) {
-    const keyframe = createKeyframe({ delay: detail.offset * pixelPerMs });
+    const keyframe = createKeyframe({ delay: getRealDelay(detail.offset) });
     currentAnime.keyframes = [ ...currentAnime.keyframes, keyframe ];
     selectKeyframe(keyframe);
     animes = animes;
   }
 
   function moveKeyframe(keyframe, { detail }) {
-    keyframe.delay += detail.offset * pixelPerMs;
+    keyframe.delay += getRealDelay(detail.offset);
     currentKeyframe = keyframe;
     animes = animes;
   }
