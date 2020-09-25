@@ -3,6 +3,7 @@ import animeTypes from "./animeTypes";
 import animeIcons from "./animeIcons";
 import animeFactories from "./animeFactories";
 import animeAttributes from "./animeAttributes";
+import animeTransformations from "./animeTransformations";
 
 export const pixelPerMs = 10;
 
@@ -20,6 +21,10 @@ function getAnimeTypeFromFile(file) {
 
 export function getAnimeAttributes(label) {
   return { ...animeAttributes[label] };
+}
+
+export function getAnimeTransformations(label) {
+  return { ...animeTransformations[label] };
 }
 
 async function createAnime(type, filename) {

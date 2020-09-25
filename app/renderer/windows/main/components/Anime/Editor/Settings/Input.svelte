@@ -1,10 +1,29 @@
 <script>
+  import Icon from "../../../Icon.svelte";
+  import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
+
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
+
   export let label;
   export let props;
+  export let removable = false;
+
+  function remove() {
+    dispatch("remove", label);
+  }
 </script>
 
 <div class="p-2 flex items-center">
-  <div class="w-1/2 truncate pr-2">{label}</div>
+  <div class="flex items-center w-1/2">
+    <div class="flex-1 truncate">{label}</div>
+    {#if removable}
+    <Icon
+      on:click={remove}
+      icon={MdDeleteForever}
+      class="mr-1 hover:bg-red-600 rounded cursor-pointer" />
+    {/if}
+  </div>
   <input
     on:blur
     on:input

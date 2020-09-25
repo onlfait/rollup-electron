@@ -6,7 +6,7 @@
 
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { getAnimeAttributes, isSameKeyframe } from "../libs/anime";
+  import { getAnimeAttributes, getAnimeTransformations, isSameKeyframe } from "../libs/anime";
 
   export let animes;
   export let currentAnime = null;
@@ -14,9 +14,11 @@
 
   let info = [];
   let attributes = [];
+  let transformations = [];
 
   $: info = currentAnime && Object.entries(currentAnime.info);
   $: attributes = currentAnime && Object.keys(currentAnime.attributes);
+  $: transformations = currentKeyframe && Object.keys(currentKeyframe.props);
 
   function getAttributesProps(label) {
     const { props } = getAnimeAttributes(label);
@@ -43,6 +45,36 @@
     });
     animes = animes;
   }
+
+  function getTransformationsProps(label) {
+    const { props } = getAnimeTransformations(label);
+    return { ...props, value: currentKeyframe.props[label] };
+  }
+
+  function onTransformationsChange(label, { currentTarget }) {
+    let value = currentTarget.value.trim();
+    if (!value.length) {
+      currentTarget.value = currentKeyframe.props[label];
+      return;
+    }
+    const { filter } = getAnimeTransformations(label);
+    if (typeof filter === "function") {
+      value = filter(value);
+    }
+    currentKeyframe.props[label] = value;
+    animes = animes;
+  }
+
+  function isTransformationRemovable(label) {
+    const { removable } = getAnimeTransformations(label);
+    return removable;
+  }
+
+  function removeTransformation({ detail }) {
+    delete currentKeyframe.props[detail];
+    currentKeyframe = currentKeyframe;
+    animes = animes;
+  }
 </script>
 
 {#if currentAnime}
@@ -67,17 +99,25 @@
     {/each}
   </Panel>
   {#if currentKeyframe}
-  <Panel title="Keyframe">
+  <Panel title="Keyframe" visible={transformations.length}>
     <div slot="title" class="p-2 cursor-pointer hover:bg-red-600" on:click|stopPropagation={deleteKeyframe}>
       <Icon icon={MdDeleteForever} />
     </div>
+    {#each transformations as label}
+    <Input
+      {label}
+      on:remove={removeTransformation}
+      props={getTransformationsProps(label)}
+      removable={isTransformationRemovable(label)}
+      on:change={onTransformationsChange.bind(null, label)} />
+    {/each}
   </Panel>
   {/if}
 {:else}
   <div class="p-2 truncate bg-primary-dark">
-    No files added/selected...
+    No files added...
   </div>
   <div class="p-2">
-    Drag/Drop some file on the timeline ;)
+    Drop some file on the timeline ;)
   </div>
 {/if}
