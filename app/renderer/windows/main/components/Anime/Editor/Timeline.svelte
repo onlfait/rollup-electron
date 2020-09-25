@@ -50,6 +50,7 @@
 
   function moveKeyframe(keyframe, { detail }) {
     keyframe.delay += detail.offset * pixelPerMs;
+    currentKeyframe = keyframe;
     animes = animes;
   }
 </script>

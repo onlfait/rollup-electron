@@ -1,5 +1,6 @@
 <script>
   import Icon from "../../Icon.svelte";
+  import Select from "../../Select.svelte";
   import AnimeIcon from "./AnimeIcon.svelte";
   import Panel from "./Settings/Panel.svelte";
   import Input from "./Settings/Input.svelte";
@@ -18,7 +19,7 @@
 
   $: info = currentAnime && Object.entries(currentAnime.info);
   $: attributes = currentAnime && Object.keys(currentAnime.attributes);
-  $: transformations = currentKeyframe && Object.keys(currentKeyframe.props);
+  $: transformations = currentKeyframe && [ "delay", ...Object.keys(currentKeyframe.props)];
 
   function getAttributesProps(label) {
     const { props } = getAnimeAttributes(label);
@@ -46,28 +47,39 @@
     animes = animes;
   }
 
+  function getPropsTarget(label) {
+    return label === "delay" ? currentKeyframe : currentKeyframe.props;
+  }
+
   function getTransformationsProps(label) {
     const { props } = getAnimeTransformations(label);
-    return { ...props, value: currentKeyframe.props[label] };
+    const target = getPropsTarget(label);
+    return { ...props, value: target[label] };
   }
 
   function onTransformationsChange(label, { currentTarget }) {
     let value = currentTarget.value.trim();
+    const target = getPropsTarget(label);
     if (!value.length) {
-      currentTarget.value = currentKeyframe.props[label];
+      currentTarget.value = target[label];
       return;
     }
     const { filter } = getAnimeTransformations(label);
     if (typeof filter === "function") {
       value = filter(value);
     }
-    currentKeyframe.props[label] = value;
+    target[label] = value;
     animes = animes;
   }
 
   function isTransformationRemovable(label) {
     const { removable } = getAnimeTransformations(label);
-    return removable;
+    return !!removable;
+  }
+
+  function getTransformationsValues(label) {
+    const { values } = getAnimeTransformations(label);
+    return values;
   }
 
   function removeTransformation({ detail }) {
@@ -104,12 +116,26 @@
       <Icon icon={MdDeleteForever} />
     </div>
     {#each transformations as label}
-    <Input
-      {label}
-      on:remove={removeTransformation}
-      props={getTransformationsProps(label)}
-      removable={isTransformationRemovable(label)}
-      on:change={onTransformationsChange.bind(null, label)} />
+      {#if getTransformationsValues(label)}
+      <div class="p-2 flex items-center">
+        <div class="flex items-center w-1/2">
+          <div class="flex-1 truncate">{label}</div>
+        </div>
+        <div class="flex items-center w-1/2">
+          <Select
+            pad="px-2"
+            bind:value={currentKeyframe.props[label]}
+            items={getTransformationsValues(label)} />
+        </div>
+      </div>
+      {:else}
+      <Input
+        {label}
+        on:remove={removeTransformation}
+        props={getTransformationsProps(label)}
+        removable={isTransformationRemovable(label)}
+        on:change={onTransformationsChange.bind(null, label)} />
+      {/if}
     {/each}
   </Panel>
   {/if}

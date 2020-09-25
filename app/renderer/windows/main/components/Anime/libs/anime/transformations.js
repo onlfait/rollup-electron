@@ -1,8 +1,16 @@
+import easingNames from "./easingNames";
+
 export default {
   easing: {
-    props: { type: "text", value: "linear" },
+    props: { type: "select", value: "linear" },
     filter: null,
     unit: null,
+    values: easingNames,
+  },
+  delay: {
+    props: { type: "number", min: 0, step: 100, value: 0 },
+    removable: false,
+    filter: parseInt,
   },
   duration: {
     props: { type: "number", min: 0, step: 100, value: 1000 },
