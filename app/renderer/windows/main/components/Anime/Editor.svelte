@@ -5,6 +5,7 @@
   import Viewer from "./Editor/Viewer.svelte";
 
   import { createAnimeFromFile } from "./libs/anime";
+  import { debounce } from "throttle-debounce";
 
   let animes = [];
   let currentAnime;
@@ -29,9 +30,17 @@
     });
   }
 
-  $: console.log("animes:", animes);
-  $: console.log("timeline:", timeline);
-  $: console.log("currentAnime:", currentAnime);
+  // $: console.log("animes:", animes);
+  // $: console.log("timeline:", timeline);
+  // $: console.log("currentAnime:", currentAnime);
+
+  const updateAnime = debounce(1000, () => {
+    console.log("updateAnime...");
+  });
+
+  $: if (animes.length) {
+    updateAnime();
+  }
 </script>
 
 <Layout on:dropFiles={onDropFiles}>
