@@ -24,7 +24,7 @@ export function getAnimeAttributes(label) {
 }
 
 export function getAnimeTransformations(label) {
-  return { ...animeTransformations[label] };
+  return label ? { ...animeTransformations[label] } : animeTransformations;
 }
 
 async function createAnime(type, filename) {

@@ -5,9 +5,14 @@
   import Panel from "./Settings/Panel.svelte";
   import Input from "./Settings/Input.svelte";
 
+  import MdAddBox from "svelte-icons/md/MdAddBox.svelte";
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
 
-  import { getAnimeAttributes, getAnimeTransformations, isSameKeyframe } from "../libs/anime";
+  import {
+    isSameKeyframe,
+    getAnimeAttributes,
+    getAnimeTransformations,
+  } from "../libs/anime";
 
   export let animes;
   export let currentAnime = null;
@@ -16,10 +21,21 @@
   let info = [];
   let attributes = [];
   let transformations = [];
+  let transformationsNames = [];
+  let animeTransformationsKeys = Object.keys(getAnimeTransformations());
 
   $: info = currentAnime && Object.entries(currentAnime.info);
   $: attributes = currentAnime && Object.keys(currentAnime.attributes);
   $: transformations = currentKeyframe && [ "delay", ...Object.keys(currentKeyframe.props)];
+
+  let selectedTransformation;
+
+  $: if (transformations) {
+    transformationsNames = animeTransformationsKeys.filter(key => {
+      return !transformations.includes(key);
+    });
+    selectedTransformation = selectedTransformation || transformationsNames[0];
+  }
 
   function getAttributesProps(label) {
     const { props } = getAnimeAttributes(label);
@@ -91,6 +107,15 @@
     currentKeyframe = currentKeyframe;
     animes = animes;
   }
+
+  function addTransformation() {
+    if (!selectedTransformation) return;
+    const { props } = getAnimeTransformations(selectedTransformation);
+    currentKeyframe.props[selectedTransformation] = props.value;
+    selectedTransformation = null;
+    currentAnime = currentAnime;
+    animes = animes;
+  }
 </script>
 
 {#if currentAnime}
@@ -119,6 +144,20 @@
     <div slot="title" class="p-2 cursor-pointer hover:bg-red-600" on:click|stopPropagation={deleteKeyframe}>
       <Icon icon={MdDeleteForever} />
     </div>
+
+    <div class="flex items-center">
+      <div class="px-2 flex-auto overflow-hidden">
+        <Select
+          pad="px-2"
+          class="min-w-full"
+          items={transformationsNames}
+          bind:value={selectedTransformation} />
+      </div>
+      <div class="p-2 cursor-pointer hover:bg-blue-600" on:click|stopPropagation={addTransformation}>
+        <Icon icon={MdAddBox} />
+      </div>
+    </div>
+
     {#each transformations as label}
       {#if getTransformationsValues(label)}
       <div class="p-2 flex items-center">
