@@ -53,7 +53,8 @@
   }
 
   function moveKeyframe(keyframe, { detail }) {
-    keyframe.delay += getRealDelay(detail.offset);
+    const delay = keyframe.delay + getRealDelay(detail.offset);
+    keyframe.delay = Math.max(0, delay);
     currentKeyframe = keyframe;
     animes = animes;
   }
