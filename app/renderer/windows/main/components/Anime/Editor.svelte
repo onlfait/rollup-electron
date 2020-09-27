@@ -5,11 +5,13 @@
   import Viewer from "./Editor/Viewer.svelte";
 
   import { createAnimeFromFile } from "./libs/anime";
+  import animejs from "animejs/lib/anime.es.js";
   import { debounce } from "throttle-debounce";
 
   let animes = [];
   let currentAnime;
   let currentKeyframe;
+  let animeTimeline;
 
   let timeline = {
     state: { left: 0, scale: 1 },
@@ -34,12 +36,45 @@
   // $: console.log("timeline:", timeline);
   // $: console.log("currentAnime:", currentAnime);
 
-  const updateAnime = debounce(1000, () => {
+  function updateAnime() {
     console.log("updateAnime...");
-  });
+    animeTimeline = animejs.timeline({
+      autoplay: false,
+      // update() {}
+    });
+
+    animes.forEach(anime => {
+      const targets = `#anime-${anime.id}`;
+      const $target = document.querySelector(targets);
+
+      $target.style.transform = null;
+
+      let playables = ["sound", "video"];
+      let isPlayable = playables.includes(anime.type);
+
+      const play = () => $target.play();
+      const stop = () => {
+        $target.pause();
+        $target.currentTime = 0;
+      };
+
+      anime.keyframes.forEach(({ delay, props }) => {
+        animeTimeline.add({ targets, ...props,
+          begin() {
+            isPlayable && play();
+          },
+          complete() {
+            isPlayable && stop();
+          },
+        }, delay);
+      });
+    });
+  }
+
+  const updateAnimeDebounce = debounce(1000, updateAnime);
 
   $: if (animes.length) {
-    updateAnime();
+    updateAnimeDebounce();
   }
 </script>
 
@@ -54,7 +89,12 @@
   </div>
 
   <div slot="bottomPane" class="bg-primary-darker h-full shadow">
-    <Timeline bind:timeline bind:animes bind:currentAnime bind:currentKeyframe />
+    <Timeline
+      {animeTimeline}
+      bind:timeline
+      bind:animes
+      bind:currentAnime
+      bind:currentKeyframe />
   </div>
 
 </Layout>
