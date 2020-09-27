@@ -30,6 +30,7 @@
 
   function deleteAnime(anime) {
     if (isSameAnime(currentAnime, anime)) {
+      currentKeyframe = null;
       currentAnime = null;
     }
     animes = animes.filter(a => !isSameAnime(a, anime));
