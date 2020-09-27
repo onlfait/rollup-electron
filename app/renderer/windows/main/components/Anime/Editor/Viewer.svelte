@@ -57,6 +57,7 @@
   {#await getText(anime) then text}
   <div
     class="absolute"
+    id="anime-{anime.id}"
     {...getProps(anime)}
     style={getStyle(anime)}>
     {text}
