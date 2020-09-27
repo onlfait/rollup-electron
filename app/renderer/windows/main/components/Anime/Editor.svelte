@@ -75,6 +75,8 @@
 
   $: if (animes.length) {
     updateAnimeDebounce();
+  } else {
+    animeTimeline = null;
   }
 </script>
 
