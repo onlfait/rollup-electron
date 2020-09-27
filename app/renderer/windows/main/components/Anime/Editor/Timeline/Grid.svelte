@@ -37,7 +37,7 @@
 }
 </style>
 
-<div class="flex flex-col h-full">
+<div class="relative flex flex-col h-full">
   <div class="timeline-grid whitespace-no-wrap bg-primary-dark grid" style={gridTemplate}>
     <slot name="header"></slot>
   </div>
@@ -46,13 +46,12 @@
       <slot />
     </div>
   </div>
-</div>
-
-<div
-  use:pannable
-  on:panmove={onSplitterPan}
-  on:mousedown|stopPropagation
-  style={splitterStyle}
-  class="absolute top-0 bottom-0 select-none"
->
+  <div
+    use:pannable
+    on:panmove={onSplitterPan}
+    on:mousedown|stopPropagation
+    style={splitterStyle}
+    class="absolute top-0 bottom-0 select-none"
+  >
+  </div>
 </div>
