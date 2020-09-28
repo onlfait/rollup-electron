@@ -4,6 +4,7 @@ import animeIcons from "./anime/icons";
 import animeFactories from "./anime/factories";
 import animeAttributes from "./anime/attributes";
 import animeTransformations from "./anime/transformations";
+import cloneDeep from "clone-deep";
 
 export const pixelPerMs = 10;
 
@@ -20,11 +21,11 @@ function getAnimeTypeFromFile(file) {
 }
 
 export function getAnimeAttributes(label) {
-  return { ...animeAttributes[label] };
+  return cloneDeep(animeAttributes[label]);
 }
 
 export function getAnimeTransformations(label) {
-  return label ? { ...animeTransformations[label] } : animeTransformations;
+  return label ? cloneDeep(animeTransformations[label]) : animeTransformations;
 }
 
 async function createAnime(type, filename) {
@@ -76,4 +77,28 @@ export function createKeyframe({ delay = 0, props = {} } = {}) {
       ...props,
     },
   };
+}
+
+export function getAnimeStyle({ attributes }) {
+  let style = ["max-width:none"];
+  Object.entries(attributes).forEach(([label, value]) => {
+    const { unit, isProp } = getAnimeAttributes(label);
+    if (!isProp) style.push(`${label}:${value}${unit || ""}`);
+  });
+  return style.join(";");
+}
+
+export function getAnimeProps({ attributes }) {
+  let props = {};
+  Object.entries(attributes).forEach(([label, value]) => {
+    const { unit, isProp } = getAnimeAttributes(label);
+    if (isProp) props[label] = `${value}${unit || ""}`;
+  });
+  return props;
+}
+
+export async function getAnimeText(anime) {
+  return fetch(`/public/media/texts/${anime.filename}`).then(response =>
+    response.text()
+  );
 }

@@ -17,6 +17,16 @@ export default {
     removable: false,
     filter: parseInt,
   },
+  opacity: {
+    props: { type: "number", min: 0, max: 1, step: 0.1, value: 0.5 },
+    removable: true,
+    filter: parseFloat,
+  },
+  // volume: {
+  //   props: { type: "number", min: 0, max: 1, step: 0.1, value: 0.8 },
+  //   removable: true,
+  //   filter: parseFloat,
+  // },
   translateX: {
     props: { type: "number", step: 10, value: 0 },
     removable: true,

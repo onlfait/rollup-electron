@@ -34,6 +34,11 @@ export default {
     filter: parseInt,
     unit: null,
   },
+  opacity: {
+    props: { type: "number", min: 0, max: 1, step: 0.1 },
+    filter: parseFloat,
+    unit: null,
+  },
   volume: {
     props: { type: "number", min: 0, max: 1, step: 0.1 },
     filter: parseFloat,

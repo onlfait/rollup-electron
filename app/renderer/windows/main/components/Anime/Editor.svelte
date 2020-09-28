@@ -4,7 +4,7 @@
   import Settings from "./Editor/Settings.svelte";
   import Viewer from "./Editor/Viewer.svelte";
 
-  import { createAnimeFromFile } from "./libs/anime";
+  import { createAnimeFromFile, getAnimeStyle } from "./libs/anime";
   import animejs from "animejs/lib/anime.es.js";
   import { debounce } from "throttle-debounce";
 
@@ -32,9 +32,11 @@
     });
   }
 
-  // $: console.log("animes:", animes);
-  // $: console.log("timeline:", timeline);
-  // $: console.log("currentAnime:", currentAnime);
+  // $: console.log(">>> animes:", animes);
+  // $: console.log(">>> timeline:", timeline);
+  // $: console.log(">>> currentAnime:", currentAnime);
+  // $: console.log(">>> currentKeyframe:", currentKeyframe);
+  // $: console.log(">>> animeTimeline:", animeTimeline);
 
   function updateAnime() {
     console.log("updateAnime...");
@@ -47,12 +49,16 @@
       const targets = `#anime-${anime.id}`;
       const $target = document.querySelector(targets);
 
-      $target.style.transform = null;
+      $target.style = getAnimeStyle(anime);
 
       let playables = ["sound", "video"];
       let isPlayable = playables.includes(anime.type);
 
-      const play = () => $target.play();
+      const play = () => {
+        $target.volume = anime.attributes.volume;
+        $target.currentTime = 0;
+        $target.play();
+      };
       const stop = () => {
         $target.pause();
         $target.currentTime = 0;
@@ -66,6 +72,10 @@
           complete() {
             isPlayable && stop();
           },
+          // change({ animations }) {
+          //   console.log($target.volume, animations[0].currentValue);
+          //   $target.volume = animations[0].currentValue;
+          // }
         }, delay);
       });
     });
