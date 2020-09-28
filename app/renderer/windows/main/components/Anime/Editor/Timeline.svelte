@@ -88,7 +88,7 @@
   <div slot="header" class="p-2 truncate">
     Timeline...
   </div>
-  {#each animes as anime}
+  {#each animes as anime (anime.id)}
     <div
       on:mousedown={selectAnime.bind(null, anime)}
       class="flex pl-2 items-center space-x-2 {selectedClass(currentAnime, anime)}"
@@ -107,7 +107,7 @@
       class="overflow-hidden {selectedClass(currentAnime, anime)}"
     >
       <Keyframes bind:timeline on:add={addKeyframe}>
-        {#each anime.keyframes as keyframe}
+        {#each anime.keyframes as keyframe (keyframe.id)}
         <Keyframe
           {timeline}
           {keyframe}

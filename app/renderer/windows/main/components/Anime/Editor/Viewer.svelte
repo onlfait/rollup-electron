@@ -27,7 +27,7 @@
   }
 </script>
 
-{#each animes as anime}
+{#each animes as anime (anime.id)}
   {#if anime.type === "image"}
   <img
     class="absolute"

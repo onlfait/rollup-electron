@@ -124,7 +124,7 @@
     <div class="truncate">{currentAnime.filename}</div>
   </div>
   <Panel title="Info" visible={info.length} expended={false}>
-    {#each info as [label, value]}
+    {#each info as [label, value] (label)}
     <div class="p-2 flex space-x-2 items-center">
       <div class="flex-auto">{label}</div>
       <div>{value}</div>
@@ -132,7 +132,7 @@
     {/each}
   </Panel>
   <Panel title="Attributes" visible={attributes.length}>
-    {#each attributes as label}
+    {#each attributes as label (label)}
     <Input
       {label}
       props={getAttributesProps(label)}
@@ -158,7 +158,7 @@
       </div>
     </div>
 
-    {#each transformations as label}
+    {#each transformations as label (label)}
       {#if getTransformationsValues(label)}
       <div class="p-2 flex items-center">
         <div class="flex items-center w-1/2">
