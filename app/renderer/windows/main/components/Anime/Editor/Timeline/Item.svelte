@@ -1,27 +1,28 @@
 <script>
+  import { getContext } from "svelte";
   import Icon from "../../../Icon.svelte";
   import AnimeIcon from "../AnimeIcon.svelte";
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
 
-  export let items;
-  export let state;
   export let item;
 
+  const { items, selectedItem } = getContext("Editor");
+
   function onSelect() {
-    if (state.selectedItem !== item) {
-      state.selectedItem = item;
+    if ($selectedItem !== item) {
+      $selectedItem = item;
     }
   }
 
   function onDelete(event) {
     event.stopPropagation();
-    if (state.selectedItem === item) {
-      state.selectedItem = null;
+    if ($selectedItem === item) {
+      $selectedItem = null;
     }
-    items = items.filter(({ id }) => id !== item.id);
+    $items = $items.filter(({ id }) => id !== item.id);
   }
 
-  $: selected = state.selectedItem === item ? "bg-black bg-opacity-25" : "";
+  $: selected = $selectedItem === item ? "bg-black bg-opacity-25" : "";
 </script>
 
 <div class="flex pl-2 items-center space-x-2 {selected}" on:click={onSelect}>

@@ -1,25 +1,10 @@
 <script>
-  import * as anime from "../../libs/anime";
+  import { getContext } from "svelte";
+  import components from "./items"
 
-  export let items;
-
-  let element;
-
-  async function processItems() {
-    for (const item of items) {
-      const target = await anime.createElementFromTarget(item.target);
-      target.setAttribute("id", `anime-${item.id}`);
-      target.setAttribute("draggable", false);
-      target.style.position = "absolute";
-      target.style.maxWidth = "none";
-      element.append(target);
-    }
-  }
-
-  $: if (element && items) {
-    element.innerHTML = "";
-    processItems();
-  }
+  const { items } = getContext("Editor");
 </script>
 
-<div bind:this={element}></div>
+{#each $items as item (item.id)}
+<svelte:component this={components[item.target.type]} {item} />
+{/each}

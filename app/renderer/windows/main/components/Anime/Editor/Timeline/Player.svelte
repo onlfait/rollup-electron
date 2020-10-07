@@ -4,7 +4,7 @@
   import MdReplay from "svelte-icons/md/MdReplay.svelte";
   import MdPlayArrow from "svelte-icons/md/MdPlayArrow.svelte";
 
-  export let timeline;
+  export let timeline = null;
 
   function playAnime() {
     timeline && timeline.play();

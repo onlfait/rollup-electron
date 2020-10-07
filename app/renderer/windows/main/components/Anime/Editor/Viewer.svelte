@@ -1,12 +1,10 @@
 <script>
-  import { onMount } from "svelte";
   import pannable from "../../pannable.js";
   import Items from "./Viewer/Items.svelte";
+  import { onMount } from "svelte";
 
   let cls = "";
   export { cls as class };
-
-  export let items;
 
   export let size = {
     width: window.screen.width,
@@ -114,8 +112,8 @@
     on:dblclick={onDoubleClick}
     bind:this={viewportWrapper}
   >
-    <div class="absolute {cls}" style={viewportStyle}>
-      <Items {items} />
+    <div class="absolute overflow-hidden {cls}" style={viewportStyle}>
+      <Items />
     </div>
   </div>
 </div>
