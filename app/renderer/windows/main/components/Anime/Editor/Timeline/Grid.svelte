@@ -1,9 +1,7 @@
 <script>
   import pannable from "../../../pannable.js";
 
-  export let timeline;
-
-  $: splitter = timeline.splitter;
+  export let splitter;
 
   $: gridTemplate = `grid-template-columns: ${splitter.x}px auto`;
   $: splitterStyle = `
@@ -14,7 +12,6 @@
 
   function onSplitterPan({ detail }) {
     splitter.x = Math.max(splitter.min, Math.min(splitter.max, detail.x));
-    timeline = timeline;
   }
 </script>
 

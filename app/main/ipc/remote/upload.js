@@ -16,6 +16,7 @@ async function upload({ source, dest }) {
 module.exports = {
   image: async source => upload({ source, dest: "images" }),
   sound: async source => upload({ source, dest: "sounds" }),
+  audio: async source => upload({ source, dest: "audios" }),
   video: async source => upload({ source, dest: "videos" }),
   text: async source => upload({ source, dest: "texts" }),
 };

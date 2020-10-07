@@ -1,104 +1,64 @@
 import { v4 as uuid } from "uuid";
-import animeTypes from "./anime/types";
-import animeIcons from "./anime/icons";
-import animeFactories from "./anime/factories";
-import animeAttributes from "./anime/attributes";
-import animeTransformations from "./anime/transformations";
-import cloneDeep from "clone-deep";
-
-export const pixelPerMs = 10;
-
-function getFileExt(file) {
-  return file.name.split(".").pop();
-}
+import types from "./anime/types";
+import icons from "./anime/icons";
+import * as utils from "./utils";
 
 export function getAnimeIcon(type) {
-  return animeIcons[type];
+  return icons[type];
 }
 
-function getAnimeTypeFromFile(file) {
-  return animeTypes[getFileExt(file)];
+function getAnimeTypeFromExt(ext) {
+  const type = types[ext];
+  if (!type) {
+    throw new Error(`Undefined anime ext. "${ext}"`);
+  }
+  return types[ext];
 }
 
-export function getAnimeAttributes(label) {
-  return cloneDeep(animeAttributes[label]);
+function uploadFile(type, file) {
+  return app.remote.call(`upload.${type}`, file.path);
 }
 
-export function getAnimeTransformations(label) {
-  return label ? cloneDeep(animeTransformations[label]) : animeTransformations;
+export async function createElementFromTarget(target) {
+  const factory = utils.factories[target.type];
+  if (!factory) {
+    throw new Error(`Undefined anime type "${target.type}"`);
+  }
+  return await factory(target.name);
 }
 
-async function createAnime(type, filename) {
+async function getTargetData(target) {
+  const element = await createElementFromTarget(target);
+  const data = {};
+  if (target.type === "image") {
+    data.width = element.width;
+    data.height = element.height;
+  } else if (target.type === "video") {
+    data.width = element.videoWidth;
+    data.height = element.videoHeight;
+  }
+  if (target.type === "audio" || target.type === "video") {
+    data.duration = Math.round(element.duration * 1000);
+  }
+  return data;
+}
+
+async function createTargetFromFile(file) {
+  const ext = utils.getFileExt(file);
+  const type = getAnimeTypeFromExt(ext);
+  const name = await uploadFile(type, file);
+  const data = await getTargetData({ type, name });
+  return { type, name, data };
+}
+
+export async function createItemFromFile(file) {
+  if (!file.size) {
+    throw new Error(`Empty file "${file.name}"`);
+  }
   return {
     id: uuid(),
-    type,
-    filename,
-    info: {},
-    attributes: {},
-    keyframes: [],
-    ...(await animeFactories[type](filename)),
+    type: "file",
+    target: await createTargetFromFile(file),
+    delay: 0,
   };
-}
-
-export function createAnimeFromFile(file) {
-  return new Promise((resolve, reject) => {
-    const type = getAnimeTypeFromFile(file);
-
-    if (!type) {
-      return reject(new Error(`Unsupported file type "${file.name}"`));
-    }
-
-    app.remote
-      .call(`upload.${type}`, file.path)
-      .then(async filename => resolve(createAnime(type, filename)))
-      .catch(reject);
-  });
-}
-
-export function hasSameId(a1, a2) {
-  return a1 && a2 && a1.id === a2.id;
-}
-
-export function isSameAnime(a1, a2) {
-  return hasSameId(a1, a2);
-}
-
-export function isSameKeyframe(a1, a2) {
-  return hasSameId(a1, a2);
-}
-
-export function createKeyframe({ delay = 0, props = {} } = {}) {
-  return {
-    id: uuid(),
-    delay,
-    props: {
-      duration: 1000,
-      easing: "linear",
-      ...props,
-    },
-  };
-}
-
-export function getAnimeStyle({ attributes }) {
-  let style = ["max-width:none"];
-  Object.entries(attributes).forEach(([label, value]) => {
-    const { unit, isProp } = getAnimeAttributes(label);
-    if (!isProp) style.push(`${label}:${value}${unit || ""}`);
-  });
-  return style.join(";");
-}
-
-export function getAnimeProps({ attributes }) {
-  let props = {};
-  Object.entries(attributes).forEach(([label, value]) => {
-    const { unit, isProp } = getAnimeAttributes(label);
-    if (isProp) props[label] = `${value}${unit || ""}`;
-  });
-  return props;
-}
-
-export async function getAnimeText(anime) {
-  return fetch(`/public/media/texts/${anime.filename}`).then(response =>
-    response.text()
-  );
 }

@@ -1,6 +1,10 @@
 const mediaPath = "/public/media";
 
-export function getImage(src) {
+export function getFileExt(file) {
+  return file.name.split(".").pop();
+}
+
+export function createImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onerror = reject;
@@ -9,7 +13,7 @@ export function getImage(src) {
   });
 }
 
-export function getMedia(type, src) {
+export function createMedia(type, src) {
   return new Promise((resolve, reject) => {
     const media = document.createElement(type);
     media.onerror = reject;
@@ -18,10 +22,27 @@ export function getMedia(type, src) {
   });
 }
 
-export function getAudio(src) {
-  return getMedia("audio", `sounds/${src}`);
+export function createAudio(src) {
+  return createMedia("audio", `audios/${src}`);
 }
 
-export function getVideo(src) {
-  return getMedia("video", `videos/${src}`);
+export function createVideo(src) {
+  return createMedia("video", `videos/${src}`);
 }
+
+export function fetchText(src) {
+  return fetch(`/public/media/texts/${src}`).then(response => response.text());
+}
+
+export async function createText(src) {
+  const text = document.createElement("div");
+  text.innerText = await fetchText(src);
+  return text;
+}
+
+export const factories = {
+  image: createImage,
+  audio: createAudio,
+  video: createVideo,
+  text: createText,
+};

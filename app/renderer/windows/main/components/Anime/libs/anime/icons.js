@@ -4,7 +4,7 @@ import MdOndemandVideo from "svelte-icons/md/MdOndemandVideo.svelte";
 import MdDescription from "svelte-icons/md/MdDescription.svelte";
 
 export default {
-  sound: MdMusicVideo,
+  audio: MdMusicVideo,
   image: MdImage,
   video: MdOndemandVideo,
   text: MdDescription,
