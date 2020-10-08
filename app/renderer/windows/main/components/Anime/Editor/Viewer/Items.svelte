@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import components from "./items"
+  import components from "./items";
 
   const { items } = getContext("Editor");
 </script>

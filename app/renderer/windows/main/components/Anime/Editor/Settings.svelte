@@ -2,12 +2,20 @@
   import { getContext } from "svelte";
   import AnimeIcon from "./AnimeIcon.svelte";
   import Panel from "./Settings/Panel.svelte";
-  // import Input from "./Settings/Input.svelte";
+  import Input from "./Settings/Input.svelte";
+
+  import { getAttrProps } from "../libs/anime";
 
   const { items, selectedItem } = getContext("Editor");
 
   $: info = $selectedItem ? Object.entries($selectedItem.target.info) : [];
   $: attrs = $selectedItem ? Object.entries($selectedItem.target.attrs) : [];
+
+  function onAttributeChange(key, { target }) {
+    // TODO check value, min, max, etc...
+    $selectedItem.target.attrs[key] = target.value;
+    $items = $items;
+  }
 </script>
 
 {#if $selectedItem}
@@ -29,8 +37,11 @@
 <Panel title="Attributes" expended={true}>
   {#each attrs as [key, value] (key)}
   <div class="p-2 flex space-x-2 items-center">
-    <div class="flex-auto">{key}</div>
-    <div>{value}</div>
+    <Input
+      label={key}
+      props={getAttrProps($selectedItem, key)}
+      on:change={onAttributeChange.bind(null, key)}
+    />
   </div>
   {/each}
 </Panel>
