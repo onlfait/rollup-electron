@@ -25,9 +25,10 @@ export const defaultStyles = {
     "font-family",
     "font-weight",
     "color",
+    "opacity",
   ],
-  image: ["top", "left", "width", "height"],
-  video: ["top", "left", "width", "height"],
+  image: ["top", "left", "width", "height", "opacity"],
+  video: ["top", "left", "width", "height", "opacity"],
 };
 
 export const attrsDefs = {
@@ -57,6 +58,10 @@ export const styleDefs = {
     default: 600,
     unit: "px",
     input: { type: "number", min: 0, step: 10 },
+  },
+  opacity: {
+    default: 1,
+    input: { type: "number", min: 0, max: 1, step: 0.1 },
   },
   "font-size": {
     default: 42,
