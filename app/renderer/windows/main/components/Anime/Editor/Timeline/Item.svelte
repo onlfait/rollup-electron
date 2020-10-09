@@ -11,7 +11,7 @@
 
   let isDragOver = false;
 
-  $: selected = $selectedItem === item ? "bg-black bg-opacity-25" : "";
+  $: selected = $selectedItem === item ? "bg-blue-600 bg-opacity-25" : "bg-primary-darker";
 
   function onSelect() {
     if ($selectedItem !== item) {
@@ -70,4 +70,4 @@
   {/if}
 </div>
 
-<div class="flex pl-2 items-center space-x-2"></div>
+<div class="flex pl-2 items-center space-x-2 bg-primary-darker"></div>

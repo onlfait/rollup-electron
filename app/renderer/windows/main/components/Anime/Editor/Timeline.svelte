@@ -10,10 +10,10 @@
 </script>
 
 <Grid bind:splitter>
-  <div slot="header" class="p-2 flex splace-x-2">
+  <div slot="header" class="p-2 flex splace-x-2 bg-primary-dark">
     <Player />
   </div>
-  <div slot="header" class="p-2 truncate">
+  <div slot="header" class="p-2 truncate bg-primary-dark">
     Timeline...
   </div>
   {#each $items as item, pos (item.id)}
