@@ -5,8 +5,6 @@
   import Panel from "../Panel.svelte";
   import Input from "../Input.svelte";
 
-  import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
-
   export let trans;
 
   const dispatch = createEventDispatcher();

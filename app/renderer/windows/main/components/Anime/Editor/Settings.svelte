@@ -15,7 +15,6 @@
 
   function onChange(type, { detail }) {
     const { key, value } = detail;
-    console.log(`onChange:${type}`, { key, value });
     // TODO check value, min, max, etc...
     $selectedItem.target[type][key] = value;
     $items = $items;
@@ -23,7 +22,6 @@
 
   function onRemove(type, { detail }) {
     const { key } = detail;
-    console.log(`onRemove:${type}`, { key });
     delete $selectedItem.target[type][key];
     $selectedItem = $selectedItem;
     $items = $items;
