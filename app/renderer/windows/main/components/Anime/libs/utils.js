@@ -1,9 +1,5 @@
 const mediaPath = "/public/media";
 
-export function getFileExt(file) {
-  return file.name.split(".").pop();
-}
-
 export function createImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -31,7 +27,7 @@ export function createVideo(src) {
 }
 
 export function fetchText(src) {
-  return fetch(`/public/media/texts/${src}`).then(response => response.text());
+  return fetch(`${mediaPath}/texts/${src}`).then(response => response.text());
 }
 
 export async function createText(src) {
@@ -40,7 +36,7 @@ export async function createText(src) {
   return text;
 }
 
-export const factories = {
+export const elementFactories = {
   image: createImage,
   audio: createAudio,
   video: createVideo,
