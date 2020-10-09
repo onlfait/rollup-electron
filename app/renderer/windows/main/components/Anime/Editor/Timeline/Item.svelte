@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import Icon from "../../../Icon.svelte";
+  import Keyframes from "./Keyframes.svelte";
   import AnimeIcon from "../AnimeIcon.svelte";
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
 
@@ -70,4 +71,6 @@
   {/if}
 </div>
 
-<div class="flex pl-2 items-center space-x-2 bg-primary-darker"></div>
+<Keyframes>
+  {item.id}
+</Keyframes>
