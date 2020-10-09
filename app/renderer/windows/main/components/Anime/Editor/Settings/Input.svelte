@@ -14,14 +14,14 @@
   }
 </script>
 
-<div class="p-2 flex items-center">
+<div class="flex items-center">
   <div class="flex items-center w-1/2">
-    <div class="flex-1 truncate">{label}</div>
+    <div class="p-2 flex-1 truncate">{label}</div>
     {#if removable}
     <Icon
       on:click={remove}
       icon={MdDeleteForever}
-      class="mr-1 hover:bg-red-600 rounded cursor-pointer" />
+      class="mr-1 hover:bg-red-600 cursor-pointer" />
     {/if}
   </div>
   <input

@@ -15,9 +15,17 @@
 
   function onChange(type, { detail }) {
     const { key, value } = detail;
-    console.log(`on:${type}`, { key, value });
+    console.log(`onChange:${type}`, { key, value });
     // TODO check value, min, max, etc...
     $selectedItem.target[type][key] = value;
+    $items = $items;
+  }
+
+  function onRemove(type, { detail }) {
+    const { key } = detail;
+    console.log(`onRemove:${type}`, { key });
+    delete $selectedItem.target[type][key];
+    $selectedItem = $selectedItem;
     $items = $items;
   }
 </script>
@@ -28,9 +36,11 @@
     <div class="p-2 pl-0 truncate flex-1">{$selectedItem.target.name}</div>
   </div>
   <InfoPanel {info} />
-  <AttrsPanel {attrs} on:change={onChange.bind(null, 'attrs')} />
-  <StylePanel {style} on:change={onChange.bind(null, 'style')} />
-  <TransPanel {trans} on:change={onChange.bind(null, 'trans')} />
+  <AttrsPanel {attrs} on:change={onChange.bind(null, "attrs")} />
+  <StylePanel {style} on:change={onChange.bind(null, "style")} />
+  <TransPanel {trans}
+    on:change={onChange.bind(null, "trans")}
+    on:remove={onRemove.bind(null, "trans")} />
 {:else if $items.length}
   <div class="p-2 truncate bg-primary-dark">
     No file selected...

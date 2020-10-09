@@ -5,6 +5,8 @@
   import Panel from "../Panel.svelte";
   import Input from "../Input.svelte";
 
+  import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
+
   export let trans;
 
   const dispatch = createEventDispatcher();
@@ -15,15 +17,21 @@
   function onChange(key, { target }) {
     dispatch("change", { key, value: target.value });
   }
+
+  function onRemove(key) {
+    dispatch("remove", { key });
+  }
 </script>
 
 <Panel title="Transformations" {expended} {visible}>
   {#each trans as [key, value] (key)}
   <Input
     label={key}
-    {value}
+    value={value}
+    removable={true}
     {...transDefs[key].input}
     on:change={onChange.bind(null, key)}
+    on:remove={onRemove.bind(null, key)}
   />
   {/each}
 </Panel>
