@@ -4,26 +4,20 @@
   import InfoPanel from "./Settings/Panels/Info.svelte";
   import AttrsPanel from "./Settings/Panels/Attrs.svelte";
   import StylePanel from "./Settings/Panels/Style.svelte";
+  import TransPanel from "./Settings/Panels/Trans.svelte";
 
   const { items, selectedItem } = getContext("Editor");
 
   $: info = $selectedItem ? Object.entries($selectedItem.target.info) : [];
   $: attrs = $selectedItem ? Object.entries($selectedItem.target.attrs) : [];
   $: style = $selectedItem ? Object.entries($selectedItem.target.style) : [];
+  $: trans = $selectedItem ? Object.entries($selectedItem.target.trans) : [];
 
-  function onAttrsChange({ detail }) {
+  function onChange(type, { detail }) {
     const { key, value } = detail;
-    console.log("onAttrsChange", {key, value});
+    console.log(`on:${type}`, { key, value });
     // TODO check value, min, max, etc...
-    $selectedItem.target.attrs[key] = value;
-    $items = $items;
-  }
-
-  function onStyleChange({ detail }) {
-    const { key, value } = detail;
-    console.log("onStyleChange", {key, value});
-    // TODO check value, min, max, etc...
-    $selectedItem.target.style[key] = value;
+    $selectedItem.target[type][key] = value;
     $items = $items;
   }
 </script>
@@ -34,8 +28,9 @@
     <div class="p-2 pl-0 truncate flex-1">{$selectedItem.target.name}</div>
   </div>
   <InfoPanel {info} />
-  <AttrsPanel {attrs} on:change={onAttrsChange} />
-  <StylePanel {style} on:change={onStyleChange} />
+  <AttrsPanel {attrs} on:change={onChange.bind(null, 'attrs')} />
+  <StylePanel {style} on:change={onChange.bind(null, 'style')} />
+  <TransPanel {trans} on:change={onChange.bind(null, 'trans')} />
 {:else if $items.length}
   <div class="p-2 truncate bg-primary-dark">
     No file selected...

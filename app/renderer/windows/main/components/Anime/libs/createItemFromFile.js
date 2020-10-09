@@ -5,8 +5,10 @@ import {
   extTypes,
   defaultStyles,
   defaultAttrs,
+  defaultTrans,
   styleDefs,
   attrsDefs,
+  transDefs,
 } from "./settings";
 
 function getTypeFromExt(ext) {
@@ -54,28 +56,28 @@ async function getTargetInfo(target) {
   return info;
 }
 
-function getTargetStyle({ type, info }) {
-  const names = defaultStyles[type] || [];
+function getTargetProps(defaults, defs, { type, info }) {
+  const names = defaults[type] || [];
   const style = {};
 
   names.forEach(key => {
-    const { default: value } = styleDefs[key];
+    const { default: value } = defs[key];
     style[key] = info[key] || value;
   });
 
   return style;
 }
 
-function getTargetAttrs({ type, info }) {
-  const names = defaultAttrs[type] || [];
-  const attrs = {};
+function getTargetStyle(data) {
+  return getTargetProps(defaultStyles, styleDefs, data);
+}
 
-  names.forEach(key => {
-    const { default: value } = attrsDefs[key];
-    attrs[key] = info[key] || value;
-  });
+function getTargetAttrs(data) {
+  return getTargetProps(defaultAttrs, attrsDefs, data);
+}
 
-  return attrs;
+function getTargetTrans(data) {
+  return getTargetProps(defaultTrans, transDefs, data);
 }
 
 async function createTargetFromFile(file) {
@@ -85,8 +87,9 @@ async function createTargetFromFile(file) {
   const info = await getTargetInfo({ type, name });
   const style = getTargetStyle({ type, info });
   const attrs = getTargetAttrs({ type, info });
+  const trans = getTargetTrans({ type, info });
 
-  return { type, name, info, style, attrs };
+  return { type, name, info, style, attrs, trans };
 }
 
 export default async function createItemFromFile(file) {

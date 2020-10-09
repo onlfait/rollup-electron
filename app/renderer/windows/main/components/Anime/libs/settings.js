@@ -31,6 +31,12 @@ export const defaultStyles = {
   video: ["top", "left", "width", "height", "opacity"],
 };
 
+export const defaultTrans = {
+  text: ["rotate", "scale"],
+  image: ["rotate", "scale"],
+  video: ["rotate", "scale"],
+};
+
 export const attrsDefs = {
   volume: {
     default: 0.8,
@@ -79,5 +85,79 @@ export const styleDefs = {
   color: {
     default: "#420042",
     input: { type: "text" },
+  },
+};
+
+export const transDefs = {
+  translateX: {
+    default: 0,
+    unit: "px",
+    input: { type: "number", step: 10 },
+  },
+  translateY: {
+    default: 0,
+    unit: "px",
+    input: { type: "number", step: 10 },
+  },
+  translateZ: {
+    default: 0,
+    unit: "px",
+    input: { type: "number", step: 10 },
+  },
+  rotate: {
+    default: 0,
+    unit: "deg",
+    input: { type: "number", step: 5 },
+  },
+  rotateX: {
+    default: 0,
+    unit: "deg",
+    input: { type: "number", step: 5 },
+  },
+  rotateY: {
+    default: 0,
+    unit: "deg",
+    input: { type: "number", step: 5 },
+  },
+  rotateZ: {
+    default: 0,
+    unit: "deg",
+    input: { type: "number", step: 5 },
+  },
+  scale: {
+    default: 1,
+    input: { type: "number", step: 0.1 },
+  },
+  scaleX: {
+    default: 1,
+    input: { type: "number", step: 0.1 },
+  },
+  scaleY: {
+    default: 1,
+    input: { type: "number", step: 0.1 },
+  },
+  scaleZ: {
+    default: 1,
+    input: { type: "number", step: 0.1 },
+  },
+  skew: {
+    default: 1,
+    unit: "deg",
+    input: { type: "number", step: 1 },
+  },
+  skewX: {
+    default: 1,
+    unit: "deg",
+    input: { type: "number", step: 1 },
+  },
+  skewY: {
+    default: 1,
+    unit: "deg",
+    input: { type: "number", step: 1 },
+  },
+  perspective: {
+    default: 0,
+    unit: "px",
+    input: { type: "number", step: 1 },
   },
 };
