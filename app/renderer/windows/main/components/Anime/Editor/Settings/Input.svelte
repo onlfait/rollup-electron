@@ -14,9 +14,9 @@
   }
 </script>
 
-<div class="flex items-center">
+<div class="p-2 flex items-center">
   <div class="flex items-center w-1/2">
-    <div class="p-2 flex-1 truncate">{label}</div>
+    <div class="flex-1 truncate">{label}</div>
     {#if removable}
     <Icon
       on:click={remove}
