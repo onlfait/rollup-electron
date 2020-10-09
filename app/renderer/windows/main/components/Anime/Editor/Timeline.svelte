@@ -16,7 +16,7 @@
   <div slot="header" class="p-2 truncate">
     Timeline...
   </div>
-  {#each $items as item (item.id)}
-    <Item bind:item />
+  {#each $items as item, pos (item.id)}
+    <Item bind:item {pos} />
   {/each}
 </Grid>
