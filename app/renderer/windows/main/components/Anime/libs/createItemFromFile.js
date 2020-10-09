@@ -43,6 +43,8 @@ async function getTargetInfo(target) {
   } else if (target.type === "video") {
     info.width = element.videoWidth;
     info.height = element.videoHeight;
+  } else if (target.type === "text") {
+    info.length = element.innerText.length;
   }
 
   if (target.type === "audio" || target.type === "video") {
