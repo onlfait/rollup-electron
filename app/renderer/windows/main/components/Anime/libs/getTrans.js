@@ -6,12 +6,12 @@ function getUnit(key) {
 }
 
 export default function getTrans(input) {
-  const style = [];
+  const trans = [];
 
   Object.entries(input).forEach(([key, value]) => {
     const unit = getUnit(key);
-    style.push(`${key}(${value}${unit})`);
+    trans.push(`${key}(${value}${unit})`);
   });
 
-  return `transform:${style.join(" ")}`;
+  return `transform:${trans.length ? trans.join(" ") : "none"}`;
 }
