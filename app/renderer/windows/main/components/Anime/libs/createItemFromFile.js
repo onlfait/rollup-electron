@@ -1,51 +1,22 @@
 import { v4 as uuid } from "uuid";
 import { elementFactories } from "./utils";
 
-const types = {
-  txt: "text",
-  ico: "image",
-  gif: "image",
-  png: "image",
-  jpg: "image",
-  jpeg: "image",
-  mp3: "audio",
-  ogg: "audio",
-  mp4: "video",
-  ogv: "video",
-};
-
-const defaultStyles = {
-  text: ["top", "left", "width", "font-size", "color"],
-  image: ["top", "left", "width", "height"],
-  video: ["top", "left", "width", "height"],
-};
-
-const defaultAttrs = {
-  audio: ["volume"],
-  video: ["volume"],
-};
-
-const styleDefs = {
-  top: { default: 0 },
-  left: { default: 0 },
-  width: { default: 800 },
-  height: { default: 600 },
-  "font-size": { default: 42 },
-  color: { default: "#004200" },
-};
-
-const attrsDefs = {
-  volume: { default: 0.8 },
-};
+import {
+  extTypes,
+  defaultStyles,
+  defaultAttrs,
+  styleDefs,
+  attrsDefs,
+} from "./settings";
 
 function getTypeFromExt(ext) {
-  const type = types[ext];
+  const type = extTypes[ext];
 
   if (!type) {
     throw new Error(`Undefined ext. "${ext}"`);
   }
 
-  return types[ext];
+  return type;
 }
 
 function uploadFile(type, file) {
