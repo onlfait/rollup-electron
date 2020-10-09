@@ -26,9 +26,10 @@ export const defaultStyles = {
     "font-weight",
     "color",
     "opacity",
+    "z-index",
   ],
-  image: ["top", "left", "width", "height", "opacity"],
-  video: ["top", "left", "width", "height", "opacity"],
+  image: ["top", "left", "width", "height", "opacity", "z-index"],
+  video: ["top", "left", "width", "height", "opacity", "z-index"],
 };
 
 export const defaultTrans = {
@@ -68,6 +69,10 @@ export const styleDefs = {
   opacity: {
     default: 1,
     input: { type: "number", min: 0, max: 1, step: 0.1 },
+  },
+  "z-index": {
+    default: 1,
+    input: { type: "number", min: 1, step: 1 },
   },
   "font-size": {
     default: 42,
