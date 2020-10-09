@@ -6,6 +6,7 @@
   import Viewer from "./Editor/Viewer.svelte";
   import Settings from "./Editor/Settings.svelte";
   import Timeline from "./Editor/Timeline.svelte";
+  import ViewerItems from "./Editor/Viewer/Items.svelte";
 
   import createItemFromFile from "./libs/createItemFromFile";
 
@@ -39,7 +40,9 @@
 
 <Layout on:dropFiles={onDropFiles}>
   <div slot="leftPane" class="relative h-full overflow-hidden">
-    <Viewer />
+    <Viewer>
+      <ViewerItems />
+    </Viewer>
   </div>
   <div slot="rightPane" class="bg-primary-darker h-full shadow overflow-auto">
     <Settings />

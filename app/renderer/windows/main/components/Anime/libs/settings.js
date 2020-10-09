@@ -11,26 +11,26 @@ export const extTypes = {
   ogv: "video",
 };
 
+export const defaultAttrs = {
+  audio: ["volume"],
+  video: ["volume"],
+};
+
+export const attrsDefs = {
+  volume: { default: 0.8 },
+};
+
 export const defaultStyles = {
   text: ["top", "left", "width", "font-size", "color"],
   image: ["top", "left", "width", "height"],
   video: ["top", "left", "width", "height"],
 };
 
-export const defaultAttrs = {
-  audio: ["volume"],
-  video: ["volume"],
-};
-
 export const styleDefs = {
-  top: { default: 0 },
-  left: { default: 0 },
-  width: { default: 800 },
-  height: { default: 600 },
-  "font-size": { default: 42 },
+  top: { default: 0, unit: "px" },
+  left: { default: 0, unit: "px" },
+  width: { default: 800, unit: "px" },
+  height: { default: 600, unit: "px" },
+  "font-size": { default: 42, unit: "px" },
   color: { default: "#004200" },
-};
-
-export const attrsDefs = {
-  volume: { default: 0.8 },
 };
