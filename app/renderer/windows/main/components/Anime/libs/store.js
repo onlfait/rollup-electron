@@ -5,6 +5,7 @@ export default function create() {
     items: writable([]),
     selectedItem: writable(null),
     selectedKeyframe: writable(null),
+    anime: writable(null),
     timeline: {
       left: writable(0),
       scale: writable(1),

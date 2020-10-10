@@ -10,13 +10,40 @@
 
   import createItemFromFile from "./libs/createItemFromFile";
 
+  import animejs from "animejs/lib/anime.es.js";
+  import { debounce } from "throttle-debounce";
+  import getStyle from "./libs/getStyle";
+  import getTrans from "./libs/getTrans";
+
   const store = createStore();
   setContext("Editor", store);
 
-  const { items, selectedItem } = store;
+  const { anime, items, selectedItem } = store;
 
-  $: console.log("items:", $items);
-  $: console.log("selectedItem:", $selectedItem);
+  function updateAnime() {
+    console.log("updateAnime");
+    $anime = animejs.timeline({ autoplay: false });
+
+    $items.forEach(item => {
+      const targets = `#item-${item.id}`;
+      const $target = document.querySelector(targets);
+      const trans = getTrans(item.target.trans);
+      const style = getStyle(item.target.style);
+      $target.style = `${trans};${style}`;
+      item.keyframes.forEach(({ delay, duration, trans }) => {
+        $anime.add({ targets, duration, ...trans }, delay);
+      });
+    });
+  }
+
+  function resetAnime() {
+    console.log("resetAnime");
+    $anime = null;
+  }
+
+  const updateAnimeDebounce = debounce(1000, updateAnime);
+  $: $items.length ? updateAnimeDebounce() : resetAnime();
+
 
   function addItem(item) {
     $items = [ ...$items,  item ];
