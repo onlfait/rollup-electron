@@ -13,8 +13,8 @@
 
   $: width = keyframe.duration / pixelPerMs * $scale;
   $: left = keyframe.delay / pixelPerMs * $scale - halfWidth;
-  $: red = "bg-red-500 bg-opacity-50 border border-red-600 border-opacity-50";
-  $: blue = "bg-blue-500 bg-opacity-50 border border-blue-600 border-opacity-50";
+  $: red = "bg-yellow-500 bg-opacity-75";
+  $: blue = "bg-blue-500 bg-opacity-75";
   $: selectedId = $selectedKeyframe && $selectedKeyframe.id;
   $: selected = selectedId === keyframe.id ? red : blue;
 
@@ -34,10 +34,10 @@
 </script>
 
 <div
-  class="absolute bg-gray-500 bg-opacity-25"
+  class="absolute z-10 bg-gray-500 bg-opacity-25"
   style="left:{left+halfWidth}px;width:{width}px;height:28.28px">
 </div>
-<div class="absolute" style="left:{left}px">
+<div class="absolute z-20 " style="left:{left}px">
   <div
     use:pannable
     on:panmove={onPanMove}

@@ -7,12 +7,9 @@
   export let visible = true;
   export let expended = true;
 
-  let divide = "divide-y divide-blue-600 divide-opacity-50";
-
   function toggle() {
     expended = !expended;
   }
-
 </script>
 
 {#if visible}
@@ -23,9 +20,7 @@
 </div>
 
 {#if expended}
-<div class="{divide}">
-  <slot />
-</div>
+<slot />
 {/if}
 
 {/if}
