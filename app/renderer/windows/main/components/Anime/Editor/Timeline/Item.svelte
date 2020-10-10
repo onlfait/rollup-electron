@@ -75,7 +75,13 @@
   }
 
   function addKeyframe(props) {
-    const keyframe = { id: uuid(), delay: 0, duration: 1000, ...props };
+    const keyframe = {
+      id: uuid(),
+      delay: 0,
+      duration: 1000,
+      ...props,
+      trans: {}
+    };
     item.keyframes = [ ...item.keyframes, keyframe ];
     selectItem(item);
     selectKeyframe(keyframe);
