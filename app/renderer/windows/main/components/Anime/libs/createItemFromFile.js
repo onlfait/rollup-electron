@@ -102,6 +102,5 @@ export default async function createItemFromFile(file) {
     type: "file",
     target: await createTargetFromFile(file),
     keyframes: [],
-    delay: 0,
   };
 }

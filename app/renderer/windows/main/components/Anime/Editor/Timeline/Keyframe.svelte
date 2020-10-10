@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { createEventDispatcher } from "svelte";
+  import pannable from "../../../pannable.js";
 
   const dispatch = createEventDispatcher();
   const { selectedKeyframe, pixelPerMs, timeline } = getContext("Editor");
@@ -19,8 +20,17 @@
   function onSelect() {
     dispatch("select", keyframe);
   }
+
+  function onPanMove({ detail }) {
+    dispatch("move", { keyframe, offset: detail.dx / $scale });
+  }
 </script>
 
 <div class="absolute" style="left:{left}px">
-  <div class="w-5 h-5 transform rotate-45 {selected} shadow-sm" on:click={onSelect}></div>
+  <div
+    use:pannable
+    on:panmove={onPanMove}
+    on:mousedown|stopPropagation={onSelect}
+    class="w-5 h-5 transform rotate-45 {selected} shadow-sm">
+  </div>
 </div>

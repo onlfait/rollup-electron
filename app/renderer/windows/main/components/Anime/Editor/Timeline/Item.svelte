@@ -74,17 +74,28 @@
     return Math.round(delay * pixelPerMs);
   }
 
-  function addKeyframe({ detail }) {
-    const keyframe = { id: uuid(), delay: getScaledDelay(detail.offset) };
+  function addKeyframe(props) {
+    const keyframe = { id: uuid(), ...props };
     item.keyframes = [ ...item.keyframes, keyframe ];
     selectItem(item);
     selectKeyframe(keyframe);
     $items = $items;
   }
 
+  function onAddKeyframe({ detail }) {
+    addKeyframe({ delay: getScaledDelay(detail.offset) });
+  }
+
   function onSelectKeyframe({ detail: keyframe }) {
     selectItem(item);
     selectKeyframe(keyframe);
+  }
+
+  function onMoveKeyframe({ detail }) {
+    const { keyframe, offset } = detail;
+    const delay = keyframe.delay + getScaledDelay(offset);
+    keyframe.delay = Math.max(0, delay);
+    $items = $items;
   }
 </script>
 
@@ -107,8 +118,8 @@
   {/if}
 </div>
 
-<Keyframes on:add={addKeyframe} selected={isSelected}>
+<Keyframes on:add={onAddKeyframe} selected={isSelected}>
   {#each item.keyframes as keyframe (keyframe.id)}
-  <Keyframe {keyframe} on:select={onSelectKeyframe} />
+  <Keyframe {keyframe} on:select={onSelectKeyframe} on:move={onMoveKeyframe} />
   {/each}
 </Keyframes>
