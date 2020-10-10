@@ -5,6 +5,7 @@
   import AttrsPanel from "./Settings/Panels/Attrs.svelte";
   import StylePanel from "./Settings/Panels/Style.svelte";
   import TransPanel from "./Settings/Panels/Trans.svelte";
+  import Keyframe from "./Settings/Keyframe.svelte";
 
   const { items, selectedItem } = getContext("Editor");
 
@@ -39,6 +40,7 @@
   <TransPanel {trans}
     on:change={onChange.bind(null, "trans")}
     on:remove={onRemove.bind(null, "trans")} />
+  <Keyframe />
 {:else if $items.length}
   <div class="p-2 truncate bg-primary-dark">
     No file selected...

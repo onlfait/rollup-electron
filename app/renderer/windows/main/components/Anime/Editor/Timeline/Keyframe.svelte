@@ -11,6 +11,7 @@
 
   let halfWidth = 10;
 
+  $: width = keyframe.duration / pixelPerMs * $scale;
   $: left = keyframe.delay / pixelPerMs * $scale - halfWidth;
   $: red = "bg-red-500 bg-opacity-50 border border-red-600 border-opacity-50";
   $: blue = "bg-blue-500 bg-opacity-50 border border-blue-600 border-opacity-50";
@@ -32,6 +33,10 @@
   }
 </script>
 
+<div
+  class="absolute bg-gray-500 bg-opacity-25"
+  style="left:{left+halfWidth}px;width:{width}px;height:28.28px">
+</div>
 <div class="absolute" style="left:{left}px">
   <div
     use:pannable

@@ -75,7 +75,7 @@
   }
 
   function addKeyframe(props) {
-    const keyframe = { id: uuid(), ...props };
+    const keyframe = { id: uuid(), delay: 0, duration: 1000, ...props };
     item.keyframes = [ ...item.keyframes, keyframe ];
     selectItem(item);
     selectKeyframe(keyframe);
@@ -95,11 +95,13 @@
     const { keyframe, offset } = detail;
     const delay = keyframe.delay + getScaledDelay(offset);
     keyframe.delay = Math.max(0, delay);
+    $selectedKeyframe = keyframe;
     $items = $items;
   }
 
   function onRemoveKeyframe({ detail: keyframe }) {
     item.keyframes = item.keyframes.filter(kf => kf.id !== keyframe.id);
+    $selectedKeyframe = null;
     $items = $items;
   }
 </script>
