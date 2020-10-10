@@ -24,12 +24,20 @@
   function onPanMove({ detail }) {
     dispatch("move", { keyframe, offset: detail.dx / $scale });
   }
+
+  function onMouseUp({ which, detail }) {
+    if (which === 3 && detail === 2) {
+      dispatch("remove", keyframe);
+    }
+  }
 </script>
 
 <div class="absolute" style="left:{left}px">
   <div
     use:pannable
     on:panmove={onPanMove}
+    on:mouseup={onMouseUp}
+    on:contextmenu|preventDefault
     on:mousedown|stopPropagation={onSelect}
     class="w-5 h-5 transform rotate-45 {selected} shadow-sm">
   </div>

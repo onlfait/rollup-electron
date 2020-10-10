@@ -97,6 +97,11 @@
     keyframe.delay = Math.max(0, delay);
     $items = $items;
   }
+
+  function onRemoveKeyframe({ detail: keyframe }) {
+    item.keyframes = item.keyframes.filter(kf => kf.id !== keyframe.id);
+    $items = $items;
+  }
 </script>
 
 <div
@@ -120,6 +125,10 @@
 
 <Keyframes on:add={onAddKeyframe} selected={isSelected}>
   {#each item.keyframes as keyframe (keyframe.id)}
-  <Keyframe {keyframe} on:select={onSelectKeyframe} on:move={onMoveKeyframe} />
+  <Keyframe
+    {keyframe}
+    on:move={onMoveKeyframe}
+    on:select={onSelectKeyframe}
+    on:remove={onRemoveKeyframe} />
   {/each}
 </Keyframes>
