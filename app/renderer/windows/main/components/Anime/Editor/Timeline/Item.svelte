@@ -1,6 +1,8 @@
 <script>
+  import { v4 as uuid } from "uuid";
   import { getContext } from "svelte";
   import Icon from "../../../Icon.svelte";
+  import Keyframe from "./Keyframe.svelte";
   import Keyframes from "./Keyframes.svelte";
   import AnimeIcon from "../AnimeIcon.svelte";
   import MdDeleteForever from "svelte-icons/md/MdDeleteForever.svelte";
@@ -8,16 +10,33 @@
   export let item;
   export let pos;
 
-  const { items, selectedItem } = getContext("Editor");
+  const {
+    items,
+    selectedItem,
+    selectedKeyframe,
+    pixelPerMs
+  } = getContext("Editor");
 
   let isDragOver = false;
 
-  $: selected = $selectedItem === item ? "bg-blue-600 bg-opacity-25" : "bg-primary-darker";
+  $: isSelected = $selectedItem && $selectedItem.id === item.id;
+  $: selected = isSelected ? "bg-blue-600 bg-opacity-50" : "bg-primary-darker";
 
-  function onSelect() {
-    if ($selectedItem !== item) {
+  function selectItem(item) {
+    if (!$selectedItem || $selectedItem.id !== item.id) {
+      $selectedKeyframe = null;
       $selectedItem = item;
     }
+  }
+
+  function selectKeyframe(keyframe) {
+    if (!$selectedKeyframe || $selectedKeyframe.id !== keyframe.id) {
+      $selectedKeyframe = keyframe;
+    }
+  }
+
+  function onSelect() {
+    selectItem(item);
   }
 
   function onDelete(event) {
@@ -50,6 +69,23 @@
     moveItem({ from: parseInt(dataTransfer.getData("from")), to: pos });
     isDragOver = false;
   }
+
+  function getScaledDelay(delay) {
+    return Math.round(delay * pixelPerMs);
+  }
+
+  function addKeyframe({ detail }) {
+    const keyframe = { id: uuid(), delay: getScaledDelay(detail.offset) };
+    item.keyframes = [ ...item.keyframes, keyframe ];
+    selectItem(item);
+    selectKeyframe(keyframe);
+    $items = $items;
+  }
+
+  function onSelectKeyframe({ detail: keyframe }) {
+    selectItem(item);
+    selectKeyframe(keyframe);
+  }
 </script>
 
 <div
@@ -71,6 +107,8 @@
   {/if}
 </div>
 
-<Keyframes>
-  {item.id}
+<Keyframes on:add={addKeyframe} selected={isSelected}>
+  {#each item.keyframes as keyframe (keyframe.id)}
+  <Keyframe {keyframe} on:select={onSelectKeyframe} />
+  {/each}
 </Keyframes>

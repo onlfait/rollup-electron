@@ -6,6 +6,7 @@
   const { timeline } = getContext("Editor");
   const { left, scale } = timeline;
 
+  export let selected = false;
   export let zoom = { min: 0.1, max: 10, sensitivity: 50 };
 
   let wrapperElement;
@@ -27,6 +28,8 @@
     $scale = Math.max(zoom.min, Math.min(newScale, zoom.max));
     $left = Math.min(0, -tx * $scale + event.clientX - x);
   }
+
+  $: selectedCLass = selected ? "bg-primary" : "bg-primary-darker";
 </script>
 
 <div
@@ -35,9 +38,9 @@
   on:panmove={onPanMove}
   on:dblclick={onDoubleClick}
   on:wheel|preventDefault={onWheel}
-  class="relative w-full h-full overflow-hidden"
+  class="relative w-full h-full overflow-hidden {selectedCLass}"
 >
-  <div class="absolute top-0 bottom-0" style="left:{$left}px">
+  <div class="absolute top-0 bottom-0 flex items-center" style="left:{$left}px">
     <slot />
   </div>
 </div>
