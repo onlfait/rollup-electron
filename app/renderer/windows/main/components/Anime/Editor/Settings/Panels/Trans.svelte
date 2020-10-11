@@ -41,7 +41,7 @@
 </script>
 
 <Panel title="Transformations" {expended} {visible}>
-  <div class="p-2 flex items-center">
+  <div class="p-2 space-x-2 flex items-center">
     <Select
       pad="px-2"
       class="flex-auto"
@@ -50,7 +50,7 @@
       on:change={onSelectTrans} />
       <div
         on:click={onAdd}
-        class="p-2 cursor-pointer hover:text-blue-600">
+        class="cursor-pointer hover:text-blue-600">
         <Icon icon={MdAddBox} />
       </div>
   </div>
