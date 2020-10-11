@@ -6,6 +6,7 @@
   const { items, selectedItem, selectedKeyframe } = getContext("Editor");
 
   $: trans = $selectedKeyframe ? Object.entries($selectedKeyframe.trans) : [];
+  $: isAudio = $selectedItem.target.type === "audio";
 
   function onKeyframeChange(key, { target }) {
     $selectedKeyframe[key] = parseInt(target.value);
@@ -42,6 +43,7 @@
   value={$selectedKeyframe.duration}
   on:change={onKeyframeChange.bind(null, "duration")} />
 <TransPanel {trans}
+  visible={!isAudio}
   on:change={onChange.bind(null, "trans")}
   on:remove={onRemove.bind(null, "trans")} />
 {/if}

@@ -12,9 +12,6 @@
 
   const dispatch = createEventDispatcher();
 
-  let expended = true;
-  let visible = true;
-
   let itemTransNames = [];
 
   $: itemTransNames = trans.map(([key]) => key);
@@ -40,7 +37,7 @@
   }
 </script>
 
-<Panel title="Transformations" {expended} {visible}>
+<Panel title="Transformations" {...$$restProps}>
   <div class="p-2 space-x-2 flex items-center">
     <Select
       pad="px-2"

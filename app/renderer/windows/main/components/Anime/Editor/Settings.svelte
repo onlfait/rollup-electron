@@ -13,6 +13,7 @@
 
   const { items, selectedItem, selectedKeyframe } = getContext("Editor");
 
+  $: isAudio = $selectedItem && $selectedItem.target.type === "audio";
   $: info = $selectedItem ? Object.entries($selectedItem.target.info) : [];
   $: attrs = $selectedItem ? Object.entries($selectedItem.target.attrs) : [];
   $: style = $selectedItem ? Object.entries($selectedItem.target.style) : [];
@@ -42,7 +43,7 @@
     <InfoPanel {info} />
     <AttrsPanel {attrs} on:change={onChange.bind(null, "attrs")} />
     <StylePanel {style} on:change={onChange.bind(null, "style")} />
-    <TransPanel {trans}
+    <TransPanel {trans} visible={!isAudio}
       on:change={onChange.bind(null, "trans")}
       on:remove={onRemove.bind(null, "trans")} />
   </Section>
