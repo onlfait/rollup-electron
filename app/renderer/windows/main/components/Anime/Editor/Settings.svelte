@@ -35,9 +35,9 @@
 
 {#if $selectedItem}
   <Section>
-    <div slot="title" class="flex items-center space-x-2 flex-auto">
+    <div slot="title" class="flex space-x-2">
       <AnimeIcon type={$selectedItem.target.type} />
-      <div class="p-2 pl-0 truncate flex-auto">{$selectedItem.target.name}</div>
+      <span class="truncate">{$selectedItem.target.name}</span>
     </div>
     <InfoPanel {info} />
     <AttrsPanel {attrs} on:change={onChange.bind(null, "attrs")} />
@@ -47,9 +47,9 @@
       on:remove={onRemove.bind(null, "trans")} />
   </Section>
   <Section visible={$selectedKeyframe}>
-    <div slot="title" class="flex items-center space-x-2 flex-auto">
+    <div slot="title" class="flex space-x-2">
       <Icon icon={MdAdjust} class="w-4 h-4 flex-shrink-0" />
-      <div class="p-2 pl-0 flex-1 truncate">Keyframe</div>
+      <div class="truncate">Keyframe</div>
     </div>
     <div class="p-2 flex items-center">
       <div class="truncate w-1/2">identifier</div>
