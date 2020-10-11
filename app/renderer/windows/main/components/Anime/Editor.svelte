@@ -19,19 +19,37 @@
   setContext("Editor", store);
 
   const { anime, items, selectedItem } = store;
+  const playables = ["audio", "video"];
 
   function updateAnime() {
     console.log("updateAnime");
     $anime = animejs.timeline({ autoplay: false });
 
+
     $items.forEach(item => {
       const targets = `#item-${item.id}`;
-      const $target = document.querySelector(targets);
       const trans = getTrans(item.target.trans);
       const style = getStyle(item.target.style);
+      const $target = document.querySelector(targets);
+      const isPlayable = playables.includes(item.target.type);
+
+      const play = () => {
+        $target.volume = item.target.attrs.volume;
+        $target.currentTime = 0;
+        $target.play();
+      };
+
+      const stop = () => {
+        $target.pause();
+        $target.currentTime = 0;
+      };
+
+      const begin = () => isPlayable && play();
+      const complete = () => isPlayable && stop();
+
       $target.style = `${trans};${style}`;
       item.keyframes.forEach(({ delay, duration, trans }) => {
-        $anime.add({ targets, duration, ...trans }, delay);
+        $anime.add({ targets, duration, ...trans, begin, complete }, delay);
       });
     });
   }
