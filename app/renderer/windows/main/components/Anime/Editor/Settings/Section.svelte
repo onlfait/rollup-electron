@@ -22,9 +22,7 @@
       <Icon icon={expended ? MdExpandLess : MdExpandMore} class="ml-2 flex-shrink-0" />
     </div>
   </div>
-  {#if expended}
-  <div class="{divide}">
+  <div class="{divide} {!expended ? 'hidden' : ''}">
     <slot />
   </div>
-  {/if}
 {/if}

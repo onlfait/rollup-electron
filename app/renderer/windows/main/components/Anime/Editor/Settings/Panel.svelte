@@ -5,7 +5,7 @@
 
   export let title;
   export let visible = true;
-  export let expended = true;
+  export let expended = false;
 
   function toggle() {
     expended = !expended;

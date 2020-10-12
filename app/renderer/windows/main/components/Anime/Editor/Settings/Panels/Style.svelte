@@ -41,7 +41,7 @@
   }
 </script>
 
-<Panel title="Style" {...$$restProps}>
+<Panel title="Styles" {...$$restProps}>
   {#if styleNames.length}
   <div class="p-2 space-x-2 flex items-center">
     <Select
