@@ -13,11 +13,15 @@
 
   const { items, selectedItem, selectedKeyframe } = getContext("Editor");
 
-  $: isAudio = $selectedItem && $selectedItem.target.type === "audio";
   $: info = $selectedItem ? Object.entries($selectedItem.target.info) : [];
   $: attrs = $selectedItem ? Object.entries($selectedItem.target.attrs) : [];
   $: style = $selectedItem ? Object.entries($selectedItem.target.style) : [];
   $: trans = $selectedItem ? Object.entries($selectedItem.target.trans) : [];
+  $: isAudio = $selectedItem && $selectedItem.target.type === "audio";
+  $: isVideo = $selectedItem && $selectedItem.target.type === "video";
+  $: hasAttrs = isAudio || isVideo;
+  $: hasStyle = !isAudio;
+  $: hasTrans = !isAudio;
 
   function onChange(type, { detail }) {
     const { key, value } = detail;
@@ -41,9 +45,13 @@
       <span class="truncate">{$selectedItem.target.name}</span>
     </div>
     <InfoPanel {info} />
-    <AttrsPanel {attrs} on:change={onChange.bind(null, "attrs")} />
-    <StylePanel {style} on:change={onChange.bind(null, "style")} />
-    <TransPanel {trans} visible={!isAudio}
+    <AttrsPanel {attrs} visible={hasAttrs}
+      on:change={onChange.bind(null, "attrs")}
+      on:remove={onRemove.bind(null, "attrs")} />
+    <StylePanel {style} visible={hasStyle}
+      on:change={onChange.bind(null, "style")}
+      on:remove={onRemove.bind(null, "style")} />
+    <TransPanel {trans} visible={hasTrans}
       on:change={onChange.bind(null, "trans")}
       on:remove={onRemove.bind(null, "trans")} />
   </Section>
@@ -52,10 +60,10 @@
       <Icon icon={MdAdjust} class="w-4 h-4 flex-shrink-0" />
       <div class="truncate">Keyframe</div>
     </div>
-    <div class="p-2 flex items-center">
+    <!-- <div class="p-2 flex items-center">
       <div class="truncate w-1/2">identifier</div>
       <div class="truncate w-1/2">{$selectedKeyframe.id}</div>
-    </div>
+    </div> -->
     <Keyframe />
   </Section>
 {:else if $items.length}

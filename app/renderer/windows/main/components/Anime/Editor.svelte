@@ -48,8 +48,9 @@
       const complete = () => isPlayable && stop();
 
       $target.style = `${trans};${style}`;
-      item.keyframes.forEach(({ delay, duration, trans }) => {
-        $anime.add({ targets, duration, ...trans, begin, complete }, delay);
+      item.keyframes.forEach(({ delay, duration, attrs, style, trans }) => {
+        const props = { ...attrs, ...style, ...trans };
+        $anime.add({ targets, duration, ...props, begin, complete }, delay);
       });
     });
   }

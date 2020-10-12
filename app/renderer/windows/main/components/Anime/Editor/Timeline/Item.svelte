@@ -80,6 +80,8 @@
       delay: 0,
       duration: 1000,
       ...props,
+      attrs: {},
+      style: {},
       trans: {}
     };
     item.keyframes = [ ...item.keyframes, keyframe ];

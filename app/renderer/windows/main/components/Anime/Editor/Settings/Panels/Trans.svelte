@@ -38,6 +38,7 @@
 </script>
 
 <Panel title="Transformations" {...$$restProps}>
+  {#if transNames.length}
   <div class="p-2 space-x-2 flex items-center">
     <Select
       pad="px-2"
@@ -51,6 +52,7 @@
         <Icon icon={MdAddBox} />
       </div>
   </div>
+  {/if}
   {#each trans as [key, value] (key)}
   <Input
     label={key}
